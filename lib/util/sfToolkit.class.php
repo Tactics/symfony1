@@ -364,7 +364,28 @@ class sfToolkit
    */
   public static function pregtr($search, $replacePairs)
   {
-    return preg_replace(array_keys($replacePairs), array_values($replacePairs), $search);
+    return preg_replace(array_keys($replacePairs), array_values($replacePairs), $search);	
+  }
+  
+  /**
+   * Returns subject replaced with regular expression matches.
+   * This function accepts callback replacements only. Use sfToolkit::pregtr to do simple preg_replace.
+   *
+   * @param mixed $search subject to search
+   * @param array $replacePairs array of search => replace callback pairs
+   */
+  public static function pregtrcb($search, $replacePairs)
+  {
+    foreach( $replacePairs as $pattern=>$callback )
+    {
+      $search = preg_replace_callback(
+	    $pattern,
+	    $callback,
+	    $search
+	 );
+    }
+
+    return $search;
   }
 
   public static function isArrayValuesEmpty($array)
