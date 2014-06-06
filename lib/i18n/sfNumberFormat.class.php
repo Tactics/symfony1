@@ -116,8 +116,14 @@ class sfNumberFormat
    * "USD" represents the US Dollar and "EUR" represents the Euro currency.
    * @return string formatted number string 
    */
-  function format($number, $pattern = 'd', $currency = 'USD', $charset = 'cp1250')
+  function format($number, $pattern = 'd', $currency = 'USD', $charset = null)
   {
+    if (!isset($charset))
+    {
+      $sfCharset = sfConfig::get('sf_charset', 'UTF-8');
+      $charset = strtolower($sfCharset) == 'iso-8859-1' ? 'cp1250' : $sfCharset;
+    }
+    
     $this->setPattern($pattern);
 
     if (strtolower($pattern) == 'p')
