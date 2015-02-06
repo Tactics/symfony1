@@ -1,5 +1,7 @@
 <?php
 
+require_once(dirname(__FILE__).'/util.php');
+
 /**
  * sfCultureInfo class file.
  *
@@ -635,12 +637,21 @@ class sfCultureInfo
    */
   static protected function simplify($array)
   {
+    $charset = sfConfig::get('sf_charset') ?: 'UTF-8';
+
     foreach ($array as &$item)
     {
       if (is_array($item) && count($item) == 1)
       {
         $item = $item[0];
       }
+
+      // [gert] notices uit om te voorkomen dat fouten in de ICU files
+      // notices genereren bij converteren naar ander charset
+      $cerl = error_reporting ();
+      error_reporting ($cerl & ~E_NOTICE);
+      $item = I18N_toEncoding($item, $charset);
+      error_reporting ($cerl);
     }
 
     return $array;
