@@ -1,0 +1,11 @@
+{
+    "name": "tactics/symfony1",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "fabpot",
+            "email": "fabpot@sensio.com"
+        }
+    ],
+    "require": {}
+}
