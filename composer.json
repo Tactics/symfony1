@@ -7,6 +7,6 @@
             "email": "fabpot@sensio.com"
         }
     ],
-    "target-dir": "symfony"
+    "target-dir": "symfony",
     "require": {}
 }
