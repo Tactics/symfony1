@@ -110,7 +110,7 @@ CREATE TABLE ".$this->quoteIdentifier($table->getName())."
 		}
 
 		if ($table->hasPrimaryKey()) {
-			$lines[] = "CONSTRAINT ".$this->quoteIdentifier($table->getName())."_PK PRIMARY KEY (".$this->getColumnList($table->getPrimaryKey()).")";
+			$lines[] = "CONSTRAINT ".$this->quoteIdentifier($table->getName()."_PK")." PRIMARY KEY (".$this->getColumnList($table->getPrimaryKey()).")";
 		}
 
 		foreach ($table->getUnices() as $unique ) {
