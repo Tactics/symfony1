@@ -83,4 +83,30 @@ class MSSQLSRVPreparedStatement extends PreparedStatementCommon implements Prepa
         $this->resultSet->_setLimit($this->limit); 
         return $this->resultSet;
     }
+
+    /**
+     * MSSQL-specific implementation of setBlob().
+     *
+     * If you are having trouble getting BLOB data into the database, see the phpdoc comment
+     * in the MSSQLConnection for some PHP ini values that may need to be set. (This also
+     * applies to CLOB support.)
+     *
+     * @param int $paramIndex
+     * @param mixed $value Blob object or string.
+     * @return void
+     */
+    function setBlob($paramIndex, $blob)
+    {
+        $this->sql_cache_valid = false;
+        if ($blob === null) {
+            $this->setNull($paramIndex);
+        } else {
+            // they took magic __toString() out of PHP5.0.0; this sucks
+            if (is_object($blob)) {
+                $blob = $blob->__toString();
+            }
+            $data = unpack("H*hex", $blob);
+            $this->boundInVars[$paramIndex] = '0x'.$data['hex']; // no surrounding quotes!
+        }
+    }
 }

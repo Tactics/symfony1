@@ -449,7 +449,7 @@ abstract class PreparedStatementCommon {
      * @see PreparedStatement::setBlob()
      */
     function setBlob($paramIndex, $blob) 
-    {        
+    {
 	    $this->sql_cache_valid = false;
         if ($blob === null) {
             $this->setNull($paramIndex);
