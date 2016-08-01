@@ -396,7 +396,7 @@ class sfWebRequest extends sfRequest
   {
     $pathArray = $this->getPathInfoArray();
 
-    return preg_match('/^http/', $pathArray['REQUEST_URI']);
+    return isset($pathArray['REQUEST_URI']) ? preg_match('/^http/', $pathArray['REQUEST_URI']) : false;
   }
 
   /**
