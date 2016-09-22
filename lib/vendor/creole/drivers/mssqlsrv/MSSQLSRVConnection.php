@@ -191,6 +191,7 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
    */
   protected function beginTrans()
   {
+    sqlsrv_query( $this->dblink, "SET ANSI_WARNINGS OFF;");
     return;
     $result = sqlsrv_begin_transaction( $this->dblink );
     if ( $result === false )
