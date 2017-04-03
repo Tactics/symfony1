@@ -470,6 +470,7 @@ class PHP5ComplexObjectBuilder extends PHP5BasicObjectBuilder {
 		$relCol = $this->getRefFKPhpNameAffix($refFK, $plural=true);
 		$collName = $this->getRefFKCollVarName($refFK);
 		$lastCriteriaName = $this->getRefFKLastCriteriaVarName($refFK);
+		$className = $refFK->getTable()->getPhpName();
 
 		$fkPeerBuilder = OMBuilder::getNewPeerBuilder($tblFK);
 
@@ -521,6 +522,8 @@ class PHP5ComplexObjectBuilder extends PHP5BasicObjectBuilder {
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in ".$table->getPhpName().".
+	 *
+	 * @return ".$className."[] $relCol joined with $relCol2
 	 */
 	public function get".$relCol."Join".$relCol2."(\$criteria = null, \$con = null)
 	{
@@ -748,6 +751,7 @@ class PHP5ComplexObjectBuilder extends PHP5BasicObjectBuilder {
 
 		$fkPeerBuilder = OMBuilder::getNewPeerBuilder($refFK->getTable());
 		$relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+		$className = $tblFK->getPhpName();
 
 		$collName = $this->getRefFKCollVarName($refFK);
 		$lastCriteriaName = $this->getRefFKLastCriteriaVarName($refFK);
@@ -765,6 +769,7 @@ class PHP5ComplexObjectBuilder extends PHP5BasicObjectBuilder {
 	 * @param      Connection \$con
 	 * @param      Criteria \$criteria
 	 * @throws     PropelException
+	 * @return     ".$className."[] $relCol
 	 */
 	public function get$relCol(\$criteria = null, \$con = null)
 	{
