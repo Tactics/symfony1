@@ -404,7 +404,7 @@ if (Propel::isInit()) {
 	/** A key representing a particular subclass */
 	const CLASSKEY_".strtoupper($child->getKey())." = '" . $child->getKey() . "';
 ";
-					
+	
 	if (strtoupper($child->getClassname()) != strtoupper($child->getKey())) {
 		$script .= "
 	/** A key representing a particular subclass */
@@ -1259,12 +1259,12 @@ if (Propel::isInit()) {
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      ".$table->getPhpName()." \$obj The object to validate.
+	 * @param      Base".$table->getPhpName()." \$obj The object to validate.
 	 * @param      mixed \$cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(".$table->getPhpName()." \$obj, \$cols = null)
+	public static function doValidate(Base".$table->getPhpName()." \$obj, \$cols = null)
 	{
 		\$columns = array();
 

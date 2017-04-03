@@ -492,13 +492,21 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	{
 		$cfc=$col->getPhpName();
 		$clo=strtolower($col->getName());
+		$throwsPropelException = in_array($col->getType(), array(PropelTypes::DATE, PropelTypes::TIME, PropelTypes::TIMESTAMP));
 
 		$script .= "
 	/**
 	 * Set the value of [$clo] column.
 	 * ".$col->getDescription()."
 	 * @param      ".$col->getPhpNative()." \$v new value
-	 * @return     void
+	 * @return     void";
+  
+		if ($throwsPropelException){
+		    $script .= "
+     * @throws     PropelException";
+        }
+        
+        $script .= "
 	 */
 	public function set$cfc(\$v)
 	{
@@ -629,7 +637,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		$this->addMutatorOpen($script, $col);
 		
 		// Perform some smart checking here to handle possible type discrepancies
-		// between the passed-in value and the value from the DB 
+		// between the passed-in value and the value from the DB
 		
 		if ($col->getPhpNative() === "int") {
 			$script .= "
@@ -644,7 +652,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		// Since the native PHP type for this column is string,
 		// we will cast the input to a string (if it is not).
 		if (\$v !== null && !is_string(\$v)) {
-			\$v = (string) \$v; 
+			\$v = (string) \$v;
 		}
 ";
 		}
@@ -719,8 +727,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 			$script .= "
 			\$this->setNew(false);
 
-			// FIXME - using NUM_COLUMNS may be clearer.
-			return \$startcol + $n; // $n = ".$this->getPeerClassname()."::NUM_COLUMNS - ".$this->getPeerClassname()."::NUM_LAZY_LOAD_COLUMNS).
+			return \$startcol + ".$this->getPeerClassname()."::NUM_COLUMNS - ".$this->getPeerClassname()."::NUM_LAZY_LOAD_COLUMNS;
 
 		} catch (Exception \$e) {
 			throw new PropelException(\"Error populating ".$table->getPhpName()." object\", \$e);
@@ -804,7 +811,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 *
 	 * @param      string \$keyType One of the class type constants TYPE_PHPNAME,
 	 *                        TYPE_COLNAME, TYPE_FIELDNAME, TYPE_NUM
-	 * @return     an associative array containing the field names (as keys) and field values
+	 * @return     mixed[string] an associative array containing the field names (as keys) and field values
 	 */
 	public function toArray(\$keyType = BasePeer::TYPE_PHPNAME)
 	{
@@ -891,7 +898,7 @@ $script .= "
 	public function setByName(\$name, \$value, \$type = BasePeer::TYPE_PHPNAME)
 	{
 		\$pos = ".$this->getPeerClassname()."::translateFieldName(\$name, \$type, BasePeer::TYPE_NUM);
-		return \$this->setByPosition(\$pos, \$value);
+		\$this->setByPosition(\$pos, \$value);
 	}
 ";
 	}

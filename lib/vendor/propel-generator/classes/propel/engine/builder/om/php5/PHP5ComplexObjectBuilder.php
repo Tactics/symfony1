@@ -296,7 +296,7 @@ class PHP5ComplexObjectBuilder extends PHP5BasicObjectBuilder {
 	/**
 	 * Declares an association between this object and a $className object.
 	 *
-	 * @param      $className \$v
+	 * @param      Base$className \$v
 	 * @return     void
 	 * @throws     PropelException
 	 */
@@ -370,7 +370,7 @@ class PHP5ComplexObjectBuilder extends PHP5BasicObjectBuilder {
 	/**
 	 * Get the associated $className object
 	 *
-	 * @param      Connection Optional Connection object.
+	 * @param      Connection \$con Optional Connection object.
 	 * @return     $className The associated $className object.
 	 * @throws     PropelException
 	 */
@@ -523,9 +523,11 @@ class PHP5ComplexObjectBuilder extends PHP5BasicObjectBuilder {
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in ".$table->getPhpName().".
 	 *
+	 * @param Criteria     \$criteria
+	 * @param Connection   \$con
 	 * @return ".$className."[] $relCol joined with $relCol2
 	 */
-	public function get".$relCol."Join".$relCol2."(\$criteria = null, \$con = null)
+	public function get".$relCol."Join".$relCol2."(Criteria \$criteria = null, Connection \$con = null)
 	{
 		// include the Peer class
 		include_once '".$fkPeerBuilder->getClassFilePath()."';
@@ -711,6 +713,7 @@ class PHP5ComplexObjectBuilder extends PHP5BasicObjectBuilder {
 	 * @param      Criteria \$criteria
 	 * @param      boolean \$distinct
 	 * @param      Connection \$con
+	 * @return     int The number of $relCol
 	 * @throws     PropelException
 	 */
 	public function count$relCol(\$criteria = null, \$distinct = false, \$con = null)
