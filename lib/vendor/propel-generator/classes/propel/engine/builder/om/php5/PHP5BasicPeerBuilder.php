@@ -286,12 +286,13 @@ if (Propel::isInit()) {
 	{
 		$script .= "
 	/**
-	 * Returns an array of of field names.
+	 * Returns an array of field names.
 	 *
 	 * @param      string \$type The type of fieldnames to return:
 	 *                      One of the class type constants TYPE_PHPNAME,
 	 *                      TYPE_COLNAME, TYPE_FIELDNAME, TYPE_NUM
-	 * @return     array A list of field names
+	 * @return     mixed[string] A list of field names
+	 * @throws     PropelException
 	 */
 
 	static public function getFieldNames(\$type = BasePeer::TYPE_PHPNAME)
@@ -316,6 +317,7 @@ if (Propel::isInit()) {
 	 *                         TYPE_COLNAME, TYPE_FIELDNAME, TYPE_NUM
 	 * @param      string \$toType   One of the class type constants
 	 * @return     string translated name of the field.
+	 * @throws     PropelException
 	 */
 	static public function translateFieldName(\$name, \$fromType, \$toType)
 	{
@@ -464,17 +466,21 @@ if (Propel::isInit()) {
 	 * XML schema will not be added to the select list and only loaded
 	 * on demand.
 	 *
-	 * @param      criteria object containing the columns to add.
+	 * @param      Criteria \$criteria object containing the columns to add.
+	 * @param      string \$alias
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function addSelectColumns(Criteria \$criteria)
+	public static function addSelectColumns(Criteria \$criteria, \$alias = null)
 	{
 ";
 		foreach ($this->getTable()->getColumns() as $col) {
 			if (!$col->isLazyLoad()) {
 				$script .= "
-		\$criteria->addSelectColumn(".$this->getPeerClassname()."::".$this->getColumnName($col).");
+		\$columnToSelect = \$alias
+		  ? {$this->getPeerClassname()}::alias(\$alias, {$this->getPeerClassname()}::{$this->getColumnName($col)})
+		  : {$this->getPeerClassname()}::{$this->getColumnName($col)};
+		\$criteria->addSelectColumn(\$columnToSelect);
 ";
 			} // if !col->isLazyLoad
 		} // foreach
@@ -588,13 +594,14 @@ if (Propel::isInit()) {
 	 */
 	protected function addDoSelect(&$script)
 	{
+	    $className = $this->getTable()->getPhpName();
 		$script .= "
 	/**
 	 * Method to do selects.
 	 *
 	 * @param      Criteria \$criteria The Criteria object used to build the SELECT statement.
 	 * @param      Connection \$con
-	 * @return     array Array of selected Objects
+	 * @return     {$className}[] Array of selected Objects
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -658,6 +665,8 @@ if (Propel::isInit()) {
 	 * The returned array will contain objects of the default type or
 	 * objects that inherit from the default.
 	 *
+	 * @param      Resultset \$rs
+	 * @return     ".$table->getPhpName()."[]
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -680,12 +689,14 @@ if (Propel::isInit()) {
 			$script .= "
 			// class must be set each time from the record row
 			\$cls = Propel::import(".$this->getPeerClassname()."::getOMClass(\$rs, 1));
+			/** @var {$table->getPhpName()} \$obj */
 			\$obj = new \$cls();
 			\$obj->hydrate(\$rs);
 			\$results[] = \$obj;
 			";
 		} else {
 			$script .= "
+			/** @var {$table->getPhpName()} \$obj */
 			\$obj = new \$cls();
 			\$obj->hydrate(\$rs);
 			\$results[] = \$obj;
@@ -937,7 +948,9 @@ if (Propel::isInit()) {
 	/**
 	 * Method to DELETE all rows from the ".$table->getName()." table.
 	 *
+	 * @param      Connection \$con
 	 * @return     int The number of affected rows (if supported by underlying database driver).
+	 * @throws     PropelException
 	 */
 	public static function doDeleteAll(\$con = null)
 	{
@@ -1309,13 +1322,14 @@ if (Propel::isInit()) {
 	protected function addRetrieveByPK_SinglePK(&$script)
 	{
 		$table = $this->getTable();
+		$className = $table->getPhpName();
 		$script .= "
 	/**
 	 * Retrieve a single object by pkey.
 	 *
 	 * @param      mixed \$pk the primary key.
 	 * @param      Connection \$con the connection to use
-	 * @return     " . $table->getPhpName() . "
+	 * @return     $className
 	 */
 	public static function ".$this->getRetrieveMethodName()."(\$pk, \$con = null)
 	{
@@ -1358,12 +1372,14 @@ if (Propel::isInit()) {
 	protected function addRetrieveByPKs_SinglePK(&$script)
 	{
 		$table = $this->getTable();
+		$className = $table->getPhpName();
 		$script .= "
 	/**
 	 * Retrieve multiple objects by pkey.
 	 *
 	 * @param      array \$pks List of primary keys
 	 * @param      Connection \$con the connection to use
+	 * @return     {$className}[]
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */

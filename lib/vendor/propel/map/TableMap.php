@@ -193,7 +193,7 @@ class TableMap {
 	/**
 	 * Get a ColumnMap[] of the columns in this table.
 	 *
-	 * @return     array A ColumnMap[].
+	 * @return     ColumnMap[].
 	 */
 	public function getColumns()
 	{

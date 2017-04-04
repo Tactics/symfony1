@@ -93,57 +93,25 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 					// be necessary:
 					// --- IT is necessary because there needs to be a system for
 					// aliasing the table if it is the same table.
-					if ( $fk->getForeignTableName() != $table->getName() ) {
+					// FIXED BY JOSKOSMOS
+					// the join table will always be aliased
+					// to be able to do that, we also modified the addSelectColumns method
+					// so that it accepts an optional alias as second argument
+						
+                    $joinClassName = $joinTable->getPhpName();
 
-						/*
-						REPLACED BY USING THE ObjectBuilder objects below
+                    $thisTableObjectBuilder = OMBuilder::getNewObjectBuilder($table);
+                    $joinedTableObjectBuilder = OMBuilder::getNewObjectBuilder($joinTable);
+                    $joinedTablePeerBuilder = OMBuilder::getNewPeerBuilder($joinTable);
 
-						// check to see if we need to add something to the method name.
-						// For example if there are multiple columns that reference the same
-						// table, then we have to have a methd name like doSelectJoinBooksByBookId
-						$partJoinName = "";
-						foreach ($fk->getLocalColumns() as $columnName ) {
-							$column = $table->getColumn($columnName);
-								//							this second part is not currently ever true (right?)
-							if ($column->isMultipleFK() || $fk->getForeignTableName() == $table->getName()) {
-								$partJoinName = $partJoinName . $column->getPhpName();
-							}
-						}
-
-
-						$joinClassName = $joinTable->getPhpName();
-
-						if ($joinTable->getInterface()) {
-						   $interfaceName = $joinTable->getInterface();
-						} else {
-							$interfaceName = $joinTable->getPhpName();
-						}
-
-						if ($partJoinName == "") {
-							$joinColumnId = $joinClassName;
-							$joinInterface = $interfaceName;
-							$collThisTable = $className . "s";
-							$collThisTableMs = $className;
-						} else {
-							$joinColumnId = $joinClassName . "RelatedBy" . $partJoinName;
-							$joinInterface = $interfaceName . "RelatedBy" . $partJoinName;
-							$collThisTable = $className . "sRelatedBy" . $partJoinName;
-							$collThisTableMs = $className . "RelatedBy" . $partJoinName;
-						}
-						*/
-
-						$joinClassName = $joinTable->getPhpName();
-
-						$thisTableObjectBuilder = OMBuilder::getNewObjectBuilder($table);
-						$joinedTableObjectBuilder = OMBuilder::getNewObjectBuilder($joinTable);
-						$joinedTablePeerBuilder = OMBuilder::getNewPeerBuilder($joinTable);
-
-						$script .= "
+                    $script .= "
 
 	/**
 	 * Selects a collection of $className objects pre-filled with their $joinClassName objects.
 	 *
-	 * @return     array Array of $className objects.
+	 * @param      Criteria \$c
+	 * @param      Connection \$con
+	 * @return     {$className}[] array Array of $className objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -158,52 +126,56 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 
 		".$this->getPeerClassname()."::addSelectColumns(\$c);
 		\$startcol = (".$this->getPeerClassname()."::NUM_COLUMNS - ".$this->getPeerClassname()."::NUM_LAZY_LOAD_COLUMNS) + 1;
-		".$joinedTablePeerBuilder->getPeerClassname()."::addSelectColumns(\$c);
+		\$c->addAlias('alias', ".$joinedTablePeerBuilder->getPeerClassname()."::TABLE_NAME);
+		".$joinedTablePeerBuilder->getPeerClassname()."::addSelectColumns(\$c, 'alias');
 ";
 
-						$lfMap = $fk->getLocalForeignMapping();
-						foreach ($fk->getLocalColumns() as $columnName ) {
-							$column = $table->getColumn($columnName);
-							$columnFk = $joinTable->getColumn( $lfMap[$columnName] );
-							$script .= "
-		\$c->addJoin(".$this->getColumnConstant($column).", ".$joinedTablePeerBuilder->getColumnConstant($columnFk).");"; //CHECKME
-						}
-						$script .= "
+                    $lfMap = $fk->getLocalForeignMapping();
+                    foreach ($fk->getLocalColumns() as $columnName ) {
+                        $column = $table->getColumn($columnName);
+                        $columnFk = $joinTable->getColumn( $lfMap[$columnName] );
+                        $script .= "
+		\$c->addJoin(".$this->getColumnConstant($column).", ".$joinedTablePeerBuilder->getPeerClassname()."::alias('alias', ".$joinedTablePeerBuilder->getColumnConstant($columnFk)."));"; //CHECKME
+                    }
+                    $script .= "
 		\$rs = ".$this->basePeerClassname."::doSelect(\$c, \$con);
 		\$results = array();
 
 		while(\$rs->next()) {
 ";
-						if ($table->getChildrenColumn()) {
-							$script .= "
+                    if ($table->getChildrenColumn()) {
+                        $script .= "
 			\$omClass = ".$this->getPeerClassname()."::getOMClass(\$rs, 1);
 ";
-						} else {
-							$script .= "
+                    } else {
+                        $script .= "
 			\$omClass = ".$this->getPeerClassname()."::getOMClass();
 ";
-						}
-						$script .= "
+                    }
+                    $script .= "
+			/** @var $className \$obj1 */
 			\$cls = Propel::import(\$omClass);
 			\$obj1 = new \$cls();
 			\$obj1->hydrate(\$rs);
 ";
-						if ($joinTable->getChildrenColumn()) {
-							$script .= "
+                    if ($joinTable->getChildrenColumn()) {
+                        $script .= "
 			\$omClass = ".$joinedTablePeerBuilder->getPeerClassname()."::getOMClass(\$rs, \$startcol);
 ";
-						} else {
-							$script .= "
+                    } else {
+                        $script .= "
 			\$omClass = ".$joinedTablePeerBuilder->getPeerClassname()."::getOMClass();
 ";
-						}
+                    }
 
-						$script .= "
+                    $script .= "
+			/** @var $joinClassName \$obj2 */
 			\$cls = Propel::import(\$omClass);
 			\$obj2 = new \$cls();
 			\$obj2->hydrate(\$rs, \$startcol);
 
 			\$newObject = true;
+			/** @var $className \$temp_obj1 */
 			foreach(\$results as \$temp_obj1) {
 				\$temp_obj2 = \$temp_obj1->get".$thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false)."(); //CHECKME
 				if (\$temp_obj2->getPrimaryKey() === \$obj2->getPrimaryKey()) {
@@ -222,7 +194,6 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 		return \$results;
 	}
 ";
-					} // if fk table name != this table name
 				} // if ! is reference only
 			} // foreach column
 		} // if count(fk) > 1
@@ -260,7 +231,7 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 	/**
 	 * Returns the number of rows matching criteria, joining the related ".$thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false)." table
 	 *
-	 * @param      Criteria \$c
+	 * @param      Criteria \$criteria
 	 * @param      boolean \$distinct Whether to select only distinct columns (You can also set DISTINCT modifier in Criteria).
 	 * @param      Connection \$con
 	 * @return     int Number of matching rows.
@@ -323,7 +294,9 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 	/**
 	 * Selects a collection of $className objects pre-filled with all related objects.
 	 *
-	 * @return     array Array of $className objects.
+	 * @param      Criteria \$c
+	 * @param      Connection \$con
+	 * @return     {$className}[] array Array of $className objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -396,7 +369,7 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 		}
 
 		$script .= "
-
+            /** @var $className \$obj1 */
 			\$cls = Propel::import(\$omClass);
 			\$obj1 = new \$cls();
 			\$obj1->hydrate(\$rs);
@@ -458,13 +431,14 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 				} /* $joinTable->getChildrenColumn() */
 
 				$script .= "
-
+            /** @var $joinClassName \$obj{$index} */
 			\$cls = Propel::import(\$omClass);
 			\$obj".$index." = new \$cls();
 			\$obj".$index."->hydrate(\$rs, \$startcol$index);
 
 			\$newObject = true;
 			for (\$j=0, \$resCount=count(\$results); \$j < \$resCount; \$j++) {
+			    /** @var $className \$temp_obj1 */
 				\$temp_obj1 = \$results[\$j];
 				\$temp_obj$index = \$temp_obj1->get".$thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false)."(); // CHECKME
 				if (\$temp_obj".$index."->getPrimaryKey() === \$obj".$index."->getPrimaryKey()) {
@@ -506,7 +480,7 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 	/**
 	 * Returns the number of rows matching criteria, joining all related tables
 	 *
-	 * @param      Criteria \$c
+	 * @param      Criteria \$criteria
 	 * @param      boolean \$distinct Whether to select only distinct columns (You can also set DISTINCT modifier in Criteria).
 	 * @param      Connection \$con
 	 * @return     int Number of matching rows.
@@ -567,6 +541,7 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 	protected function addDoSelectJoinAllExcept(&$script)
 	{
 		$table = $this->getTable();
+		$className = $table->getPhpName();
 
 		// ------------------------------------------------------------------------
 		// doSelectJoinAllExcept*()
@@ -613,6 +588,8 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 	/**
 	 * Selects a collection of ".$table->getPhpName()." objects pre-filled with all related objects except ".$thisTableObjectBuilder->getFKPhpNameAffix($fk).".
 	 *
+	 * @param      Criteria \$c
+	 * @param      Connection \$con
 	 * @return     array Array of ".$table->getPhpName()." objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
@@ -689,6 +666,7 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 			}
 
 			$script .= "
+			/** @var $className \$obj1 */
 			\$cls = Propel::import(\$omClass);
 			\$obj1 = new \$cls();
 			\$obj1->hydrate(\$rs);
@@ -744,13 +722,14 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 					} /* $joinTable->getChildrenColumn() */
 
 					$script .= "
-
+            /** @var $joinClassName \$obj{$index} */
 			\$cls = Propel::import(\$omClass);
 			\$obj$index  = new \$cls();
 			\$obj".$index."->hydrate(\$rs, \$startcol$index);
 
 			\$newObject = true;
 			for (\$j=0, \$resCount=count(\$results); \$j < \$resCount; \$j++) {
+			    /** @var $className \$temp_obj1 */
 				\$temp_obj1 = \$results[\$j];
 				\$temp_obj$index = \$temp_obj1->get".$thisTableObjectBuilder->getFKPhpNameAffix($subfk, $plural=false)."(); //CHECKME
 				if (\$temp_obj".$index."->getPrimaryKey() === \$obj".$index."->getPrimaryKey()) {
@@ -804,7 +783,7 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 	/**
 	 * Returns the number of rows matching criteria, joining the related ".$thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false)." table
 	 *
-	 * @param      Criteria \$c
+	 * @param      Criteria \$criteria
 	 * @param      boolean \$distinct Whether to select only distinct columns (You can also set DISTINCT modifier in Criteria).
 	 * @param      Connection \$con
 	 * @return     int Number of matching rows.
