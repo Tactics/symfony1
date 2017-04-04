@@ -94,10 +94,10 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 					// --- IT is necessary because there needs to be a system for
 					// aliasing the table if it is the same table.
 					// FIXED BY JOSKOSMOS
-					// the join table will always be aliased
-					// to be able to do that, we also modified the addSelectColumns method
-					// so that it accepts an optional alias as second argument
-						
+					// the join table will be aliases when
+                    // this table == foreign table
+                    $alias = $fk->getForeignTableName() == $table->getName() ? 'alias' : null;
+                    
                     $joinClassName = $joinTable->getPhpName();
 
                     $thisTableObjectBuilder = OMBuilder::getNewObjectBuilder($table);
@@ -126,16 +126,25 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 
 		".$this->getPeerClassname()."::addSelectColumns(\$c);
 		\$startcol = (".$this->getPeerClassname()."::NUM_COLUMNS - ".$this->getPeerClassname()."::NUM_LAZY_LOAD_COLUMNS) + 1;
-		\$c->addAlias('alias', ".$joinedTablePeerBuilder->getPeerClassname()."::TABLE_NAME);
-		".$joinedTablePeerBuilder->getPeerClassname()."::addSelectColumns(\$c, 'alias');
+";
+                    if ($alias) {
+                        $script .= "
+        \$c->addAlias('$alias', ".$joinedTablePeerBuilder->getPeerClassname()."::TABLE_NAME);
+";
+                    }
+                    $script .= "
+		".$joinedTablePeerBuilder->getPeerClassname()."::addSelectColumns(\$c".($alias ? ", '$alias')" : ")").";
 ";
 
                     $lfMap = $fk->getLocalForeignMapping();
                     foreach ($fk->getLocalColumns() as $columnName ) {
                         $column = $table->getColumn($columnName);
                         $columnFk = $joinTable->getColumn( $lfMap[$columnName] );
+                        $joinColumn = $alias
+                            ? $joinedTablePeerBuilder->getPeerClassname()."::alias('$alias', ".$joinedTablePeerBuilder->getColumnConstant($columnFk).")"
+                            : $joinedTablePeerBuilder->getColumnConstant($columnFk);
                         $script .= "
-		\$c->addJoin(".$this->getColumnConstant($column).", ".$joinedTablePeerBuilder->getPeerClassname()."::alias('alias', ".$joinedTablePeerBuilder->getColumnConstant($columnFk)."));"; //CHECKME
+		\$c->addJoin(".$this->getColumnConstant($column).", ".$joinColumn.", Criteria::JOIN);"; //CHECKME
                     }
                     $script .= "
 		\$rs = ".$this->basePeerClassname."::doSelect(\$c, \$con);
