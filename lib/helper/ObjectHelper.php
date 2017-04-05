@@ -97,7 +97,7 @@ function objects_for_select($options = array(), $value_method, $text_method = nu
 /**
  * Returns a list html tag.
  *
- * @param object An object or the selected value
+ * @param Object An object or the selected value
  * @param string An object column.
  * @param array Input options (related_class option is mandatory).
  * @param bool Input default value.
