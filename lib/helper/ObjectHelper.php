@@ -42,7 +42,7 @@ function object_input_date_tag($object, $method, $options = array(), $default_va
 /**
  * Returns a textarea html tag.
  *
- * @param object An object.
+ * @param Object An object.
  * @param string An object column.
  * @param array Textarea options.
  * @param bool Textarea default value.
@@ -208,7 +208,7 @@ function object_select_language_tag($object, $method, $options = array(), $defau
 /**
  * Returns a hidden input html tag.
  *
- * @param object An object.
+ * @param Object An object.
  * @param string An object column.
  * @param array Input options.
  * @param bool Input default value.
@@ -228,7 +228,7 @@ function object_input_hidden_tag($object, $method, $options = array(), $default_
 /**
  * Returns a input html tag.
  *
- * @param object An object.
+ * @param Object An object.
  * @param string An object column.
  * @param array Input options.
  * @param bool Input default value.
@@ -248,7 +248,7 @@ function object_input_tag($object, $method, $options = array(), $default_value =
 /**
  * Returns a checkbox html tag.
  *
- * @param object An object.
+ * @param Object An object.
  * @param string An object column.
  * @param array Checkbox options.
  * @param bool Checkbox value.
