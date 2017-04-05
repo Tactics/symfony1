@@ -22,7 +22,7 @@ use_helper('Form');
 /**
  * Returns a html date control.
  *
- * @param object An object.
+ * @param Object An object.
  * @param string An object column.
  * @param array Date options.
  * @param bool Date default value.
