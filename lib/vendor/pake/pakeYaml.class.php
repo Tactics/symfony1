@@ -78,10 +78,19 @@
     /**
      * The constructor assigns the node a unique ID.
      * @access public
+     */
+    public function __construct() {
+      $this->id = uniqid('');
+    }
+
+    /**
+     * The constructor assigns the node a unique ID.
+     * keep old PHP4 constructor for backwards compatibility
+     * @access public
      * @return void
      */
      public function pakeYAMLNode() {
-      $this->id = uniqid('');
+      self::__construct();
     }
   }
 
