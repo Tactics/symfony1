@@ -576,7 +576,7 @@ class BasePeer
 
 			$selectClause[] = $columnName; // the full column name: e.g. MAX(books.price)
 
-			$parenPos = strpos($columnName, '(');
+			$parenPos = strrpos($columnName, '(');
 			$dotPos = strpos($columnName, '.');
 
 			// [HL] I think we really only want to worry about adding stuff to
