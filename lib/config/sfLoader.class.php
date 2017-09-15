@@ -18,6 +18,9 @@
  */
 class sfLoader
 {
+  static $templatePluginDirs = [];
+  static $templateModuleDirs = [];
+  static $templateFileDirs = [];
   static $pluginModuleHelperDirs = [];
   static $pluginGlobalHelperDirs;
   static $pluginGlobalConfigPaths = [];
@@ -91,7 +94,13 @@ class sfLoader
 
     $dirs[] = sfConfig::get('sf_app_module_dir').'/'.$suffix;                        // application
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/modules/'.$suffix))
+    if (!isset(self::$templatePluginDirs[$moduleName]) && extension_loaded('wincache')) {
+      self::$templatePluginDirs[$moduleName] = self::getForPathFromUCache('templatePluginDirs.'.$moduleName, sfConfig::get('sf_plugins_dir').'/*/modules/'.$suffix);
+    } elseif (!isset(self::$templatePluginDirs[$moduleName])) {
+      self::$templatePluginDirs[$moduleName] = glob(sfConfig::get('sf_plugins_dir').'/*/modules/'.$suffix);
+    }
+
+    if ($pluginDirs = self::$templatePluginDirs[$moduleName])
     {
       $dirs = array_merge($dirs, $pluginDirs);                                       // plugins
     }
@@ -112,11 +121,20 @@ class sfLoader
    */
   static public function getTemplateDir($moduleName, $templateFile)
   {
-    $dirs = self::getTemplateDirs($moduleName);
+    if (isset(self::$templateFileDirs[$moduleName][$templateFile])) {
+      return self::$templateFileDirs[$moduleName][$templateFile];
+    }
+
+    if (!isset(self::$templateModuleDirs[$moduleName])){
+      self::$templateModuleDirs[$moduleName] = self::getTemplateDirs($moduleName);
+    }
+
+    $dirs = self::$templateModuleDirs[$moduleName];
     foreach ($dirs as $dir)
     {
-      if (is_readable($dir.'/'.$templateFile))
+      if (file_exists($dir.'/'.$templateFile) && is_readable($dir.'/'.$templateFile))
       {
+        self::$templateFileDirs[$moduleName][$templateFile] = $dir;
         return $dir;
       }
     }
