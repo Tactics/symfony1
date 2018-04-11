@@ -45,7 +45,7 @@ class sfFrontWebController extends sfWebController
       $actionName = $request->getParameter('action');
 
       // tideways
-      if (class_exists('Tideways\Profiler')) {
+      if (@class_exists('Tideways\Profiler')) {
         $transactionName = $moduleName . '::' . $actionName;
         \Tideways\Profiler::setTransactionName($transactionName);
       }
