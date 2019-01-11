@@ -354,11 +354,15 @@ abstract class ResultSetCommon {
         
         if ($this->fields[$idx] instanceof DateTime)
         {
-          $ts = $this->fields[$idx]->getTimestamp();
+            $ts = $this->fields[$idx]->getTimestamp();
+        }
+        else if (1 === preg_match('/^[a-zA-Z]{3,4}\s+[\d]{1,2} [\d]{4} [\d]{1,2}:[\d]{2}:[\d]{2}:[AP]M$/', $this->fields[$idx]))
+        {
+            $ts = DateTime::createFromFormat('M d Y H:i:s:A', $this->fields[$idx])->getTimestamp();
         }
         else
         {
-          $ts = strtotime($this->fields[$idx]);
+            $ts = strtotime($this->fields[$idx]);
         }
         
         if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE          
@@ -418,11 +422,15 @@ abstract class ResultSetCommon {
         
         if ($this->fields[$idx] instanceof DateTime)
         {
-          $ts = $this->fields[$idx]->getTimestamp();
+            $ts = $this->fields[$idx]->getTimestamp();
+        }
+        else if (1 === preg_match('/^[a-zA-Z]{3,4}\s+[\d]{1,2} [\d]{4} [\d]{1,2}:[\d]{2}:[\d]{2}:[AP]M$/', $this->fields[$idx]))
+        {
+            $ts = DateTime::createFromFormat('M d Y H:i:s:A', $this->fields[$idx])->getTimestamp();
         }
         else
         {
-          $ts = strtotime($this->fields[$idx]);
+            $ts = strtotime($this->fields[$idx]);
         }
         
         if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
@@ -449,11 +457,15 @@ abstract class ResultSetCommon {
         
         if ($this->fields[$idx] instanceof DateTime)
         {
-          $ts = $this->fields[$idx]->getTimestamp();
+            $ts = $this->fields[$idx]->getTimestamp();
+        }
+        else if (1 === preg_match('/^[a-zA-Z]{3,4}\s+[\d]{1,2} [\d]{4} [\d]{1,2}:[\d]{2}:[\d]{2}:[AP]M$/', $this->fields[$idx]))
+        {
+            $ts = DateTime::createFromFormat('M d Y H:i:s:A', $this->fields[$idx])->getTimestamp();
         }
         else
         {
-          $ts = strtotime($this->fields[$idx]);
+            $ts = strtotime($this->fields[$idx]);
         }
         
         if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
