@@ -732,7 +732,9 @@ function input_date_tag($name, $value = null, $options = array())
     // educated guess about the size
     $options['size'] = strlen($date_format)+2;
   }
-  $html = input_tag($name, $value, $options);
+
+  $html = "<span class='ttdatepicker'>";
+  $html .= input_tag($name, $value, $options);
 
   if ($calendar_button_type == 'img')
   {
@@ -750,6 +752,7 @@ function input_date_tag($name, $value = null, $options = array())
 
   // add javascript
   $html .= content_tag('script', $js, array('type' => 'text/javascript'));
+  $html .= '</span>';
 
   return $html;
 }
