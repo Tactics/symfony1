@@ -625,6 +625,7 @@ function input_date_tag($name, $value = null, $options = array())
   $culture = _get_option($options, 'culture', $context->getUser()->getCulture());
 
   $withTime = _get_option($options, 'withtime', false);
+  $withHolidays = _get_option($options, 'withholidays', true);
 
   // rich control?
   if (!_get_option($options, 'rich', false))
@@ -700,6 +701,22 @@ function input_date_tag($name, $value = null, $options = array())
   if ($withTime)
   {
     $js .= ",\n showsTime : true";
+  }
+
+  if ($withHolidays)
+  {
+    $js .= ",\n dateStatusFunc: function(date, y){                               
+                  if (typeof Calendar._Holidays !== \"function\") return \"\";
+                  var holidays = Calendar._Holidays(y);
+                  var dateStr = date.print(\"%Y-%m-%d\");                  
+                  return typeof holidays[dateStr] !== \"undefined\" ? \"holiday\" : \"\";
+                },
+                dateTooltipFunc: function(date, y){                
+                  if (typeof Calendar._Holidays !== \"function\") return \"\";
+                  var holidays = Calendar._Holidays(y);
+                  var dateStr = date.print(\"%Y-%m-%d\");                  
+                  return typeof holidays[dateStr] !== \"undefined\" ? holidays[dateStr] : \"\";
+                }";
   }
 
   // calendar options
