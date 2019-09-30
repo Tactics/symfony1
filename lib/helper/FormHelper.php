@@ -625,6 +625,7 @@ function input_date_tag($name, $value = null, $options = array())
   $culture = _get_option($options, 'culture', $context->getUser()->getCulture());
 
   $withTime = _get_option($options, 'withtime', false);
+  $withHolidays = _get_option($options, 'withholidays', true);
 
   // rich control?
   if (!_get_option($options, 'rich', false))
@@ -702,6 +703,22 @@ function input_date_tag($name, $value = null, $options = array())
     $js .= ",\n showsTime : true";
   }
 
+  if ($withHolidays)
+  {
+    $js .= ",\n dateStatusFunc: function(date, y){                               
+                  if (typeof Calendar._Holidays !== \"function\") return \"\";
+                  var holidays = Calendar._Holidays(y);
+                  var dateStr = date.print(\"%Y-%m-%d\");                  
+                  return typeof holidays[dateStr] !== \"undefined\" ? \"holiday\" : \"\";
+                },
+                dateTooltipFunc: function(date, y){                
+                  if (typeof Calendar._Holidays !== \"function\") return \"\";
+                  var holidays = Calendar._Holidays(y);
+                  var dateStr = date.print(\"%Y-%m-%d\");                  
+                  return typeof holidays[dateStr] !== \"undefined\" ? holidays[dateStr] : \"\";
+                }";
+  }
+
   // calendar options
   if ($calendar_options = _get_option($options, 'calendar_options'))
   {
@@ -732,7 +749,9 @@ function input_date_tag($name, $value = null, $options = array())
     // educated guess about the size
     $options['size'] = strlen($date_format)+2;
   }
-  $html = input_tag($name, $value, $options);
+
+  $html = "<span class='ttdatepicker'>";
+  $html .= input_tag($name, $value, $options);
 
   if ($calendar_button_type == 'img')
   {
@@ -750,6 +769,7 @@ function input_date_tag($name, $value = null, $options = array())
 
   // add javascript
   $html .= content_tag('script', $js, array('type' => 'text/javascript'));
+  $html .= '</span>';
 
   return $html;
 }

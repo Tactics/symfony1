@@ -18,6 +18,14 @@
  */
 class sfLoader
 {
+  static $templatePluginDirs = [];
+  static $templateModuleDirs = [];
+  static $templateFileDirs = [];
+  static $pluginModuleHelperDirs = [];
+  static $pluginGlobalHelperDirs;
+  static $pluginGlobalConfigPaths = [];
+  static $pluginConfigPaths = [];
+
   /**
    * Gets directories where model classes are stored. The order of returned paths is lowest precedence
    * to highest precedence.
@@ -86,7 +94,13 @@ class sfLoader
 
     $dirs[] = sfConfig::get('sf_app_module_dir').'/'.$suffix;                        // application
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/modules/'.$suffix))
+    if (!isset(self::$templatePluginDirs[$moduleName]) && extension_loaded('wincache')) {
+      self::$templatePluginDirs[$moduleName] = self::getForPathFromUCache('templatePluginDirs.'.$moduleName, sfConfig::get('sf_plugins_dir').'/*/modules/'.$suffix);
+    } elseif (!isset(self::$templatePluginDirs[$moduleName])) {
+      self::$templatePluginDirs[$moduleName] = glob(sfConfig::get('sf_plugins_dir').'/*/modules/'.$suffix);
+    }
+
+    if ($pluginDirs = self::$templatePluginDirs[$moduleName])
     {
       $dirs = array_merge($dirs, $pluginDirs);                                       // plugins
     }
@@ -107,11 +121,20 @@ class sfLoader
    */
   static public function getTemplateDir($moduleName, $templateFile)
   {
-    $dirs = self::getTemplateDirs($moduleName);
+    if (isset(self::$templateFileDirs[$moduleName][$templateFile])) {
+      return self::$templateFileDirs[$moduleName][$templateFile];
+    }
+
+    if (!isset(self::$templateModuleDirs[$moduleName])){
+      self::$templateModuleDirs[$moduleName] = self::getTemplateDirs($moduleName);
+    }
+
+    $dirs = self::$templateModuleDirs[$moduleName];
     foreach ($dirs as $dir)
     {
-      if (is_readable($dir.'/'.$templateFile))
+      if (file_exists($dir.'/'.$templateFile) && is_readable($dir.'/'.$templateFile))
       {
+        self::$templateFileDirs[$moduleName][$templateFile] = $dir;
         return $dir;
       }
     }
@@ -245,7 +268,7 @@ class sfLoader
       sfConfig::get('sf_symfony_data_dir').'/'.$configPath,                          // core modules
     );
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/'.$globalConfigPath))
+    if ($pluginDirs = self::getPluginGlobalConfigPaths($globalConfigPath))
     {
       $files = array_merge($files, $pluginDirs);                                     // plugins
     }
@@ -257,7 +280,7 @@ class sfLoader
       sfConfig::get('sf_cache_dir').'/'.$configPath,                                 // generated modules
     ));
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/'.$configPath))
+    if ($pluginDirs = self::getPluginConfigPaths($configPath))
     {
       $files = array_merge($files, $pluginDirs);                                     // plugins
     }
@@ -291,7 +314,7 @@ class sfLoader
     {
       $dirs[] = sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/'.sfConfig::get('sf_app_module_lib_dir_name').'/helper'; // module
 
-      if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/modules/'.$moduleName.'/lib/helper'))
+      if ($pluginDirs = self::getPluginModuleHelperDirs($moduleName))
       {
         $dirs = array_merge($dirs, $pluginDirs);                                                                              // module plugins
       }
@@ -301,7 +324,7 @@ class sfLoader
 
     $dirs[] = sfConfig::get('sf_lib_dir').'/helper';                                                                          // project
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/lib/helper'))
+    if ($pluginDirs = self::getPluginGlobalHelperDirs())
     {
       $dirs = array_merge($dirs, $pluginDirs);                                                                                // plugins
     }
@@ -373,5 +396,95 @@ class sfLoader
         include($config);
       }
     }
+  }
+
+  /**
+   * @param string $moduleName
+   * @return array
+   */
+  private static function getPluginModuleHelperDirs($moduleName)
+  {
+    if (extension_loaded('wincache')){
+      $dirs = self::getForPathFromUCache('pluginModuleHelperDirs.'.$moduleName, sfConfig::get('sf_plugins_dir') . '/*/modules/' . $moduleName . '/lib/helper');
+      return $dirs;
+    }
+
+    if (!isset(self::$pluginModuleHelperDirs[$moduleName])) {
+      $dirs = glob(sfConfig::get('sf_plugins_dir') . '/*/modules/' . $moduleName . '/lib/helper');
+      self::$pluginModuleHelperDirs[$moduleName] = $dirs;
+    }
+
+    return self::$pluginModuleHelperDirs[$moduleName];
+  }
+
+  /**
+   * @return array
+   */
+  private static function getPluginGlobalHelperDirs()
+  {
+    if (extension_loaded('wincache')){
+      $dirs = self::getForPathFromUCache('pluginGlobalHelperDirs', sfConfig::get('sf_plugins_dir') . '/*/lib/helper');
+      return $dirs;
+    }
+
+    if (!self::$pluginGlobalHelperDirs){
+      $dirs = glob(sfConfig::get('sf_plugins_dir') . '/*/lib/helper');
+      self::$pluginGlobalHelperDirs = $dirs;
+    }
+
+    return self::$pluginGlobalHelperDirs;
+  }
+
+  /**
+   * @param string $globalConfigPath
+   * @return array
+   */
+  private static function getPluginGlobalConfigPaths($globalConfigPath)
+  {
+    if (extension_loaded('wincache')){
+      $paths = self::getForPathFromUCache('pluginGlobalConfigDirs.'.$globalConfigPath, sfConfig::get('sf_plugins_dir') . '/*/' . $globalConfigPath);
+      return $paths;
+    }
+
+    if (!isset(self::$pluginGlobalConfigPaths[$globalConfigPath])) {
+      $paths = glob(sfConfig::get('sf_plugins_dir') . '/*/' . $globalConfigPath);
+      self::$pluginGlobalConfigPaths[$globalConfigPath] = $paths;
+    }
+
+    return self::$pluginGlobalConfigPaths[$globalConfigPath];
+  }
+
+  /**
+   * @param string $configPath
+   * @return array
+   */
+  private static function getPluginConfigPaths($configPath)
+  {
+    if (extension_loaded('wincache')){
+      $dirs = self::getForPathFromUCache('pluginConfigDirs.'.$configPath, sfConfig::get('sf_plugins_dir') . '/*/' . $configPath);
+      return $dirs;
+    }
+
+    if (!isset(self::$pluginConfigPaths[$configPath])) {
+      $dirs = glob(sfConfig::get('sf_plugins_dir') . '/*/' . $configPath);
+      self::$pluginConfigPaths[$configPath] = $dirs;
+    }
+
+    return self::$pluginConfigPaths[$configPath];
+  }
+
+  /**
+   * @return array
+   */
+  private static function getForPathFromUCache($key, $path)
+  {
+    $inUCache = false;
+    $value = wincache_ucache_get($key, $inUCache);
+    if (!$inUCache) {
+      $value = glob($path);
+      wincache_ucache_add($key, $value);
+    }
+
+    return $value;
   }
 }
