@@ -883,7 +883,8 @@
       $ret   = array(); 
 
       foreach($keys as $key) { 
-        list($unused,$val) = each($vals);
+        $unused = key($vals);
+        $val = current($vals);
         // This is the good part!  If a key already exists, but it's part of a
         // sequence (an int), just keep addin numbers until we find a fresh one.
         if (isset($ret[$key]) and is_int($key)) {

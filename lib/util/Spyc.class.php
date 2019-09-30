@@ -998,7 +998,8 @@ class Spyc
     $ret   = array();
     foreach ($keys as $key)
     {
-      list($unused, $val) = each($vals);
+      $unused = key($vals);
+      $val = current($vals);
       if (isset($ret[$key]) && is_int($key))
       {
         $ret[] = $val;
