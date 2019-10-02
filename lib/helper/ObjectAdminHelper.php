@@ -5,7 +5,7 @@ use_helper('Form', 'Javascript', 'Helper', 'I18N');
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -62,7 +62,7 @@ function object_admin_double_list($object, $method, $options = array(), $callbac
 
   // get the lists of objects
   list($all_objects, $objects_associated, $associated_ids) = _get_object_list($object, $method, $options, $callback);
-  
+
   $objects_unassociated = array();
   foreach ($all_objects as $object)
   {
@@ -192,7 +192,9 @@ function _get_propel_object_list($object, $method, $options)
 
   $objects = sfPropelManyToMany::getAllObjects($object, $through_class);
   $objects_associated = sfPropelManyToMany::getRelatedObjects($object, $through_class);
-  $ids = array_map(create_function('$o', 'return $o->getPrimaryKey();'), $objects_associated);
+  $ids = array_map(function ($o) {
+      return $o->getPrimaryKey();
+  }, $objects_associated);
 
   return array($objects, $objects_associated, $ids);
 }
