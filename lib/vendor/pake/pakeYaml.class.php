@@ -37,7 +37,7 @@
     }
   }
 
-  /** 
+  /**
    * Spyc -- A Simple PHP YAML Class
    * @version 0.2.2 -- 2006-01-29
    * @author Chris Wanstrath <chris@ozmm.org>
@@ -47,7 +47,7 @@
    * @package Spyc
    */
 
-  /** 
+  /**
    * A node, used by Spyc for parsing YAML.
    * @package Spyc
    */
@@ -55,21 +55,21 @@
     /**#@+
      * @access public
      * @var string
-     */ 
+     */
     public $parent;
     public $id;
     /**#@+*/
-    /** 
+    /**
      * @access public
      * @var mixed
      */
     public $data;
-    /** 
+    /**
      * @access public
      * @var int
      */
     public $indent;
-    /** 
+    /**
      * @access public
      * @var bool
      */
@@ -100,14 +100,14 @@
    * @package Spyc
    */
   class pakeSpyc {
-    
+
     /**
      * Load YAML into a PHP array statically
      *
-     * The load method, when supplied with a YAML stream (string or file), 
-     * will do its best to convert YAML in a file into a PHP array.  Pretty 
+     * The load method, when supplied with a YAML stream (string or file),
+     * will do its best to convert YAML in a file into a PHP array.  Pretty
      * simple.
-     *  Usage: 
+     *  Usage:
      *  <code>
      *   $array = Spyc::YAMLLoad('lucky.yml');
      *   print_r($array);
@@ -120,7 +120,7 @@
       $spyc = new pakeSpyc;
       return $spyc->load($input);
     }
-    
+
     /**
      * Dump YAML from PHP array statically
      *
@@ -129,7 +129,7 @@
      * save the returned string as nothing.yml and pass it around.
      *
      * Oh, and you can decide how big the indent is and what the wordwrap
-     * for folding is.  Pretty cool -- just pass in 'false' for either if 
+     * for folding is.  Pretty cool -- just pass in 'false' for either if
      * you want to use the default.
      *
      * Indent's default is 2 spaces, wordwrap's default is 40 characters.  And
@@ -138,20 +138,20 @@
      * @access public
      * @return string
      * @param array $array PHP array
-     * @param int $indent Pass in false to use the default, which is 2 
+     * @param int $indent Pass in false to use the default, which is 2
      * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
      */
      public function YAMLDump($array,$indent = false,$wordwrap = false) {
       $spyc = new pakeSpyc;
       return $spyc->dump($array,$indent,$wordwrap);
     }
-  
+
     /**
      * Load YAML into a PHP array from an instantiated object
      *
-     * The load method, when supplied with a YAML stream (string or file path), 
+     * The load method, when supplied with a YAML stream (string or file path),
      * will do its best to convert the YAML into a PHP array.  Pretty simple.
-     *  Usage: 
+     *  Usage:
      *  <code>
      *   $parser = new Spyc;
      *   $array  = $parser->load('lucky.yml');
@@ -164,7 +164,7 @@
      public function load($input) {
       // See what type of input we're talking about
       // If it's not a file, assume it's a string
-      if (!empty($input) && (strpos($input, "\n") === false) 
+      if (!empty($input) && (strpos($input, "\n") === false)
           && file_exists($input)) {
         $yaml = file($input);
       } else {
@@ -177,7 +177,7 @@
       $this->_lastNode   = $base->id;
       $this->_inBlock    = false;
       $this->_isInline   = false;
-  
+
       foreach ($yaml as $linenum => $line) {
         $ifchk = trim($line);
 
@@ -187,7 +187,7 @@
                  ' with a tab.  YAML only recognizes spaces.  Please reformat.';
           throw new Exception($err);
         }
-        
+
         if ($this->_inBlock === false && empty($ifchk)) {
           continue;
         } elseif ($this->_inBlock == true && empty($ifchk)) {
@@ -197,7 +197,7 @@
           // Create a new node and get its indent
           $node         = new pakeYAMLNode;
           $node->indent = $this->_getIndent($line);
-          
+
           // Check where the node lies in the hierarchy
           if ($this->_lastIndent == $node->indent) {
             // If we're in a block, add the text to the parent's data
@@ -210,16 +210,16 @@
                 $node->parent = $this->_allNodes[$this->_lastNode]->parent;
               }
             }
-          } elseif ($this->_lastIndent < $node->indent) {            
+          } elseif ($this->_lastIndent < $node->indent) {
             if ($this->_inBlock === true) {
               $parent =& $this->_allNodes[$this->_lastNode];
               $parent->data[key($parent->data)] .= trim($line).$this->_blockEnd;
             } elseif ($this->_inBlock === false) {
               // The current node's parent is the previous node
               $node->parent = $this->_lastNode;
-              
-              // If the value of the last node's data was > or | we need to 
-              // start blocking i.e. taking in all lines as a text value until 
+
+              // If the value of the last node's data was > or | we need to
+              // start blocking i.e. taking in all lines as a text value until
               // we drop our indent.
               $parent =& $this->_allNodes[$node->parent];
               $this->_allNodes[$node->parent]->children = true;
@@ -228,7 +228,7 @@
                 if ($chk === '>') {
                   $this->_inBlock  = true;
                   $this->_blockEnd = ' ';
-                  $parent->data[key($parent->data)] = 
+                  $parent->data[key($parent->data)] =
                         str_replace('>','',$parent->data[key($parent->data)]);
                   $parent->data[key($parent->data)] .= trim($line).' ';
                   $this->_allNodes[$node->parent]->children = false;
@@ -236,7 +236,7 @@
                 } elseif ($chk === '|') {
                   $this->_inBlock  = true;
                   $this->_blockEnd = "\n";
-                  $parent->data[key($parent->data)] =               
+                  $parent->data[key($parent->data)] =
                         str_replace('|','',$parent->data[key($parent->data)]);
                   $parent->data[key($parent->data)] .= trim($line)."\n";
                   $this->_allNodes[$node->parent]->children = false;
@@ -250,11 +250,11 @@
               $this->_inBlock = false;
               if ($this->_blockEnd = "\n") {
                 $last =& $this->_allNodes[$this->_lastNode];
-                $last->data[key($last->data)] = 
+                $last->data[key($last->data)] =
                       trim($last->data[key($last->data)]);
               }
             }
-            
+
             // We don't know the parent of the node so we have to find it
             // foreach ($this->_allNodes as $n) {
             foreach ($this->_indentSort[$node->indent] as $n) {
@@ -263,7 +263,7 @@
               }
             }
           }
-        
+
           if ($this->_inBlock === false) {
             // Set these properties with information from our current node
             $this->_lastIndent = $node->indent;
@@ -277,13 +277,13 @@
             $this->_indentSort[$node->indent][] =& $this->_allNodes[$node->id];
             // Add a reference to the node in a References array if this node
             // has a YAML reference in it.
-            if ( 
+            if (
               ( (is_array($node->data)) &&
                 isset($node->data[key($node->data)]) &&
                 (!is_array($node->data[key($node->data)])) )
               &&
-              ( (preg_match('/^&([^ ]+)/',$node->data[key($node->data)])) 
-                || 
+              ( (preg_match('/^&([^ ]+)/',$node->data[key($node->data)]))
+                ||
                 (preg_match('/^\*([^ ]+)/',$node->data[key($node->data)])) )
             ) {
                 $this->_haveRefs[] =& $this->_allNodes[$node->id];
@@ -294,9 +294,9 @@
             ) {
               // Incomplete reference making code.  Ugly, needs cleaned up.
               foreach ($node->data[key($node->data)] as $d) {
-                if ( !is_array($d) && 
-                  ( (preg_match('/^&([^ ]+)/',$d)) 
-                    || 
+                if ( !is_array($d) &&
+                  ( (preg_match('/^&([^ ]+)/',$d))
+                    ||
                     (preg_match('/^\*([^ ]+)/',$d)) )
                   ) {
                     $this->_haveRefs[] =& $this->_allNodes[$node->id];
@@ -307,15 +307,15 @@
         }
       }
       unset($node);
-      
+
       // Here we travel through node-space and pick out references (& and *)
       $this->_linkReferences();
-      
+
       // Build the PHP array out of node-space
       $trunk = $this->_buildArray();
       return $trunk;
     }
-  
+
     /**
      * Dump PHP array to YAML
      *
@@ -324,7 +324,7 @@
      * save the returned string as tasteful.yml and pass it around.
      *
      * Oh, and you can decide how big the indent is and what the wordwrap
-     * for folding is.  Pretty cool -- just pass in 'false' for either if 
+     * for folding is.  Pretty cool -- just pass in 'false' for either if
      * you want to use the default.
      *
      * Indent's default is 2 spaces, wordwrap's default is 40 characters.  And
@@ -333,7 +333,7 @@
      * @access public
      * @return string
      * @param array $array PHP array
-     * @param int $indent Pass in false to use the default, which is 2 
+     * @param int $indent Pass in false to use the default, which is 2
      * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
      */
      public function dump($array,$indent = false,$wordwrap = false) {
@@ -346,29 +346,29 @@
       } else {
         $this->_dumpIndent = $indent;
       }
-      
+
       if ($wordwrap === false or !is_numeric($wordwrap)) {
         $this->_dumpWordWrap = 40;
       } else {
         $this->_dumpWordWrap = $wordwrap;
       }
-      
+
       // New YAML document
       $string = "---\n";
-      
+
       // Start at the base of the array and move through it.
       foreach ($array as $key => $value) {
         $string .= $this->_yamlize($key,$value,0);
       }
       return $string;
     }
-  
+
     /**** Private Properties ****/
-    
+
     /**#@+
      * @access private
      * @var mixed
-     */ 
+     */
     private $_haveRefs;
     private $_allNodes;
     private $_lastIndent;
@@ -380,7 +380,7 @@
     /**#@+*/
 
     /**** Private Methods ****/
-    
+
     /**
      * Attempts to convert a key / value array item to YAML
      * @access private
@@ -388,7 +388,7 @@
      * @param $key The name of the key
      * @param $value The value of the item
      * @param $indent The indent of the current node
-     */    
+     */
      private function _yamlize($key,$value,$indent) {
       if (is_array($value)) {
         // It has children.  What to do?
@@ -404,14 +404,14 @@
       }
       return $string;
     }
-    
+
     /**
      * Attempts to convert an array to YAML
      * @access private
      * @return string
      * @param $array The array you want to convert
      * @param $indent The indent of the current level
-     */ 
+     */
      private function _yamlizeArray($array,$indent) {
       if (is_array($array)) {
         $string = '';
@@ -423,7 +423,7 @@
         return false;
       }
     }
-  
+
     /**
      * Returns YAML from a key and a value
      * @access private
@@ -431,15 +431,15 @@
      * @param $key The name of the key
      * @param $value The value of the item
      * @param $indent The indent of the current node
-     */ 
+     */
      private function _dumpNode($key,$value,$indent) {
       // do some folding here, for blocks
       if (strpos($value,"\n")) {
         $value = $this->_doLiteralBlock($value,$indent);
-      } else {  
+      } else {
         $value  = $this->_doFolding($value,$indent);
       }
-      
+
       $spaces = str_repeat(' ',$indent);
 
       if (is_int($key)) {
@@ -456,9 +456,9 @@
      * Creates a literal block for dumping
      * @access private
      * @return string
-     * @param $value 
+     * @param $value
      * @param $indent int The value of the indent
-     */ 
+     */
      private function _doLiteralBlock($value,$indent) {
       $exploded = explode("\n",$value);
       $newValue = '|';
@@ -469,7 +469,7 @@
       }
       return $newValue;
     }
-    
+
     /**
      * Folds a string of text, if necessary
      * @access private
@@ -481,7 +481,7 @@
       if ($this->_dumpWordWrap === 0) {
         return $value;
       }
-      
+
       if (strlen($value) > $this->_dumpWordWrap) {
         $indent += $this->_dumpIndent;
         $indent = str_repeat(' ',$indent);
@@ -490,9 +490,9 @@
       }
       return $value;
     }
-  
+
     /* Methods used in loading */
-    
+
     /**
      * Finds and returns the indentation of a YAML line
      * @access private
@@ -516,7 +516,7 @@
      * @param string $line A line from the YAML file
      */
      private function _parseLine($line) {
-      $line = trim($line);  
+      $line = trim($line);
 
       $array = array();
 
@@ -558,7 +558,7 @@
       }
       return $array;
     }
-    
+
     /**
      * Finds the type of the passed value, returns the value as the new type.
      * @access private
@@ -566,7 +566,7 @@
      * @return mixed
      */
      private function _toType($value) {
-      if (preg_match('/^("(.*)"|\'(.*)\')/',$value,$matches)) {        
+      if (preg_match('/^("(.*)"|\'(.*)\')/',$value,$matches)) {
        $value = (string)preg_replace('/(\'\'|\\\\\')/',"'",end($matches));
        $value = preg_replace('/\\\\"/','"',$value);
       } elseif (preg_match('/^\\[(.+)\\]$/',$value,$matches)) {
@@ -574,7 +574,7 @@
 
         // Take out strings sequences and mappings
         $explode = $this->_inlineEscape($matches[1]);
-        
+
         // Propogate value array
         $value  = array();
         foreach ($explode as $v) {
@@ -604,10 +604,10 @@
         $value = NULL;
       } elseif (ctype_digit($value)) {
         $value = (int)$value;
-      } elseif (in_array(strtolower($value), 
+      } elseif (in_array(strtolower($value),
                   array('true', 'on', '+', 'yes', 'y'))) {
         $value = TRUE;
-      } elseif (in_array(strtolower($value), 
+      } elseif (in_array(strtolower($value),
                   array('false', 'off', '-', 'no', 'n'))) {
         $value = FALSE;
       } elseif (is_numeric($value)) {
@@ -616,10 +616,10 @@
         // Just a normal string, right?
         $value = trim(preg_replace('/#(.+)$/','',$value));
       }
-      
+
       return $value;
     }
-    
+
     /**
      * Used in inlines to check for more inlines or quoted strings
      * @access private
@@ -630,12 +630,12 @@
       // While pure sequences seem to be nesting just fine,
       // pure mappings and mappings with sequences inside can't go very
       // deep.  This needs to be fixed.
-      
-      // Check for strings      
+
+      // Check for strings
       $regex = '/(?:(")|(?:\'))((?(1)[^"]+|[^\']+))(?(1)"|\')/';
       if (preg_match_all($regex,$inline,$strings)) {
         $strings = $strings[2];
-        $inline  = preg_replace($regex,'YAMLString',$inline); 
+        $inline  = preg_replace($regex,'YAMLString',$inline);
       }
       unset($regex);
 
@@ -644,15 +644,15 @@
         $inline = preg_replace('/\[(.+)\]/U','YAMLSeq',$inline);
         $seqs   = $seqs[0];
       }
-      
+
       // Check for mappings
       if (preg_match_all('/{(.+)}/U',$inline,$maps)) {
         $inline = preg_replace('/{(.+)}/U','YAMLMap',$inline);
         $maps   = $maps[0];
       }
-      
+
       $explode = explode(', ',$inline);
-      
+
       // Re-add the strings
       if (!empty($strings)) {
         $i = 0;
@@ -663,7 +663,7 @@
           }
         }
       }
-      
+
       // Re-add the sequences
       if (!empty($seqs)) {
         $i = 0;
@@ -674,7 +674,7 @@
           }
         }
       }
-      
+
       // Re-add the mappings
       if (!empty($maps)) {
         $i = 0;
@@ -685,10 +685,10 @@
           }
         }
       }
-      
+
       return $explode;
     }
-  
+
     /**
      * Builds the PHP array from all the YAML nodes we've gathered
      * @access private
@@ -710,10 +710,10 @@
           $trunk = $this->_array_kmerge($trunk,$n->data);
         }
       }
-      
+
       return $trunk;
     }
-  
+
     /**
      * Traverses node-space and sets references (& and *) accordingly
      * @access private
@@ -725,7 +725,7 @@
           if (!empty($node->data)) {
             $key = key($node->data);
             // If it's an array, don't check.
-            if (is_array($node->data[$key])) {  
+            if (is_array($node->data[$key])) {
               foreach ($node->data[$key] as $k => $v) {
                 $this->_linkRef($node,$key,$k,$v);
               }
@@ -733,18 +733,18 @@
               $this->_linkRef($node,$key);
             }
           }
-        } 
+        }
       }
       return true;
     }
-    
+
     function _linkRef(&$n,$key,$k = NULL,$v = NULL) {
       if (empty($k) && empty($v)) {
         // Look for &refs
         if (preg_match('/^&([^ ]+)/',$n->data[$key],$matches)) {
           // Flag the node so we know it's a reference
           $this->_allNodes[$n->id]->ref = substr($matches[0],1);
-          $this->_allNodes[$n->id]->data[$key] = 
+          $this->_allNodes[$n->id]->data[$key] =
                    substr($n->data[$key],strlen($matches[0])+1);
         // Look for *refs
         } elseif (preg_match('/^\*([^ ]+)/',$n->data[$key],$matches)) {
@@ -756,7 +756,7 @@
         if (preg_match('/^&([^ ]+)/',$v,$matches)) {
           // Flag the node so we know it's a reference
           $this->_allNodes[$n->id]->ref = substr($matches[0],1);
-          $this->_allNodes[$n->id]->data[$key][$k] = 
+          $this->_allNodes[$n->id]->data[$key][$k] =
                               substr($v,strlen($matches[0])+1);
         // Look for *refs
         } elseif (preg_match('/^\*([^ ]+)/',$v,$matches)) {
@@ -766,7 +766,7 @@
         }
       }
     }
-  
+
     /**
      * Finds the children of a node and aids in the building of the PHP array
      * @access private
@@ -789,7 +789,7 @@
       }
       return $return;
     }
-  
+
     /**
      * Turns a node's data and its children's data into a PHP array
      *
@@ -843,7 +843,7 @@
       }
       return true;
     }
-  
+
 
     /**
      * Merges arrays and maintains numeric keys.
@@ -858,33 +858,34 @@
      * @param array $arr2
      * @return array
      */
-     private function _array_kmerge($arr1,$arr2) { 
-      if(!is_array($arr1)) 
-        $arr1 = array(); 
+     private function _array_kmerge($arr1,$arr2) {
+      if(!is_array($arr1))
+        $arr1 = array();
 
       if(!is_array($arr2))
-        $arr2 = array(); 
-    
-      $keys1 = array_keys($arr1); 
-      $keys2 = array_keys($arr2); 
-      $keys  = array_merge($keys1,$keys2); 
-      $vals1 = array_values($arr1); 
-      $vals2 = array_values($arr2); 
-      $vals  = array_merge($vals1,$vals2); 
-      $ret   = array(); 
+        $arr2 = array();
 
-      foreach($keys as $key) { 
-        list($unused,$val) = each($vals);
+      $keys1 = array_keys($arr1);
+      $keys2 = array_keys($arr2);
+      $keys  = array_merge($keys1,$keys2);
+      $vals1 = array_values($arr1);
+      $vals2 = array_values($arr2);
+      $vals  = array_merge($vals1,$vals2);
+      $ret   = array();
+
+      foreach($keys as $key) {
+        $val = current($vals);
+        next($vals);
         // This is the good part!  If a key already exists, but it's part of a
         // sequence (an int), just keep addin numbers until we find a fresh one.
         if (isset($ret[$key]) and is_int($key)) {
           while (array_key_exists($key, $ret)) {
             $key++;
           }
-        }  
-        $ret[$key] = $val; 
-      } 
+        }
+        $ret[$key] = $val;
+      }
 
-      return $ret; 
+      return $ret;
     }
   }
