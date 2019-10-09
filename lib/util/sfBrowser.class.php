@@ -524,6 +524,7 @@ class sfBrowser
   }
 }
 
+
 class sfFakeRenderingFilter extends sfFilter
 {
   public function execute($filterChain)

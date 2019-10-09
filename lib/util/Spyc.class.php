@@ -1,5 +1,5 @@
 <?php
-  /** 
+  /**
    * Spyc -- A Simple PHP YAML Class
    * @version 0.2.3 -- 2006-02-04
    * @author Chris Wanstrath <chris@ozmm.org>
@@ -9,7 +9,7 @@
    * @package Spyc
    */
 
-/** 
+/**
  * A node, used by Spyc for parsing YAML.
  * @package Spyc
  */
@@ -53,10 +53,10 @@ class Spyc
   /**
    * Load YAML into a PHP array statically
    *
-   * The load method, when supplied with a YAML stream (string or file), 
-   * will do its best to convert YAML in a file into a PHP array.  Pretty 
+   * The load method, when supplied with a YAML stream (string or file),
+   * will do its best to convert YAML in a file into a PHP array.  Pretty
    * simple.
-   *  Usage: 
+   *  Usage:
    *  <code>
    *   $array = Spyc::YAMLLoad('lucky.yml');
    *   print_r($array);
@@ -80,7 +80,7 @@ class Spyc
    * save the returned string as nothing.yml and pass it around.
    *
    * Oh, and you can decide how big the indent is and what the wordwrap
-   * for folding is.  Pretty cool -- just pass in 'false' for either if 
+   * for folding is.  Pretty cool -- just pass in 'false' for either if
    * you want to use the default.
    *
    * Indent's default is 2 spaces, wordwrap's default is 40 characters.  And
@@ -88,7 +88,7 @@ class Spyc
    *
    * @return string
    * @param array $array PHP array
-   * @param int $indent Pass in false to use the default, which is 2 
+   * @param int $indent Pass in false to use the default, which is 2
    * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
    */
   public static function YAMLDump($array, $indent = false, $wordwrap = false)
@@ -101,9 +101,9 @@ class Spyc
   /**
    * Load YAML into a PHP array from an instantiated object
    *
-   * The load method, when supplied with a YAML stream (string or file path), 
+   * The load method, when supplied with a YAML stream (string or file path),
    * will do its best to convert the YAML into a PHP array.  Pretty simple.
-   *  Usage: 
+   *  Usage:
    *  <code>
    *   $parser = new Spyc;
    *   $array  = $parser->load('lucky.yml');
@@ -260,13 +260,13 @@ class Spyc
           $this->_indentSort[$node->indent][] =& $this->_allNodes[$node->id];
           // Add a reference to the node in a References array if this node
           // has a YAML reference in it.
-          if ( 
+          if (
              ((is_array($node->data)) &&
               isset($node->data[key($node->data)]) &&
               (!is_array($node->data[key($node->data)])))
             &&
              ((preg_match('/^&([^ ]+)/', $node->data[key($node->data)]))
-              || 
+              ||
               (preg_match('/^\*([^ ]+)/', $node->data[key($node->data)])))
           )
           {
@@ -309,7 +309,7 @@ class Spyc
    * save the returned string as tasteful.yml and pass it around.
    *
    * Oh, and you can decide how big the indent is and what the wordwrap
-   * for folding is.  Pretty cool -- just pass in 'false' for either if 
+   * for folding is.  Pretty cool -- just pass in 'false' for either if
    * you want to use the default.
    *
    * Indent's default is 2 spaces, wordwrap's default is 40 characters.  And
@@ -317,7 +317,7 @@ class Spyc
    *
    * @return string
    * @param array $array PHP array
-   * @param int $indent Pass in false to use the default, which is 2 
+   * @param int $indent Pass in false to use the default, which is 2
    * @param int $wordwrap Pass in 0 for no wordwrap, false for default (40)
    */
    public function dump($array, $indent = false, $wordwrap = false)
@@ -472,9 +472,9 @@ class Spyc
    * Creates a literal block for dumping
    *
    * @return string
-   * @param $value 
+   * @param $value
    * @param $indent int The value of the indent
-   */ 
+   */
    protected function _doLiteralBlock($value, $indent)
    {
     $exploded = explode("\n", $value);
@@ -833,7 +833,7 @@ class Spyc
             $this->_linkRef($node, $key);
           }
         }
-      } 
+      }
     }
 
     return true;
@@ -998,8 +998,9 @@ class Spyc
     $ret   = array();
     foreach ($keys as $key)
     {
-      $unused = key($vals);
       $val = current($vals);
+      next($vals);
+
       if (isset($ret[$key]) && is_int($key))
       {
         $ret[] = $val;
