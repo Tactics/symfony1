@@ -94,7 +94,7 @@ class sfValidatorConfigHandler extends sfYamlConfigHandler
     $this->loadAttributes($configFiles, $methods, $names, $validators, $config, $list);
 
     // fill-in filter configuration
-    $fillin = var_export(isset($config['fillin']) ? $config['fillin'] : array(), true);
+    $fillin = var_export(isset($config['fillin']) ? $config['fillin'] : NULL, true);
 
     // generate GET file/parameter data
 
@@ -103,7 +103,7 @@ class sfValidatorConfigHandler extends sfYamlConfigHandler
 
     $this->generateRegistration('GET', $data, $methods, $names, $validators);
 
-    if (count($fillin))
+    if ($fillin !== "NULL")
     {
       $data[] = sprintf("  \$context->getRequest()->setAttribute('fillin', %s, 'symfony/filter');", $fillin);
     }
@@ -116,7 +116,7 @@ class sfValidatorConfigHandler extends sfYamlConfigHandler
 
     $this->generateRegistration('POST', $data, $methods, $names, $validators);
 
-    if (count($fillin))
+    if ($fillin !== "NULL")
     {
       $data[] = sprintf("  \$context->getRequest()->setAttribute('fillin', %s, 'symfony/filter');", $fillin);
     }
