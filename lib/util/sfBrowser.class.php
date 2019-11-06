@@ -445,7 +445,9 @@ class sfBrowser
     if (false !== $pos = strpos($name, '['))
     {
       $var = &$vars;
-      $tmps = array_filter(preg_split('/(\[ | \[\] | \])/x', $name), create_function('$s', 'return $s !== "";'));
+      $tmps = array_filter(preg_split('/(\[ | \[\] | \])/x', $name), function ($s) {
+          return $s !== "";
+      });
       foreach ($tmps as $tmp)
       {
         $var = &$var[$tmp];
@@ -521,6 +523,7 @@ class sfBrowser
     $this->defaultServerArray['session_id'] = $_SERVER['session_id'] = md5(uniqid(rand(), true));
   }
 }
+
 
 class sfFakeRenderingFilter extends sfFilter
 {
