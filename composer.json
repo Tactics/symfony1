@@ -7,5 +7,10 @@
             "email": "fabpot@sensio.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "classmap": [
+            "lib"
+        ]
+    }
 }
