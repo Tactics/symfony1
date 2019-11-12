@@ -6,31 +6,5 @@
             "name": "fabpot",
             "email": "fabpot@sensio.com"
         }
-    ],
-    "require": {},
-    "autoload-dev": {
-        "classmap": [
-            "lib/action",
-            "lib/addon",
-            "lib/cache",
-            "lib/config",
-            "lib/controller",
-            "lib/database",
-            "lib/debug",
-            "lib/exception",
-            "lib/filter",
-            "lib/generator",
-            "lib/helper",
-            "lib/i18n",
-            "lib/log",
-            "lib/request",
-            "lib/response",
-            "lib/storage",
-            "lib/user",
-            "lib/util",
-            "lib/validator",
-            "lib/vendor",
-            "lib/view"
-        ]
-    }
+    ]
 }
