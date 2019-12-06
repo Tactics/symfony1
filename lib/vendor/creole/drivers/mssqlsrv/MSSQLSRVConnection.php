@@ -120,12 +120,20 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
   }
 
   /**
-   * Returns false since MSSQL doesn't support this method.
+   * @see Connection::applyLimit()
    */
   public function applyLimit(&$sql, $offset, $limit)
   {
-    return false;
+    if($limit > 0)
+    {
+      $sql .= ' offset ' . ($offset?: 0) . ' rows ';
+      $sql .= ' fetch next ' . $limit . ' rows only ';
+    }
+    else if($offset > 0) {
+      $sql .= ' offset ' . ($offset?: 0) . ' rows ';
+    }
   }
+
 
   /**
    * @see Connection::close()
