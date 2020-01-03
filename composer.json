@@ -1,5 +1,6 @@
 {
-    "name": "symfony",
+    "name": "tactics/symfony",
+    "description": "The Tactics fork of symfony 1",
     "license": "MIT",
     "authors": [
         {
