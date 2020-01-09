@@ -78,11 +78,26 @@ class MSSQLSRVPreparedStatement extends PreparedStatementCommon implements Prepa
         $this->updateCount = null; // reset
         $sql = $this->replaceParams();
 
-        if ($this->limit > 0 || $this->offset > 0) {
-          $this->conn->applyLimit($sql, $this->offset, $this->limit);
+        if(stripos($sql, 'ORDER BY'))
+          $offsetBefore = true;
+        else
+          $offsetBefore = false;
+
+        if($offsetBefore)
+        {
+          if ($this->limit > 0 || $this->offset > 0) {
+            $this->conn->applyLimit($sql, $this->offset, $this->limit);
+          }
         }
 
         $this->resultSet = $this->conn->executeQuery($sql, $fetchmode);
+
+        if(!$offsetBefore)
+        {
+          $this->resultSet->_setOffset($this->offset);
+          $this->resultSet->_setLimit($this->limit);
+        }
+
         return $this->resultSet;
     }
 
