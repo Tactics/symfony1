@@ -1,5 +1,7 @@
 <?php
 
+namespace Test;
+
 require_once(dirname(__FILE__).'/../vendor/lime/lime.php');
 
 /*

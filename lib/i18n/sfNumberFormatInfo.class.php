@@ -1,5 +1,7 @@
 <?php
 
+namespace i18n;
+
 /**
  * sfNumberFormatInfo class file.
  *

@@ -1,5 +1,7 @@
 <?php
 
+namespace i18n;
+
 /**
  * sfChoiceFormat class file.
  *

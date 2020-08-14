@@ -1,4 +1,7 @@
 <?php
+
+namespace i18n;
+
 /**
  * Translation table cache.
  * @author     Wei Zhuo <weizhuo[at]gmail[dot]com>

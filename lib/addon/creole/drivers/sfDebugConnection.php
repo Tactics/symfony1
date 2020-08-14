@@ -1,5 +1,7 @@
 <?php
 
+namespace Addon\Creole\Drivers;
+
 /**
  * Debug implementation of Connection.
  *

@@ -1,5 +1,7 @@
 <?php
 
+namespace Storage;
+
 /*
  * This file is part of the symfony package.
  * (c) 2004, 2005 Fabien Potencier <fabien.potencier@symfony-project.com>

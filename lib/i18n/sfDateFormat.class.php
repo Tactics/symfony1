@@ -1,4 +1,7 @@
 <?php
+
+namespace i18n;
+
 /**
  * sfDateFormat class file.
  *

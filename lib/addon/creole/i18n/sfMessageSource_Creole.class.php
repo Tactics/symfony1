@@ -1,5 +1,7 @@
 <?php
 
+namespace Addon\Creole\i18n;
+
 /**
  * sfMessageSource_Creole class file.
  *
