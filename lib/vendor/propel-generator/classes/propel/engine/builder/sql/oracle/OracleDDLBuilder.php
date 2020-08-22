@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://propel.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\propel_generator\classes\propel\engine\builder\sql\oracle;
 
 require_once 'propel/engine/builder/sql/DDLBuilder.php';
 

@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://propel.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\propel\map;
 
 /**
  * ValidatorMap is used to model a column validator.

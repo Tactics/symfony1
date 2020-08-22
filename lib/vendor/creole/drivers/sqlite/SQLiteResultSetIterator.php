@@ -18,10 +18,11 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\sqlite;
 
 /**
  * Optimized iterator for SQLite.
- * 
+ *
  * @author    Hans Lellelid <hans@xmpl.org>
  * @version   $Revision: 1.6 $
  * @package   creole.drivers.sqlite
@@ -32,7 +33,7 @@ class SQLiteResultSetIterator implements Iterator {
     private $pos = 0;
     private $fetchmode;
     private $row_count;
-    
+
     /**
      * Construct the iterator.
      * @param SQLiteResultSet $rs
@@ -43,20 +44,20 @@ class SQLiteResultSetIterator implements Iterator {
         $this->fetchmode = $rs->getFetchmode();
 	$this->row_count = $rs->getRecordCount();
     }
-    
+
     /**
      * This method actually has no effect, since we do not rewind ResultSet for iteration.
      */
     function rewind()
-    {        
+    {
         sqlite_rewind($this->result);
     }
-    
+
     function valid()
     {
 	return ( $this->pos < $this->row_count );
     }
-    
+
     /**
      * Returns the cursor position.  Note that this will not necessarily
      * be 1 for the first row, since no rewind is performed at beginning
@@ -67,7 +68,7 @@ class SQLiteResultSetIterator implements Iterator {
     {
         return $this->pos;
     }
-    
+
     /**
      * Returns the row (assoc array) at current cursor pos.
      * @return array
@@ -76,7 +77,7 @@ class SQLiteResultSetIterator implements Iterator {
     {
        return sqlite_fetch_array($this->result, $this->fetchmode);
     }
-    
+
     /**
      * Advances internal cursor pos.
      */

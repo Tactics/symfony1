@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\system;
 
 require_once 'phing/tasks/system/CopyTask.php';
 include_once 'phing/system/io/FileReader.php';
@@ -29,19 +30,19 @@ include_once 'phing/filters/XsltFilter.php';
  *
  * This is a shortcut for calling the <copy> task with the XSLTFilter used
  * in the <filterchains> section.
- * 
+ *
  * @author    Andreas Aderhold, andi@binarycloud.com
  * @version   $Revision: 1.8 $
  * @package   phing.tasks.system
  */
 class XsltTask extends CopyTask {
-    
+
     /** XSLTFilter object that we use to handle transformation. */
     private $xsltFilter;
-    
+
     /** Parameters to pass to XSLT procesor. */
     private $parameters = array();
-    
+
     /**
      * Setup the filterchains w/ XSLTFilter that we will use while copying the files.
      */
@@ -49,19 +50,19 @@ class XsltTask extends CopyTask {
         $xf = new XsltFilter();
         $chain = $this->createFilterChain($this->getProject());
         $chain->addXsltFilter($xf);
-        $this->xsltFilter = $xf;        
+        $this->xsltFilter = $xf;
     }
-    
+
     /**
      * Set any XSLT Param and invoke CopyTask::main()
      * @see CopyTask::main()
      */
-    function main() {        
+    function main() {
         $this->log("Doing XSLT transformation using stylesheet " . $this->xsltFilter->getStyle(), PROJECT_MSG_VERBOSE);
         $this->xsltFilter->setParams($this->parameters);
         parent::main();
     }
-    
+
     /**
      * Set the stylesheet to use.
      * @param PhingFile $style
@@ -69,7 +70,7 @@ class XsltTask extends CopyTask {
     function setStyle(PhingFile $style) {
         $this->xsltFilter->setStyle($style);
     }
-    
+
     /**
      * Support nested <param> tags useing XSLTParam class.
      * @return XSLTParam

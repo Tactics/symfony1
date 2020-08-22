@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\metadata;
 
 /**
  * Represents a foreign key.

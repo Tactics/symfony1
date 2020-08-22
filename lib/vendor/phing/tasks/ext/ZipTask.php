@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext;
 
 require_once 'phing/tasks/system/MatchingTask.php';
 include_once 'phing/util/SourceFileScanner.php';
@@ -35,7 +36,7 @@ include_once 'phing/lib/Zip.php';
  * @since     2.1.0
  */
 class ZipTask extends MatchingTask {
-    
+
     private $zipFile;
     private $baseDir;
 
@@ -73,7 +74,7 @@ class ZipTask extends MatchingTask {
      * @throws BuildException
      */
     public function main() {
-    
+
         if ($this->zipFile === null) {
             throw new BuildException("zipfile attribute must be set!", $this->getLocation());
         }
@@ -89,7 +90,7 @@ class ZipTask extends MatchingTask {
         // shouldn't need to clone, since the entries in filesets
         // themselves won't be modified -- only elements will be added
         $savedFileSets = $this->filesets;
-        
+
         try {
             if ($this->baseDir !== null) {
                 if (!$this->baseDir->exists()) {
@@ -106,8 +107,8 @@ class ZipTask extends MatchingTask {
                 throw new BuildException("You must supply either a basedir "
                                          . "attribute or some nested filesets.",
                                          $this->getLocation());
-            }                        
-            
+            }
+
             // check if zip is out of date with respect to each
             // fileset
             $upToDate = true;
@@ -123,21 +124,21 @@ class ZipTask extends MatchingTask {
                     }
                 }
             }
-            
+
             if ($upToDate) {
                 $this->log("Nothing to do: " . $this->zipFile->__toString() . " is up to date.", PROJECT_MSG_INFO);
                 return;
             }
 
             $this->log("Building zip: " . $this->zipFile->__toString(), PROJECT_MSG_INFO);
-            
+
             $zip = new Archive_Zip($this->zipFile->getAbsolutePath());
-            
-            foreach($this->filesets as $fs) {                                
+
+            foreach($this->filesets as $fs) {
             	$ds = $fs->getDirectoryScanner($this->project);
             	$files = $ds->getIncludedFiles();
 
-                // FIXME 
+                // FIXME
                 // Current model is only adding directories implicitly.  This
                 // won't add any empty directories.  Perhaps modify FileSet::getFiles()
                 // to also include empty directories.  Not high priority, since non-inclusion
@@ -146,21 +147,21 @@ class ZipTask extends MatchingTask {
                 $filesToZip = array();
                 for ($i=0, $fcount=count($files); $i < $fcount; $i++) {
                     $f = new PhingFile($fsBasedir, $files[$i]);
-                    $filesToZip[] = $f->getAbsolutePath();                        
+                    $filesToZip[] = $f->getAbsolutePath();
                 }
                 $zip->add($filesToZip, array('remove_path' => $fsBasedir->getCanonicalPath()));
             }
-                         
-                
+
+
         } catch (IOException $ioe) {
                 $msg = "Problem creating ZIP: " . $ioe->getMessage();
                 $this->filesets = $savedFileSets;
                 throw new BuildException($msg, $ioe, $this->getLocation());
         }
-        
+
         $this->filesets = $savedFileSets;
     }
-           
+
     /**
      * @param array $files array of filenames
      * @param PhingFile $dir
@@ -172,5 +173,5 @@ class ZipTask extends MatchingTask {
         $mm->setTo($this->zipFile->getAbsolutePath());
         return count($sfs->restrict($files, $dir, null, $mm)) == 0;
     }
-   
+
 }

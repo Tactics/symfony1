@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\odbc;
 
 require_once 'creole/drivers/odbc/ODBCResultSetCommon.php';
 
@@ -28,12 +29,12 @@ require_once 'creole/drivers/odbc/ODBCResultSetCommon.php';
  * the methods in here perform some adjustments and extra checking to make
  * sure that this behaves the same as RDBMS drivers using native OFFSET/LIMIT.
  *
- * This class also emulates a row count if the driver is not capable of 
+ * This class also emulates a row count if the driver is not capable of
  * providing one natively.
- * 
- * NOTE: This class only works with drivers that support absolute cursor 
+ *
+ * NOTE: This class only works with drivers that support absolute cursor
  *       positioning (SQL_FETCH_DIRECTION = SQL_FD_FETCH_ABSOLUTE). If the
- *       driver you are using does not support reverse/absolute cursor 
+ *       driver you are using does not support reverse/absolute cursor
  *       scrolling, you should use the {@link ODBCCachedResultSet} class instead.
  *       See the documentation for ODBCCachedResultSet for instructions on how
  *       to use it.
@@ -57,7 +58,7 @@ class ODBCResultSet extends ODBCResultSetCommon implements ResultSet
      * @var boolean
      */
     protected $hasRowCount = false;
-    
+
     /**
      * @see ResultSet::__construct()
      */
@@ -94,7 +95,7 @@ class ODBCResultSet extends ODBCResultSetCommon implements ResultSet
     {
         if ($rownum < 0 || $this->limit > 0 && $rownum > $this->limit)
             return false;
-        
+
         $this->cursorPos = $rownum;
 
         return true;
@@ -106,7 +107,7 @@ class ODBCResultSet extends ODBCResultSetCommon implements ResultSet
     public function next()
     {
         $this->cursorPos++;
-        
+
         if ($this->limit > 0 && $this->cursorPos > $this->limit) {
             $this->cursorPos = $this->limit+1;
             return false;
@@ -114,7 +115,7 @@ class ODBCResultSet extends ODBCResultSetCommon implements ResultSet
 
         $rowNum = $this->offset + $this->cursorPos;
         $fields = null;
-        
+
         $cols = @odbc_fetch_into($this->result->getHandle(), $fields, $rowNum);
 
         if ($cols === false) {
@@ -123,7 +124,7 @@ class ODBCResultSet extends ODBCResultSetCommon implements ResultSet
         }
 
         $this->fields =& $this->checkFetchMode($fields);
-        
+
         return true;
     }
 
@@ -135,7 +136,7 @@ class ODBCResultSet extends ODBCResultSetCommon implements ResultSet
         // Force calculation of last record pos.
         if ($this->cursorPos == -1)
             $this->getRecordCount();
-            
+
         return parent::isAfterLast();
     }
 
@@ -152,27 +153,27 @@ class ODBCResultSet extends ODBCResultSetCommon implements ResultSet
             if ($this->limit > 0 && $numRows > $this->limit)
                 $numRows = $this->limit;
         }
-        else 
+        else
         {
             // Do manual row count if driver doesn't provide one.
-            if ($this->numRows == -1) 
+            if ($this->numRows == -1)
             {
                 $this->numRows = 0;
                 $this->beforeFirst();
-            
-                while($this->next()) 
+
+                while($this->next())
                     $this->numRows++;
             }
-                
+
             $numRows = $this->numRows;
         }
 
         // Cursor pos is -1 when an attempt to fetch past the last row was made
         // (or a fetch error occured).
-        
+
         if ($this->cursorPos == -1)
             $this->cursorPos = $numRows+1;
-            
+
         return $numRows;
     }
 

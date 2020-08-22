@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\types\selectors;
 
 /**
  * This is the interface to be used by all selectors.

@@ -18,12 +18,13 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\pgsql;
 
 /**
  * Optimized iterator for PostgreSQL, based off of SQLite iterator.
  * Testing with SeekableIterator, no idea if it will keep this
  * functionality or what uses it or even how to use it as yet.
- * 
+ *
  * @author    Cameron Brunner <webmaster@animetorrents.com>
  * @version   $Revision: 1.1 $
  * @package   creole.drivers.pgsql
@@ -35,7 +36,7 @@ class PgSQLResultSetIterator implements SeekableIterator, Countable {
     private $fetchmode;
     private $row_count;
     private $rs;
-    
+
     /**
      * Construct the iterator.
      * @param PgSQLResultSet $rs
@@ -47,20 +48,20 @@ class PgSQLResultSetIterator implements SeekableIterator, Countable {
 		$this->row_count = $rs->getRecordCount();
 		$this->rs = $rs; // This is to address reference count bug: http://creole.phpdb.org/trac/ticket/6
     }
-    
+
     /**
      * This method actually has no effect, since we do not rewind ResultSet for iteration.
      */
     function rewind()
-    {        
+    {
         $this->pos = 0;
     }
-    
+
     function valid()
     {
 		return ( $this->pos < $this->row_count );
     }
-    
+
     /**
      * Returns the cursor position.  Note that this will not necessarily
      * be 1 for the first row, since no rewind is performed at beginning
@@ -71,7 +72,7 @@ class PgSQLResultSetIterator implements SeekableIterator, Countable {
     {
         return $this->pos;
     }
-    
+
     /**
      * Returns the row (assoc array) at current cursor pos.
      * @return array
@@ -80,7 +81,7 @@ class PgSQLResultSetIterator implements SeekableIterator, Countable {
     {
        return pg_fetch_array($this->result, $this->pos, $this->fetchmode);
     }
-    
+
     /**
      * Advances internal cursor pos.
      */

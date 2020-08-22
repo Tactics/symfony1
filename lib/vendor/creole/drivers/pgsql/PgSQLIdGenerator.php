@@ -18,7 +18,8 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
- 
+namespace Tactics\Symfony\vendor\creole\drivers\pgsql;
+
 require_once 'creole/IdGenerator.php';
 
 /**
@@ -29,7 +30,7 @@ require_once 'creole/IdGenerator.php';
  * @package   creole.drivers.pgsql
  */
 class PgSQLIdGenerator implements IdGenerator {
-    
+
     /** Connection object that instantiated this class */
     private $conn;
 
@@ -42,15 +43,15 @@ class PgSQLIdGenerator implements IdGenerator {
     {
         $this->conn = $conn;
     }
-    
+
     /**
      * @see IdGenerator::isBeforeInsert()
      */
     public function isBeforeInsert()
     {
         return true;
-    }    
-    
+    }
+
     /**
      * @see IdGenerator::isAfterInsert()
      */
@@ -58,7 +59,7 @@ class PgSQLIdGenerator implements IdGenerator {
     {
         return false;
     }
-        
+
     /**
      * @see IdGenerator::getIdMethod()
      */
@@ -66,7 +67,7 @@ class PgSQLIdGenerator implements IdGenerator {
     {
         return self::SEQUENCE;
     }
-    
+
     /**
      * @see IdGenerator::getId()
      */
@@ -79,6 +80,6 @@ class PgSQLIdGenerator implements IdGenerator {
         $rs->next();
         return $rs->getInt(1);
     }
-    
+
 }
 

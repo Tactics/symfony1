@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\parser;
 
 include_once 'phing/UnknownElement.php';
 
@@ -29,7 +30,7 @@ include_once 'phing/UnknownElement.php';
  * initialized on the fly.
  *
  * @author      Andreas Aderhold <andi@binarycloud.com>
- * @copyright © 2001,2002 THYRELL. All rights reserved
+ * @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  * @version   $Revision: 1.10 $
  * @package   phing.parser
  */
@@ -55,14 +56,14 @@ class TaskHandler extends AbstractHandler {
      * @var Task
      */
     private $task;
-	
+
 	/**
  	 * Wrapper for the parent element, if any. The wrapper for this
 	 * element will be added to this wrapper as a child.
 	 * @var RuntimeConfigurable
 	 */
 	private $parentWrapper;
-	
+
 	/**
 	 * Wrapper for this element which takes care of actually configuring
 	 * the element, if this element is contained within a target.
@@ -88,9 +89,9 @@ class TaskHandler extends AbstractHandler {
      * @param Target $target The target object this task is contained in (null for top-level tasks).
      */
     function __construct(AbstractSAXParser $parser, $parentHandler, ProjectConfigurator $configurator, $container = null, $parentWrapper = null, $target = null) {
-        
+
         parent::__construct($parser, $parentHandler);
-    
+
         if (($container !== null) && !($container instanceof TaskContainer)) {
             throw new Exception("Argument expected to be a TaskContainer, got something else");
         }
@@ -130,7 +131,7 @@ class TaskHandler extends AbstractHandler {
         try {
             $configurator = $this->configurator;
             $project = $this->configurator->project;
-            
+
             $this->task = $project->createTask($tag);
         } catch (BuildException $be) {
             // swallow here, will be thrown again in
@@ -150,11 +151,11 @@ class TaskHandler extends AbstractHandler {
         // should be used in task exceptions to provide details
         $this->task->setLocation($this->parser->getLocation());
         $configurator->configureId($task, $attrs);
-		
+
 		if ($this->container) {
 			$this->container->addTask($this->task);
 		}
-		
+
         // Top level tasks don't have associated targets
 		// FIXME: if we do like Ant 1.6 and create an implicitTarget in the projectconfigurator object
 		// then we don't need to check for null here ... but there's a lot of stuff that will break if we
@@ -165,9 +166,9 @@ class TaskHandler extends AbstractHandler {
             $this->wrapper = $this->task->getRuntimeConfigurableWrapper();
             $this->wrapper->setAttributes($attrs);
             /*
-			Commenting this out as per thread on Premature configurate of ReuntimeConfigurables 
+			Commenting this out as per thread on Premature configurate of ReuntimeConfigurables
             with Matthias Pigulla: http://phing.tigris.org/servlets/ReadMsg?list=dev&msgNo=251
-            
+
 			if ($this->parentWrapper !== null) { // this may not make sense only within this if-block, but it
 												// seems to address current use cases adequately
 		    	$this->parentWrapper->addChild($this->wrapper);

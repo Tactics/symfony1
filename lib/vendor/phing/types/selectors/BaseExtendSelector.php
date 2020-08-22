@@ -19,7 +19,8 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
- 
+namespace Tactics\Symfony\vendor\phing\types\selectors;
+
 require_once 'phing/types/selectors/ExtendFileSelector.php';
 require_once 'phing/types/selectors/BaseSelector.php';
 include_once 'phing/types/Parameter.php';

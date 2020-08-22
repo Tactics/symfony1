@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\odbc;
 
 require_once 'creole/ResultSet.php';
 require_once 'creole/common/ResultSetCommon.php';
@@ -154,7 +155,7 @@ abstract class ODBCResultSetCommon extends ResultSetCommon
 
         return $data;
     }
-    
+
     /**
      * Converts row fields to names if FETCHMODE_ASSOC is set.
      *
@@ -167,21 +168,21 @@ abstract class ODBCResultSetCommon extends ResultSetCommon
         if ($this->fetchmode == ResultSet::FETCHMODE_ASSOC)
         {
             $newrow = array();
-            
+
             for ($i = 0, $n = count($row); $i < $n; $i++)
             {
                 $colname = @odbc_field_name($this->result->getHandle(), $i+1);
-                
+
                 if ($this->lowerAssocCase) {
                     $colname = strtolower($colname);
                 }
-				
+
                 $newrow[$colname] = $row[$i];
             }
-            
+
             $row =& $newrow;
         }
-        
+
         return $row;
     }
 

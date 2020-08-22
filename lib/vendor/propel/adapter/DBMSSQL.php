@@ -19,6 +19,7 @@
 * and is licensed under the LGPL. For more information please see
 * <http://propel.phpdb.org>.
 */
+namespace Tactics\Symfony\vendor\propel\adapter;
 
 /**
  * This is used to connect to a MSSQL database.  For now, this class

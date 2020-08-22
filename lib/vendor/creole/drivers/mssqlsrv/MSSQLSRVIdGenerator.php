@@ -1,4 +1,5 @@
 <?php
+namespace Tactics\Symfony\vendor\creole\drivers\mssqlsrv;
 
 require_once 'creole/IdGenerator.php';
 
@@ -52,7 +53,7 @@ class MSSQLSRVIdGenerator implements IdGenerator {
      * @see IdGenerator::getId()
      */
     public function getId($unused = null)
-    { 
+    {
         return $this->conn->getLastInsertedId();
     }
 

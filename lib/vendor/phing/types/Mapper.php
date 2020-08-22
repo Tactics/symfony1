@@ -16,15 +16,16 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\types;
 
 include_once 'phing/types/DataType.php';
 include_once 'phing/types/Path.php';
 
 /**
  * Filename Mapper maps source file name(s) to target file name(s).
- * 
+ *
  * Built-in mappers can be accessed by specifying they "type" attribute:
  * <code>
  * <mapper type="glob" from="*.php" to="*.php.bak"/>
@@ -41,21 +42,21 @@ include_once 'phing/types/Path.php';
  */
 class Mapper extends DataType {
 
-    protected $type;    
+    protected $type;
     protected $classname;
     protected $from;
     protected $to;
     protected $classpath;
     protected $classpathId;
 
-    
+
     function __construct(Project $project) {
         $this->project = $project;
     }
-    
+
     /**
      * Set the classpath to be used when searching for component being defined
-     * 
+     *
      * @param Path $classpath An Path object containing the classpath.
      */
     public function setClasspath(Path $classpath) {
@@ -71,7 +72,7 @@ class Mapper extends DataType {
 
     /**
      * Create the classpath to be used when searching for component being defined
-     */ 
+     */
     public function createClasspath() {
         if ($this->isReference()) {
             throw $this->tooManyAttributes();
@@ -151,7 +152,7 @@ class Mapper extends DataType {
         if ($this->type === null && $this->classname === null) {
             throw new BuildException("either type or classname attribute must be set for <mapper>");
         }
-        
+
         if ($this->type !== null) {
             switch($this->type) {
             case 'identity':
@@ -165,10 +166,10 @@ class Mapper extends DataType {
                 break;
             case 'regexp':
             case 'regex':
-                $this->classname = 'phing.mappers.RegexpMapper';            
+                $this->classname = 'phing.mappers.RegexpMapper';
                 break;
             case 'merge':
-                $this->classname = 'phing.mappers.MergeMapper';                
+                $this->classname = 'phing.mappers.MergeMapper';
                 break;
             default:
                 throw new BuildException("Mapper type {$this->type} not known");
@@ -178,11 +179,11 @@ class Mapper extends DataType {
 
         // get the implementing class
         $cls = Phing::import($this->classname, $this->classpath);
-        
+
         $m = new $cls;
         $m->setFrom($this->from);
         $m->setTo($this->to);
-        
+
         return $m;
     }
 
@@ -191,7 +192,7 @@ class Mapper extends DataType {
         if (!$this->checked) {
             $stk = array();
             $stk[] = $this;
-            $this->dieOnCircularReference($stk, $this->project);            
+            $this->dieOnCircularReference($stk, $this->project);
         }
 
         $o = $this->ref->getReferencedObject($this->project);

@@ -18,9 +18,10 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\types\selectors;
 
 require_once 'phing/types/selectors/BaseSelectorContainer.php';
- 
+
 /**
  * This selector has a collection of other selectors, any of which have to
  * select a file in order for this selector to select it.
@@ -52,13 +53,13 @@ class OrSelector extends BaseSelectorContainer {
      * @return boolean Whether the file should be selected or not
      */
     public function isSelected(PhingFile $basedir, $filename, PhingFile $file) {
-        
+
         $this->validate();
-        
+
         $selectors = $this->selectorElements();
 
         // First, check that all elements are correctly configured
-        
+
         for($i=0,$size=count($selectors); $i < $size; $i++) {
             $result = $selectors[$i]->isSelected($basedir, $filename, $file);
             if ($result) {

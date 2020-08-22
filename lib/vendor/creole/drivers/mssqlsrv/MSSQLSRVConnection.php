@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\mssqlsrv;
 
 
 require_once 'creole/Connection.php';
@@ -151,8 +152,8 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
   function executeQuery($sql, $fetchmode = null)
   {
     $this->lastQuery = $sql;
-    
-    $result = sqlsrv_query($this->dblink, $sql, null, array("Scrollable" => SQLSRV_CURSOR_STATIC));    
+
+    $result = sqlsrv_query($this->dblink, $sql, null, array("Scrollable" => SQLSRV_CURSOR_STATIC));
     if($result === false)
     {
       throw new SQLException('Could not execute query: ' . $sql,  $this->sqlError());
@@ -176,7 +177,7 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
     $this->lastQuery = $sql;
 
     $stmt = sqlsrv_query( $this->dblink, $sql);
-    
+
     if (!$stmt) {
         throw new SQLException('Could not execute update', $this->sqlError(), $sql);
     }
@@ -282,23 +283,23 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
   {
     return print_r( sqlsrv_errors(), true);
   }
-  
+
   /**
    * returns the last inserted id
-   * 
+   *
    * @return int
    * @throws SQLException
    */
   function getLastInsertedId()
-  { 
+  {
     if (
-        (sqlsrv_next_result($this->lastStmt) !== true) || 
+        (sqlsrv_next_result($this->lastStmt) !== true) ||
         (sqlsrv_fetch($this->lastStmt) !== true) ||
         (($lastInsertedId = sqlsrv_get_field($this->lastStmt, 0)) === false)
        ) {
       throw new SQLException('Unable to retrieve last inserted id', $this->sqlError());
     }
-    
+
     return $lastInsertedId;
   }
 }

@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\mysqli;
 
 require_once 'creole/ResultSet.php';
 require_once 'creole/common/ResultSetCommon.php';
@@ -178,13 +179,13 @@ class MySQLiResultSet extends ResultSetCommon implements ResultSet {
     {
         /* As of PHP 5.2.4, strftime() returns false for '0000-00-00' which
            is impossible to tell apart from illegal dates. (Pre-PHP 5.2.4
-           even interpreted such dates incorrectly, see 
+           even interpreted such dates incorrectly, see
            http://bugs.php.net/bug.php?id=41523).
            We catch this special case and return null as the date here.
            However, we need to know the exact format the DBMS returns this
            date, which is why we make this decision here in the specific
            driver before dispatching to the common implementation. */
-        $idx = (is_int($column) ? $column - 1 : $column);        
+        $idx = (is_int($column) ? $column - 1 : $column);
         if (array_key_exists($idx, $this->fields) && $this->fields[$idx] == '0000-00-00') return null;
         return parent::getDate($column, $format);
     }

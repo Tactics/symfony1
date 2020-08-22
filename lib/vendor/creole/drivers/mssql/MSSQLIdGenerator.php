@@ -1,4 +1,5 @@
 <?php
+namespace Tactics\Symfony\vendor\creole\drivers\mssql;
 
 require_once 'creole/IdGenerator.php';
 
@@ -10,7 +11,7 @@ require_once 'creole/IdGenerator.php';
  * @package   creole.drivers.mssql
  */
 class MSSQLIdGenerator implements IdGenerator {
-    
+
     /** Connection object that instantiated this class */
     private $conn;
 
@@ -23,15 +24,15 @@ class MSSQLIdGenerator implements IdGenerator {
     {
         $this->conn = $conn;
     }
-    
+
     /**
      * @see IdGenerator::isBeforeInsert()
      */
     public function isBeforeInsert()
     {
         return false;
-    }    
-    
+    }
+
     /**
      * @see IdGenerator::isAfterInsert()
      */
@@ -39,7 +40,7 @@ class MSSQLIdGenerator implements IdGenerator {
     {
         return true;
     }
-        
+
     /**
      * @see IdGenerator::getIdMethod()
      */
@@ -47,7 +48,7 @@ class MSSQLIdGenerator implements IdGenerator {
     {
         return self::AUTOINCREMENT;
     }
-    
+
     /**
      * @see IdGenerator::getId()
      */
@@ -55,8 +56,8 @@ class MSSQLIdGenerator implements IdGenerator {
     {
         $rs = $this->conn->executeQuery("SELECT SCOPE_IDENTITY()", ResultSet::FETCHMODE_NUM);
         $rs->next();
-        return $rs->getInt(1);        
+        return $rs->getInt(1);
     }
-    
+
 }
 

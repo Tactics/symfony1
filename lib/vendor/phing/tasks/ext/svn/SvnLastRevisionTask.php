@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\svn;
 
 require_once 'phing/Task.php';
 require_once 'phing/tasks/ext/svn/SvnBaseTask.php';
@@ -59,9 +60,9 @@ class SvnLastRevisionTask extends SvnBaseTask
 	function main()
 	{
 		$this->setup('info');
-		
+
 		$output = $this->run();
-		
+
 		if (preg_match('/Rev:[\s]+([\d]+)/', $output, $matches))
 		{
 			$this->project->setProperty($this->getPropertyName(), $matches[1]);

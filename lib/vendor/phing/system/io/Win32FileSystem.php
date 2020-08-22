@@ -16,8 +16,9 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\system\io;
 
 include_once 'phing/system/io/FileSystem.php';
 
@@ -394,7 +395,7 @@ class Win32FileSystem extends FileSystem {
             }
             return (string) $drive.':'.$this->slashify(substr($path,2)); //fake it
         }
-        
+
         throw new Exception("Unresolvable path: " . $path);
     }
 
@@ -449,7 +450,7 @@ class Win32FileSystem extends FileSystem {
     function compare(PhingFile $f1, PhingFile $f2) {
         $f1Path = $f1->getPath();
         $f2Path = $f2->getPath();
-        return (boolean) strcasecmp((string) $f1Path, (string) $f2Path);        
+        return (boolean) strcasecmp((string) $f1Path, (string) $f2Path);
     }
 
 

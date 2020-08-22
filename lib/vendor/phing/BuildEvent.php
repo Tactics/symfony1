@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing;
 
 require_once 'phing/system/lang/EventObject.php';
 
@@ -25,7 +26,7 @@ require_once 'phing/system/lang/EventObject.php';
  * Encapsulates a build specific event.
  *
  * <p>We have three sources of events all handled by this class:
- * 
+ *
  * <ul>
  *  <li>Project level events</li>
  *  <li>Target level events</li>

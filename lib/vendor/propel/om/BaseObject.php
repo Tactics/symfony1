@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://propel.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\propel\om;
 
 require_once 'propel/om/Persistent.php';
 

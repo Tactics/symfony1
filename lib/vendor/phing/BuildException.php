@@ -16,8 +16,9 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing;
 
 /**
  * BuildException is for when things go wrong in a build execution.
@@ -29,11 +30,11 @@
 class BuildException extends Exception {
 
     /** location in the xml file */
-    protected $location = null; 
-            
+    protected $location = null;
+
     /** The nested "cause" exception. */
     protected $cause;
-    
+
     /**
      * Construct a BuildException.
      * Supported signatures:
@@ -44,12 +45,12 @@ class BuildException extends Exception {
      *         throw new BuildException($msg, $loc);
      *         throw new BuildException($msg, $causeExc, $loc);
      */
-    function __construct($p1, $p2 = null, $p3 = null) {        
-        
+    function __construct($p1, $p2 = null, $p3 = null) {
+
         $cause = null;
         $loc = null;
         $msg = "";
-        
+
         if ($p3 !== null) {
             $cause = $p2;
             $loc = $p3;
@@ -71,28 +72,28 @@ class BuildException extends Exception {
         } else {
             $msg = $p1;
         }
-        
+
         parent::__construct($msg);
-        
+
         if ($cause !== null) {
             $this->cause = $cause;
             $this->message .= " [wrapped: " . $cause->getMessage() ."]";
         }
-        
+
         if ($loc !== null) {
             $this->setLocation($loc);
-        }                
+        }
     }
-    
+
     function getCause() {
         return $this->cause;
     }
-    
+
     function getLocation() {
         return $this->location;
     }
 
-    function setLocation($loc) {        
+    function setLocation($loc) {
         $this->location = $loc;
         $this->message = $loc->toString() . ': ' . $this->message;
     }

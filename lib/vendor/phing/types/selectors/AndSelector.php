@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\types\selectors;
 
 require_once 'phing/types/selectors/BaseSelectorContainer.php';
 
@@ -53,7 +54,7 @@ class AndSelector extends BaseSelectorContainer {
      */
     public function isSelected(PhingFile $basedir, $filename, PhingFile $file) {
         $this->validate();
-        $selectors = $this->selectorElements();       
+        $selectors = $this->selectorElements();
            for($i=0,$size=count($selectors); $i < $size; $i++) {
             $result = $selectors[$i]->isSelected($basedir, $filename, $file);
             if (!$result) {

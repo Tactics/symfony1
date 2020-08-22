@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\system;
 
 require_once 'phing/Task.php';
 include_once 'phing/types/FileSet.php';
@@ -39,17 +40,17 @@ class ChmodTask extends Task {
     private $filesets = array();
 
     private $filesystem;
-	
-	private $quiet = false;	
+
+	private $quiet = false;
 	private $failonerror = true;
-	
+
 	/**
 	 * This flag means 'note errors to the output, but keep going'
 	 * @see setQuiet()
 	 */
     function setFailonerror($bool) {
         $this->failonerror = $bool;
-    }	
+    }
 
     /**
      * Set quiet mode, which suppresses warnings if chmod() fails.
@@ -61,14 +62,14 @@ class ChmodTask extends Task {
             $this->failonerror = false;
         }
     }
-	
+
     /**
      * Sets a single source file to touch.  If the file does not exist
      * an empty file will be created.
      */
-    function setFile(PhingFile $file) {        
+    function setFile(PhingFile $file) {
         $this->file = $file;
-    } 
+    }
 
     function setMode($str) {
         $this->mode = $str;
@@ -88,16 +89,16 @@ class ChmodTask extends Task {
      */
     function main() {
         // Check Parameters
-        $this->checkParams();       
+        $this->checkParams();
         $this->chmod();
     }
-    
+
     /**
      * Ensure that correct parameters were passed in.
      * @return void
      */
     private function checkParams() {
-    
+
         if ($this->file === null && empty($this->filesets)) {
             throw new BuildException("Specify at least one source - a file or a fileset.");
         }
@@ -110,7 +111,7 @@ class ChmodTask extends Task {
         if (!preg_match('/^([0-7]){3,4}$/', $this->mode)) {
             throw new BuildException("You have specified an invalid mode.");
         }
-     
+
     }
 
     /**
@@ -118,14 +119,14 @@ class ChmodTask extends Task {
      * @return void
      */
     private function chmod() {
-    	
+
 		if (strlen($this->mode) === 4) {
 			$mode = octdec($this->mode);
 		} else {
 			// we need to prepend the 0 before converting
 			$mode = octdec("0". $this->mode);
 		}
-        
+
         // one file
         if ($this->file !== null) {
             $this->chmodFile($this->file, $mode);
@@ -133,7 +134,7 @@ class ChmodTask extends Task {
 
         // filesets
         foreach($this->filesets as $fs) {
-                    
+
             $ds = $fs->getDirectoryScanner($this->project);
             $fromDir = $fs->getDir($this->project);
 
@@ -159,8 +160,8 @@ class ChmodTask extends Task {
     private function chmodFile(PhingFile $file, $mode) {
         if ( !$file->exists() ) {
             throw new BuildException("The file " . $file->__toString() . " does not exist");
-        }   
-		     
+        }
+
 		try {
 			$file->setMode($mode);
 			$this->log("Changed file mode on '" . $file->__toString() ."' to " . vsprintf("%o", $mode));
@@ -172,6 +173,6 @@ class ChmodTask extends Task {
 			}
 		}
     }
-	
+
 }
 

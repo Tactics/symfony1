@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://propel.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\propel\map;
 
 /**
  * MapBuilders are classes that construct a model of a database at runtime.

@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\simpletest;
 
 require_once 'phing/tasks/ext/simpletest/SimpleTestResultFormatter.php';
 
@@ -34,7 +35,7 @@ class SimpleTestCountResultFormatter extends SimpleTestResultFormatter
 	const SUCCESS = 0;
 	const FAILURES = 1;
 	const ERRORS = 2;
-	
+
 	function getRetCode()
 	{
 		if ($this->getExceptionCount() != 0)
@@ -45,8 +46,8 @@ class SimpleTestCountResultFormatter extends SimpleTestResultFormatter
 		{
 			return self::FAILURES;
 		}
-		
+
 		return self::SUCCESS;
-	}	
+	}
 }
 ?>

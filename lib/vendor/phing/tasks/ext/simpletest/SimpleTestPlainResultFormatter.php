@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\simpletest;
 
 require_once 'phing/tasks/ext/simpletest/SimpleTestResultFormatter.php';
 
@@ -32,12 +33,12 @@ require_once 'phing/tasks/ext/simpletest/SimpleTestResultFormatter.php';
 class SimpleTestPlainResultFormatter extends SimpleTestResultFormatter
 {
 	private $inner = "";
-	
+
 	function getExtension()
 	{
 		return ".txt";
 	}
-	
+
 	function getPreferredOutfile()
 	{
 		return "testresults";
@@ -46,14 +47,14 @@ class SimpleTestPlainResultFormatter extends SimpleTestResultFormatter
 	function paintCaseStart($test_name)
 	{
 		parent::paintCaseStart($test_name);
-		
+
 		$this->inner = "";
 	}
-	
+
 	function paintCaseEnd($test_name)
 	{
 		parent::paintCaseEnd($test_name);
-		
+
 		/* Only count suites where more than one test was run */
 		if ($this->getRunCount())
 		{
@@ -75,21 +76,21 @@ class SimpleTestPlainResultFormatter extends SimpleTestResultFormatter
 	function paintError($message)
 	{
 		parent::paintError($message);
-		
+
 		$this->formatError("ERROR", $message);
 	}
 
 	function paintFail($message)
 	{
 		parent::paintFail($message);
-		
+
 		$this->formatError("FAILED", $message);
 	}
 
 	private function formatError($type, $message)
 	{
 		$this->inner.= $this->getTestName() . " " . $type . "\n";
-		$this->inner.= $message . "\n";	
+		$this->inner.= $message . "\n";
 	}
 }
 ?>

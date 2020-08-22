@@ -1,4 +1,8 @@
 <?php
+
+namespace Tactics\Symfony\vendor\phing\tasks\ext;
+
+
 require_once 'phing/Task.php';
 
 /**
@@ -19,7 +23,7 @@ class PhpLintTask extends Task {
   public function setFile(PhingFile $file) {
     $this->file = $file;
   }
-  
+
   /**
    * Nested creator, creates a FileSet for this task
    *

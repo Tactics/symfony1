@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\types\selectors;
 
 require_once 'phing/types/selectors/FileSelector.php';
 
@@ -77,7 +78,7 @@ abstract class BaseSelector extends DataType implements FileSelector {
         if ($this->getError() !== null) {
             throw new BuildException($this->errmsg);
         }
-    }   
+    }
 
 }
 

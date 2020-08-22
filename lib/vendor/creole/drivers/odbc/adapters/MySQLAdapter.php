@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\odbc\adapters;
 
 require_once 'creole/drivers/odbc/ODBCCachedResultSet.php';
 require_once 'creole/drivers/odbc/ODBCResultSet.php';

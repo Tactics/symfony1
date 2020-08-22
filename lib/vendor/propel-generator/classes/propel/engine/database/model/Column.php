@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://propel.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\propel_generator\classes\propel\engine\database\model;
 
 require_once 'propel/engine/database/model/XMLElement.php';
 include_once 'propel/engine/EngineException.php';

@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
 */
+namespace Tactics\Symfony\vendor\phing\system\io;
 
 /**
  * Abstract class for reading character streams.
@@ -35,17 +36,17 @@ abstract class Reader {
      * @param int $len
      */
     abstract public function read($len = null);
-            
+
     /**
      * Close stream.
      */
     abstract public function close();
-    
+
     /**
      * Open stream for reading.
      */
     abstract public function open();
-    
+
     /**
      * Returns the filename, url, etc. that is being read from.
      * This is critical for, e.g., ExpatParser's ability to know
@@ -59,17 +60,17 @@ abstract class Reader {
      * @param int $n
      */
     public function skip($n) {}
-    
+
     /**
      * Reset the current position in stream to beginning or last mark (if supported).
-     */    
+     */
     public function reset() {}
-        
+
     /**
      * If supported, places a "marker" (like a bookmark) at current stream position.
      * A subsequent call to reset() will move stream position back
      * to last marker (if supported).
-     */    
+     */
     public function mark() {}
 
     /**
@@ -77,7 +78,7 @@ abstract class Reader {
      * @return boolean
      */
     public function markSupported() {}
-    
+
     /**
      * Is stream ready for reading.
      * @return boolean

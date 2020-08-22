@@ -1,6 +1,6 @@
 <?php
 
-namespace Addon\Propel\Builder;
+namespace Tactics\Symfony\addon\propel\builder;
 
 require_once 'propel/engine/builder/om/php5/PHP5ExtensionObjectBuilder.php';
 
@@ -53,7 +53,7 @@ class ".$this->getClassname()." extends $baseClassname
   /**
    * Closes class.
    * @param string &$script The script will be modified in this method.
-   */ 
+   */
   protected function addClassClose(&$script)
   {
     $script .= "

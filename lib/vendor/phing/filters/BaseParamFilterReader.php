@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
 */
+namespace Tactics\Symfony\vendor\phing\filters;
 
 include_once 'phing/filters/BaseFilterReader.php';
 include_once 'phing/types/Parameterizable.php';
@@ -28,28 +29,28 @@ include_once 'phing/types/Parameter.php';
  * Base class for core filter readers.
  *
  * @author <a href="mailto:yl@seasonfive.com">Yannick Lecaillez</a>
- * @copyright © 2003 seasonfive. All rights reserved
+ * @copyright ï¿½ 2003 seasonfive. All rights reserved
  * @version   $Revision: 1.5 $ $Date: 2005/02/27 20:52:08 $
  * @access    public
  * @see       FilterReader
  * @package   phing.filters
  */
 class BaseParamFilterReader extends BaseFilterReader implements Parameterizable {
-    
+
     /** The passed in parameter array. */
     protected $_parameters = array();
-    
+
     /*
      * Sets the parameters used by this filter, and sets
      * the filter to an uninitialized status.
-     * 
+     *
      * @param array Array of parameters to be used by this filter.
      *              Should not be <code>null</code>.
     */
     function setParameters($parameters) {
         // type check, error must never occur, bad code of it does
         if ( !is_array($parameters) ) {
-            throw new Exception("Expected parameters array got something else");            
+            throw new Exception("Expected parameters array got something else");
         }
 
         $this->_parameters = $parameters;
@@ -58,7 +59,7 @@ class BaseParamFilterReader extends BaseFilterReader implements Parameterizable 
 
     /*
      * Returns the parameters to be used by this filter.
-     * 
+     *
      * @return the parameters to be used by this filter
     */
     function &getParameters() {

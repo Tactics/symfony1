@@ -1,4 +1,5 @@
 <?php
+namespace Tactics\Symfony\vendor\creole\drivers\odbc;
 
 require_once 'creole/IdGenerator.php';
 

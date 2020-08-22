@@ -16,19 +16,20 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\system\io;
 
 /**
- * Dummy class for reading character streams. 
+ * Dummy class for reading character streams.
  * @package phing.system.io
  */
 class StringReader extends Reader {
-    
+
     private    $_string;
     private $mark = 0;
     private $currPos = 0;
-    
+
     function __construct($string) {
         $this->_string = $string;
     }
@@ -38,10 +39,10 @@ class StringReader extends Reader {
     function read($len = null) {
         if ($len === null) {
             return $this->_string;
-        } else {            
+        } else {
             if ($this->currPos >= strlen($this->_string)) {
                 return -1;
-            }            
+            }
             $out = substr($this->_string, $this->currPos, $len);
             $this->currPos += $len;
             return $out;
@@ -65,7 +66,7 @@ class StringReader extends Reader {
     function markSupported() {
         return true;
     }
-    
+
     function getResource() {
         return '(string) "'.$this->_string . '"';
     }

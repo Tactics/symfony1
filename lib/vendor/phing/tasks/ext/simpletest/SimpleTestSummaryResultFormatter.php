@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\simpletest;
 
 require_once 'phing/tasks/ext/simpletest/SimpleTestResultFormatter.php';
 
@@ -34,7 +35,7 @@ class SimpleTestSummaryResultFormatter extends SimpleTestResultFormatter
 	function paintCaseEnd($test_name)
 	{
 		parent::paintCaseEnd($test_name);
-		
+
 		/* Only count suites where more than one test was run */
 		if ($this->getRunCount())
 		{

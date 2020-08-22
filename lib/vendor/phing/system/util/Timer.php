@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\system\util;
 
 
 /**
@@ -44,9 +45,9 @@ class Timer {
 
     /** start time */
     protected $stime;
-    
+
     /** end time */
-    protected $etime;  
+    protected $etime;
 
     /**
      * This function sets the class variable $stime to the current time in
@@ -65,7 +66,7 @@ class Timer {
     function stop() {
         $this->etime = $this->getMicrotime();
     }
-    
+
     /**
      * This function returns the elapsed time in seconds.
      *

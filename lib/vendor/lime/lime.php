@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+namespace Tactics\Symfony\vendor\lime;
 
 /**
  * Unit test library.
@@ -76,7 +77,7 @@ class lime_test
     if (!$result)
     {
       $traces = debug_backtrace();
-      if (!empty($_SERVER['PHP_SELF'])) 
+      if (!empty($_SERVER['PHP_SELF']))
       {
         $i = strstr($traces[0]['file'], $_SERVER['PHP_SELF']) ? 0 : (isset($traces[1]['file']) ? 1 : 0);
       }

@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
 */
+namespace Tactics\Symfony\vendor\phing\filters\util;
 
 include_once 'phing/types/TokenReader.php';
 include_once 'phing/system/io/IOException.php';
@@ -25,7 +26,7 @@ include_once 'phing/filters/ReplaceTokens.php'; // For class Token
 
 /**
  * Class that allows reading tokens from INI files.
- * 
+ *
  * @author    Manuel Holtgewe
  * @version   $Revision: 1.7 $
  * @package   phing.filters.util
@@ -83,7 +84,7 @@ class IniFileTokenReader extends TokenReader {
         } else
             return null;
     }
-    
+
     function setFile(PhingFile $file) {
         $this->file = $file;
     }

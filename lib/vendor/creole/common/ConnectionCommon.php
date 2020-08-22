@@ -18,13 +18,14 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\common;
 
 /**
  * Class that contains some shared/default information for connections.  Classes may wish to extend this so
  * as not to worry about the sleep/wakeup methods, etc.
- * 
+ *
  * In reality this class is not very useful yet, so there's not much incentive for drivers to extend this.
- * 
+ *
  * @author    Hans Lellelid <hans@xmpl.org>
  * @version   $Revision: 1.5 $
  * @package   creole.common
@@ -39,19 +40,19 @@ abstract class ConnectionCommon {
     // const TRANSACTION_READ_COMMITTED = 2;
     // const TRANSACTION_REPEATABLE_READ = 3;
     // const TRANSACTION_SERIALIZABLE = 4;
-    
+
        /**
      * The depth level of current transaction.
      * @var int
-     */ 
+     */
     protected $transactionOpcount = 0;
-    
+
     /**
-     * DB connection resource id.     
+     * DB connection resource id.
      * @var resource
-     */ 
+     */
     protected $dblink;
-    
+
     /**
      * Array hash of connection properties.
      * @var array
@@ -63,29 +64,29 @@ abstract class ConnectionCommon {
      * @var int
      */
     protected $flags = 0;
-        
+
     /**
      * This "magic" method is invoked upon serialize() and works in tandem with the __wakeup()
      * method to ensure that your database connection is serializable.
-     * 
+     *
      * This method returns an array containing the names of any members of your class
      * which need to be serialized in order to allow the class to re-connect to the database
      * when it is unserialized.
-     * 
+     *
      * <p>
      * Developers:
-     * 
-     * Note that you cannot serialize resources (connection links) and expect them to 
+     *
+     * Note that you cannot serialize resources (connection links) and expect them to
      * be valid when you unserialize.  For this reason, you must re-connect to the database in the
      * __wakeup() method.
-     * 
-     * It's up to your class implimentation to ensure that the necessary data is serialized. 
+     *
+     * It's up to your class implimentation to ensure that the necessary data is serialized.
      * You probably at least need to serialize:
-     * 
+     *
      *  (1) the DSN array used by connect() method
      *  (2) Any flags that were passed to the connection
      *  (3) Possibly the autocommit state
-     * 
+     *
      * @return array The class variable names that should be serialized.
      * @see __wakeup()
      * @see DriverManager::getConnection()
@@ -95,18 +96,18 @@ abstract class ConnectionCommon {
     {
         return array('dsn', 'flags');
     }
-    
+
     /**
      * This "magic" method is invoked upon unserialize().
      * This method will re-connects to the database using the information that was
      * stored using the __sleep() method.
      * @see __sleep()
      */
-    public function __wakeup() 
+    public function __wakeup()
     {
         $this->connect($this->dsn, $this->flags);
     }
-   
+
     /**
      * @see Connection::getResource()
      */
@@ -114,47 +115,47 @@ abstract class ConnectionCommon {
     {
         return $this->dblink;
     }
-    
+
     /**
      * @see Connection::getDSN()
      */
     public function getDSN() {
         return $this->dsn;
     }
-       
+
     /**
      * @see Connection::getFlags()
      */
     public function getFlags()
     {
         return $this->flags;
-    }    
+    }
 
     /**
      * Creates a CallableStatement object for calling database stored procedures.
-     * 
+     *
      * @param string $sql
      * @return CallableStatement
      */
-    public function prepareCall($sql) 
+    public function prepareCall($sql)
     {
         throw new SQLException("Current driver does not support stored procedures using CallableStatement.");
-    }    
-    
+    }
+
     /**
      * Driver classes should override this if they support transactions.
-     * 
+     *
      * @return boolean
      */
-    public function supportsNestedTrans() 
+    public function supportsNestedTrans()
     {
         return false;
     }
-    
+
     /**
      * Begins a transaction (if supported).
      */
-    public function begin() 
+    public function begin()
     {
         if ($this->transactionOpcount === 0 || $this->supportsNestedTrans()) {
             $this->beginTrans();
@@ -165,41 +166,41 @@ abstract class ConnectionCommon {
     /**
      * Commits statements in a transaction.
      */
-    public function commit() 
+    public function commit()
     {
         if ($this->transactionOpcount > 0) {
             if ($this->transactionOpcount == 1 || $this->supportsNestedTrans()) {
                 $this->commitTrans();
             }
-            $this->transactionOpcount--;       
+            $this->transactionOpcount--;
         }
     }
-    
+
     /**
      * Rollback changes in a transaction.
      */
-    public function rollback() 
+    public function rollback()
     {
         if ($this->transactionOpcount > 0) {
             if ($this->transactionOpcount == 1 || $this->supportsNestedTrans()) {
                 $this->rollbackTrans();
             }
-            $this->transactionOpcount--;       
+            $this->transactionOpcount--;
         }
     }
 
     /**
      * Enable/disable automatic commits.
-     * 
+     *
      * Pushes SQLWarning onto $warnings stack if the autocommit value is being changed mid-transaction. This function
      * is overridden by driver classes so that they can perform the necessary begin/end transaction SQL.
-     * 
+     *
      * If auto-commit is being set to TRUE, then the current transaction will be committed immediately.
-     * 
+     *
      * @param boolean $bit New value for auto commit.
      * @return void
      */
-    public function setAutoCommit($bit) 
+    public function setAutoCommit($bit)
     {
         if ($this->transactionOpcount > 0) {
             trigger_error("Changing autocommit in mid-transaction; committing " . $this->transactionOpcount . " uncommitted statements.", E_USER_WARNING);
@@ -218,11 +219,11 @@ abstract class ConnectionCommon {
      *
      * @return boolean
      */
-    public function getAutoCommit() 
+    public function getAutoCommit()
     {
         return ($this->transactionOpcount == 0);
     }
-    
+
     /**
      * Begin new transaction.
      * Driver classes should override this method if they support transactions.
@@ -230,23 +231,23 @@ abstract class ConnectionCommon {
     protected function beginTrans()
     {
     }
-    
+
     /**
      * Commit the current transaction.
      * Driver classes should override this method if they support transactions.
      */
-    protected function commitTrans() 
+    protected function commitTrans()
     {
     }
-    
+
     /**
      * Roll back (undo) the current transaction.
      * Driver classes should override this method if they support transactions.
      */
-    protected function rollbackTrans() 
+    protected function rollbackTrans()
     {
     }
- 
+
     /**
      * Returns false if connection is closed.
      * @return boolean

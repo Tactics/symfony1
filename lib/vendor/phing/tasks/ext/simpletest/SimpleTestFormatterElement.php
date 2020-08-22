@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\simpletest;
 
 require_once 'phing/tasks/ext/simpletest/SimpleTestPlainResultFormatter.php';
 require_once 'phing/tasks/ext/simpletest/SimpleTestSummaryResultFormatter.php';

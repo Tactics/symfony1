@@ -18,7 +18,8 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
- 
+namespace Tactics\Symfony\vendor\creole\drivers\oracle;
+
 require_once 'creole/ResultSet.php';
 require_once 'creole/common/ResultSetCommon.php';
 
@@ -34,7 +35,7 @@ class OCI8ResultSet extends ResultSetCommon implements ResultSet
 {
     /**
      * @see ResultSet::seek()
-     */ 
+     */
     function seek($rownum)
     {
         if ( $rownum < $this->cursorPos )
@@ -42,7 +43,7 @@ class OCI8ResultSet extends ResultSetCommon implements ResultSet
             // this will effectively disable previous(), first() and some calls to relative() or absolute()
             throw new SQLException( 'Oracle ResultSet is FORWARD-ONLY' );
         }
-        
+
         // Oracle has no seek function imulate it here
         while ( $this->cursorPos < $rownum )
 		{
@@ -53,12 +54,12 @@ class OCI8ResultSet extends ResultSetCommon implements ResultSet
 
         return true;
     }
-    
+
     /**
      * @see ResultSet::next()
-     */ 
+     */
     function next()
-    {   
+    {
 		// no specific result position available
 
 		// Returns an array, which corresponds to the next result row or FALSE
@@ -96,7 +97,7 @@ class OCI8ResultSet extends ResultSetCommon implements ResultSet
 		{
 			$this->fields = array_change_key_case($this->fields, CASE_LOWER);
         }
-        
+
         // Advance cursor position
         $this->cursorPos++;
 
@@ -122,7 +123,7 @@ class OCI8ResultSet extends ResultSetCommon implements ResultSet
 
     /**
      * @see ResultSet::close()
-     */ 
+     */
     function close()
     {
 		$this->fields			= array();

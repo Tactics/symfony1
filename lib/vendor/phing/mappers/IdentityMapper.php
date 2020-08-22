@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  *  $Id: IdentityMapper.php 3076 2006-12-18 08:52:12Z fabien $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -16,14 +16,15 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\mapper;
 
 require_once 'phing/mappers/FileNameMapper.php';
 
 /**
  * This mapper does nothing ;)
- * 
+ *
  * @author    Andreas Aderhold <andi@binarycloud.com>
  * @author    Hans Lellelid <hans@xmpl.org>
  * @version   $Revision: 1.7 $

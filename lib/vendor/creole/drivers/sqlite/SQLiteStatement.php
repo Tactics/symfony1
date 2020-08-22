@@ -18,17 +18,18 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
- 
+namespace Tactics\Symfony\vendor\creole\drivers\sqlite;
+
 require_once 'creole/Statement.php';
 require_once 'creole/common/StatementCommon.php';
 
 /**
  * SQLite Statement
- * 
+ *
  * @author    Hans Lellelid <hans@xmpl.org>
  * @version   $Revision: 1.1 $
  * @package   creole.drivers.sqlite
- */ 
-class SQLiteStatement extends StatementCommon implements Statement {   
-    
+ */
+class SQLiteStatement extends StatementCommon implements Statement {
+
 }

@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\parser;
 
 include_once 'phing/IntrospectionHelper.php';
 include_once 'phing/TaskContainer.php';
@@ -30,7 +31,7 @@ include_once 'phing/TaskContainer.php';
  * introspects the implementation of the class and sets up the data structures.
  *
  * @author      Andreas Aderhold <andi@binarycloud.com>
- * @copyright © 2001,2002 THYRELL. All rights reserved
+ * @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  * @version   $Revision: 1.10 $ $Date: 2005/10/04 19:13:44 $
  * @access    public
  * @package   phing.parser
@@ -90,7 +91,7 @@ class NestedElementHandler extends AbstractHandler {
             $this->parent = $parent;
         }
         $this->parentWrapper = $parentWrapper;
-        $this->target = $target;        
+        $this->target = $target;
     }
 
     /**
@@ -121,12 +122,12 @@ class NestedElementHandler extends AbstractHandler {
             if ($this->parent instanceof UnknownElement) {
                 $this->child = new UnknownElement(strtolower($propType));
                 $this->parent->addChild($this->child);
-            } else {                
+            } else {
                 $this->child = $ih->createElement($project, $this->parent, strtolower($propType));
             }
-            
+
             $configurator->configureId($this->child, $attrs);
-            
+
             if ($this->parentWrapper !== null) {
                 $this->childWrapper = new RuntimeConfigurable($this->child, $propType);
                 $this->childWrapper->setAttributes($attrs);
@@ -149,16 +150,16 @@ class NestedElementHandler extends AbstractHandler {
      */
     function characters($data) {
 
-        $configurator = $this->configurator;        
+        $configurator = $this->configurator;
         $project = $this->configurator->project;
 
         if ($this->parentWrapper === null) {
-            try {                
+            try {
                 $configurator->addText($project, $this->child, $data);
             } catch (BuildException $exc) {
                 throw new ExpatParseException($exc->getMessage(), $this->parser->getLocation());
             }
-        } else {                    
+        } else {
             $this->childWrapper->addText($data);
         }
     }

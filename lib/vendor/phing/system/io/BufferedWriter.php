@@ -16,9 +16,10 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
- 
+namespace Tactics\Symfony\vendor\phing\system\io;
+
 include_once 'phing/system/io/Writer.php';
 
 /**
@@ -26,15 +27,15 @@ include_once 'phing/system/io/Writer.php';
  *
  * @author    Hans Lellelid <hans@xmpl.org>
  * @version   $Revision: 1.10 $
- * @package   phing.system.io 
+ * @package   phing.system.io
  */
 class BufferedWriter extends Writer {
-    
+
     /**
      * The size of the buffer in kb.
      */
     private $bufferSize    = 0;
-    
+
     /**
      * The Writer we are buffering output to.
      */
@@ -48,11 +49,11 @@ class BufferedWriter extends Writer {
     function write($buf, $off = null, $len = null) {
         return $this->out->write($buf, $off, $len);
     }
-    
+
     function newLine() {
         $this->write(Phing::getProperty('line.separator'));
     }
-    
+
     function getResource() {
         return $this->out->getResource();
     }
@@ -60,13 +61,13 @@ class BufferedWriter extends Writer {
     function reset() {
         return $this->out->reset();
     }
-    
+
     function close() {
         return $this->out->close();
     }
-    
+
     function open() {
         return $this->out->open();
     }
-    
+
 }

@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\ioncube;
 
 /**
  * Wrapper for comments for ionCube tasks
@@ -30,12 +31,12 @@
 class IoncubeComment
 {
 	private $value = "";
-	
+
 	public function getValue()
 	{
 		return $this->value;
 	}
-	
+
 	public function addText($txt)
 	{
 		$this->value = trim($txt);

@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\system\condition;
 
 require_once 'phing/tasks/system/condition/Condition.php';
 
@@ -26,7 +27,7 @@ require_once 'phing/tasks/system/condition/Condition.php';
  *  binary safe manner. Implements the condition interface specification.
  *
  *  @author    Andreas Aderhold <andi@binarycloud.com>
- *  @copyright © 2001,2002 THYRELL. All rights reserved
+ *  @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  *  @version   $Revision: 1.7 $ $Date: 2006-04-28 16:49:47 +0200 (Fri, 28 Apr 2006) $
  *  @access    public
  *  @package   phing.tasks.system.condition
@@ -37,7 +38,7 @@ class EqualsCondition implements Condition {
     private $arg2;
     private $trim = false;
     private $caseSensitive = true;
-    
+
     public function setArg1($a1) {
         $this->arg1 = $a1;
     }
@@ -60,18 +61,18 @@ class EqualsCondition implements Condition {
      */
     public function setCaseSensitive($b) {
         $this->caseSensitive = (boolean) $b;
-    } 
-    
+    }
+
     public function evaluate() {
         if ($this->arg1 === null || $this->arg2 === null) {
             throw new BuildException("Both arg1 and arg2 are required in equals.");
         }
-        
+
         if ($this->trim) {
             $this->arg1 = trim($this->arg1);
             $this->arg2 = trim($this->arg2);
         }
-        
+
         //print("[comparison] Comparing '".$this->arg1."' and '".$this->arg2."'\n");
         return $this->caseSensitive ? $this->arg1 === $this->arg2 : strtolower($this->arg1) === strtolower($this->arg2);
     }

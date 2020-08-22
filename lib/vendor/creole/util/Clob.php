@@ -19,6 +19,8 @@
  * <http://creole.phpdb.org>.
  */
 
+namespace Tactics\Symfony\vendor\creole\util;
+
 require_once 'creole/util/Lob.php';
 
 /**

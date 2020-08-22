@@ -18,7 +18,8 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
- 
+namespace Tactics\Symfony\vendor\phing\types\selectors;
+
 require_once 'phing/types/selectors/BaseExtendSelector.php';
 
 /**
@@ -82,10 +83,10 @@ class DepthSelector extends BaseExtendSelector {
                     case self::MAX_KEY:
                         $this->setMax($parameters[$i]->getValue());
                         break;
-                        
+
                     default:
                         $this->setError("Invalud parameter " . $paramname);
-                } // switch                
+                } // switch
             }
         }
     }
@@ -124,10 +125,10 @@ class DepthSelector extends BaseExtendSelector {
         // If you felt daring, you could cache the basedir absolute path
         $abs_base = $basedir->getAbsolutePath();
         $abs_file = $file->getAbsolutePath();
-        
+
         $tok_base = explode(DIRECTORY_SEPARATOR, $abs_base);
         $tok_file = explode(DIRECTORY_SEPARATOR, $abs_file);
-        
+
         for($i=0,$size=count($tok_file); $i < $size; $i++) {
             $filetoken = $tok_file[$i];
             if (isset($tok_base[$i])) {

@@ -19,6 +19,8 @@
  * <http://propel.phpdb.org>.
  */
 
+namespace Tactics\Symfony\vendor\propel;
+
 /**
  * The base class of all exceptions thrown by Propel.
  * @author     Hans Lellelid <hans@xmpl.org>

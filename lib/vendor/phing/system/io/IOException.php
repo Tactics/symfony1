@@ -16,8 +16,9 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\system\io;
 
 /**
  * Extends Exception to take advantage of methods therein.

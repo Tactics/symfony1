@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\mysql\metadata;
 
 require_once 'creole/metadata/TableInfo.php';
 
@@ -59,7 +60,7 @@ class MySQLTableInfo extends TableInfo {
             $size = null;
             $precision = null;
 			$scale = null;
-			
+
             if (preg_match('/^(\w+)[\(]?([\d,]*)[\)]?( |$)/', $row['Type'], $matches)) {
                 //            colname[1]   size/precision[2]
                 $nativeType = $matches[1];
@@ -221,7 +222,7 @@ class MySQLTableInfo extends TableInfo {
             'ON DELETE'	=> ForeignKeyInfo::RESTRICT,
             'ON UPDATE'	=> ForeignKeyInfo::RESTRICT,
           );
-                              
+
           if ($fkey) {
             //split foreign key information -> search for ON DELETE and afterwords for ON UPDATE action
             foreach (array_keys($fkactions) as $fkaction) {
@@ -238,7 +239,7 @@ class MySQLTableInfo extends TableInfo {
       }
     }
     $this->fksLoaded = true;
-    
+
   }
 
   protected function initVendorSpecificInfo()

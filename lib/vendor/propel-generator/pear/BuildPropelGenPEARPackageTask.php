@@ -19,6 +19,8 @@
  * <http://phing.info>.
  */
 
+namespace Tactics\Symfony\vendor\propel_generator\pear;
+
 require_once 'phing/tasks/system/MatchingTask.php';
 include_once 'phing/types/FileSet.php';
 include_once 'phing/tasks/ext/pearpackage/Fileset.php';

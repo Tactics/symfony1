@@ -1,6 +1,6 @@
 <?php
 
-namespace Addon\Creole\Drivers;
+namespace Tactics\Symfony\addon\creole\drivers;
 
 /**
  * Debug implementation of Connection.

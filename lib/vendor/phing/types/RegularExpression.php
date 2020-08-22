@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
 */
+namespace Tactics\Symfony\vendor\phing\types;
 
 include_once 'phing/types/DataType.php';
 include_once 'phing/Project.php';
@@ -40,7 +41,7 @@ class RegularExpression extends DataType {
 
     private $regexp   = null;
     private $ignoreCase = false;
-    
+
     function __construct() {
         $this->regexp  = new Regexp();
     }
@@ -52,7 +53,7 @@ class RegularExpression extends DataType {
     function setReplace($replace) {
         $this->regexp->setReplace($replace);
     }
-    
+
     function getPattern($p) {
         if ( $this->isReference() ) {
             $ref = $this->getRef($p);
@@ -69,15 +70,15 @@ class RegularExpression extends DataType {
 
         return $this->regexp->getReplace();
     }
-    
+
     function setIgnoreCase($bit) {
         $this->regexp->setIgnoreCase($bit);
     }
-    
+
     function getIgnoreCase() {
         return $this->regexp->getIgnoreCase();
     }
-    
+
     function getRegexp(Project $p) {
         if ( $this->isReference() ) {
             $ref = $this->getRef($p);
@@ -90,7 +91,7 @@ class RegularExpression extends DataType {
         if ( !$this->checked ) {
             $stk = array();
             array_push($stk, $this);
-            $this->dieOnCircularReference($stk, $p);            
+            $this->dieOnCircularReference($stk, $p);
         }
 
         $o = $this->ref->getReferencedObject($p);

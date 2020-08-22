@@ -1,7 +1,7 @@
 <?php
 /*
- *  $Id: FileWriter.php 3076 2006-12-18 08:52:12Z fabien $  
- * 
+ *  $Id: FileWriter.php 3076 2006-12-18 08:52:12Z fabien $
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -18,7 +18,8 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
- 
+namespace Tactics\Symfony\vendor\phing\system\io;
+
 include_once 'phing/system/io/PhingFile.php';
 include_once 'phing/system/io/Writer.php';
 
@@ -31,13 +32,13 @@ class FileWriter extends Writer {
 
     protected $file;
     protected $fd;
-    
+
     /** Whether to append contents to file. */
     protected $append;
-    
+
     /** Whether we should attempt to lock the file (currently disabled). */
     protected $exclusive;
-    
+
     /**
      * Construct a new FileWriter.
      * @param mixed $file PhingFile or string pathname.
@@ -93,12 +94,12 @@ class FileWriter extends Writer {
 
         return true;
     }
-    
+
     function reset() {
         // FIXME -- what exactly should this do, if anything?
         // reset to beginning of file (i.e. re-open)?
     }
-    
+
     function writeBuffer($buffer) {
 
         if (!$this->file->canWrite()) {
@@ -131,7 +132,7 @@ class FileWriter extends Writer {
             return true;
         }
     }
-    
+
     function getResource() {
         return $this->file->toString();
     }

@@ -16,8 +16,9 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\util;
 
 /**
  *  Utility class that collects the functionality of the various
@@ -32,7 +33,7 @@ class SourceFileScanner {
 
     /** Instance of FileUtils */
     private $fileUtils;
-    
+
     /** Task this class is working for -- for logging purposes. */
     private $task;
 
@@ -77,7 +78,7 @@ class SourceFileScanner {
         $v = array();
 
         for ($i=0, $size=count($files); $i < $size; $i++) {
-        
+
             $targets = $mapper->main($files[$i]);
             if (empty($targets)) {
                 $this->task->log($files[$i]." skipped - don't know how to handle it", PROJECT_MSG_VERBOSE);
@@ -91,7 +92,7 @@ class SourceFileScanner {
                 } else {
                     $src = $this->fileUtils->resolveFile($srcDir, $files[$i]);
                 }
-    
+
                 if ($src->lastModified() > $now) {
                     $this->task->log("Warning: ".$files[$i]." modified in the future (".$src->lastModified()." > ".$now.")", PROJECT_MSG_WARN);
                 }
@@ -99,7 +100,7 @@ class SourceFileScanner {
                 $this->task->log("Unable to read file ".$files[$i]." (skipping): " . $ioe->getMessage());
                 continue;
             }
-            
+
             $added = false;
             $targetList = "";
 

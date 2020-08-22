@@ -23,11 +23,12 @@
  * Stores the file name and line number of a XML file
  *
  * @author      Andreas Aderhold <andi@binarycloud.com>
- * @copyright © 2001,2002 THYRELL. All rights reserved
+ * @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  * @version   $Revision: 1.6 $ $Date: 2003/12/24 13:02:09 $
  * @access    public
  * @package   phing.parser
  */
+namespace Tactics\Symfony\vendor\phing\parser;
 
 class Location {
 

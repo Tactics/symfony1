@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\coverage;
 
 require_once 'phing/Task.php';
 require_once 'phing/system/io/PhingFile.php';
@@ -63,28 +64,28 @@ class CoverageMergerTask extends Task
 			$ds->scan();
 
 			$includedFiles = $ds->getIncludedFiles();
-			
+
 			foreach ($includedFiles as $file)
 			{
 				$fs = new PhingFile(basename($ds->getBaseDir()), $file);
-					
+
 				$files[] = $fs->getAbsolutePath();
 			}
 		}
 
 		return $files;
 	}
-	
+
 	function main()
 	{
 		$files = $this->getFilenames();
-		
+
 		$this->log("Merging " . count($files) . " coverage files");
 
 		foreach ($files as $file)
 		{
 			$coverageInformation = unserialize(file_get_contents($file));
-			
+
 			CoverageMerger::merge($this->project, array($coverageInformation));
 		}
 	}

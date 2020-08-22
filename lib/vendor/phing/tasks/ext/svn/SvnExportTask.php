@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\svn;
 
 require_once 'phing/Task.php';
 require_once 'phing/tasks/ext/svn/SvnBaseTask.php';
@@ -59,9 +60,9 @@ class SvnExportTask extends SvnBaseTask
 	function main()
 	{
 		$this->setup('export');
-		
+
 		$this->log("Exporting SVN repository to '" . $this->toDir . "'");
-		
+
 		$this->run(array($this->toDir));
 	}
 }

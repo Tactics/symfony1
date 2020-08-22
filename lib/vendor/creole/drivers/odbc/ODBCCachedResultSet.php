@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\odbc;
 
 require_once 'creole/drivers/odbc/ODBCResultSetCommon.php';
 require_once 'creole/drivers/odbc/ODBCTypes.php';
@@ -27,14 +28,14 @@ require_once 'creole/drivers/odbc/ODBCTypes.php';
  *
  * In addition to limit/offset emulation, this class implements a resultset
  * cache. This can be useful as a workaround for some ODBC drivers which lack
- * support for reverse/absolute cursor scrolling, etc. 
+ * support for reverse/absolute cursor scrolling, etc.
  *
  * This class will cache rows _on-demand_. So if you only read the first couple
  * rows of a result, then only those rows will be cached. However, note that if
- * you call getRecordCount() or last(), the class must read and cache all 
- * available records. 
+ * you call getRecordCount() or last(), the class must read and cache all
+ * available records.
  *
- * The offset / limit variables are also taken into account when caching. Any 
+ * The offset / limit variables are also taken into account when caching. Any
  * rows preceding the offset value will be skipped. Caching will stop once the
  * limit value is reached.
  *
@@ -130,7 +131,7 @@ class ODBCCachedResultSet extends ODBCResultSetCommon implements ResultSet
             {
                 $fldNum = $i+1;
                 $row[$i] = odbc_result($rid, $fldNum);
-                
+
                 // Cache lobs if necessary
                 if ($this->cacheLobs)
                 {
@@ -153,7 +154,7 @@ class ODBCCachedResultSet extends ODBCResultSetCommon implements ResultSet
                     }
                 }
             }
-                        
+
             // Add record to cache.
             $this->recs[++$curRecs] = $row;
         }

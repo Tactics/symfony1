@@ -7,5 +7,10 @@
             "name": "fabpot",
             "email": "fabpot@sensio.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Tactics\\Symfony\\": "lib"
+        }
+    }
 }

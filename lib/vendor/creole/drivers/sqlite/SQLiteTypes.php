@@ -19,7 +19,8 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
- 
+namespace Tactics\Symfony\vendor\creole\drivers\sqlite;
+
 require_once 'creole/CreoleTypes.php';
 
 /**
@@ -31,10 +32,10 @@ require_once 'creole/CreoleTypes.php';
  */
 class SQLiteTypes extends CreoleTypes {
 
-    /** 
-     * Map some fake SQLite types CreoleTypes. 
+    /**
+     * Map some fake SQLite types CreoleTypes.
      * SQLite is typeless so this is really only for "hint" / readability
-     * purposes.    
+     * purposes.
      * @var array
      */
     private static $typeMap = array(
@@ -56,7 +57,7 @@ class SQLiteTypes extends CreoleTypes {
                                 'time' => CreoleTypes::TIME,
                                 'year' => CreoleTypes::YEAR,
                                 'datetime' => CreoleTypes::TIMESTAMP,
-                                'timestamp' => CreoleTypes::TIMESTAMP,                                
+                                'timestamp' => CreoleTypes::TIMESTAMP,
                                 'tinyblob' => CreoleTypes::BINARY,
                                 'blob' => CreoleTypes::VARBINARY,
                                 'mediumblob' => CreoleTypes::VARBINARY,
@@ -65,10 +66,10 @@ class SQLiteTypes extends CreoleTypes {
                                 'mediumtext' => CreoleTypes::LONGVARCHAR,
                                 'text' => CreoleTypes::LONGVARCHAR,
                                 );
-    
+
     /** Reverse mapping, created on demand. */
     private static $reverseMap = null;
-    
+
     /**
      * This method returns the generic Creole (JDBC-like) type
      * when given the native db type.  If no match is found then we just
@@ -85,15 +86,15 @@ class SQLiteTypes extends CreoleTypes {
             return CreoleTypes::TEXT; // because SQLite is typeless
         }
     }
-            
+
     /**
      * This method will return a native type that corresponds to the specified
      * Creole (JDBC-like) type.  Remember that this is really only for "hint" purposes
      * as SQLite is typeless.
-     * 
-     * If there is more than one matching native type, then the LAST defined 
+     *
+     * If there is more than one matching native type, then the LAST defined
      * native type will be returned.
-     * 
+     *
      * @param int $creoleType
      * @return string Native type string.
      */
@@ -104,5 +105,5 @@ class SQLiteTypes extends CreoleTypes {
         }
         return @self::$reverseMap[$creoleType];
     }
-                                
+
 }

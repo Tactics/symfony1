@@ -18,14 +18,15 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
- 
+namespace Tactics\Symfony\vendor\phing\tasks\ext\svn;
+
 include_once 'phing/Task.php';
 
 /**
- *  Send a message by mail() 
+ *  Send a message by mail()
  *
- *  <mail to="user@example.org" subject="build complete">The build process is a success...</mail> 
- * 
+ *  <mail to="user@example.org" subject="build complete">The build process is a success...</mail>
+ *
  *  @author   Francois Harvey at SecuriWeb (http://www.securiweb.net)
  *  @version  $Id: SvnBaseTask.php 3076 2006-12-18 08:52:12Z fabien $
  *  @package  phing.tasks.ext
@@ -33,15 +34,15 @@ include_once 'phing/Task.php';
 abstract class SvnBaseTask extends Task
 {
 	private $workingCopy = "";
-	
+
 	private $repositoryUrl = "";
-	
+
 	private $svnPath = "/usr/bin/svn";
-	
+
 	private $svn = NULL;
-	
+
 	private $mode = "";
-	
+
 	private $svnArgs = array();
 
 	/**
@@ -104,7 +105,7 @@ abstract class SvnBaseTask extends Task
 	{
 		return $this->svnPath;
 	}
-	
+
 	/**
 	 * Creates a VersionControl_SVN class based on $mode
 	 *
@@ -114,11 +115,11 @@ abstract class SvnBaseTask extends Task
 	protected function setup($mode)
 	{
 		$this->mode = $mode;
-		
+
 		// Set up runtime options. Will be passed to all
 		// subclasses.
 		$options = array('fetchmode' => VERSIONCONTROL_SVN_FETCHMODE_ASSOC, 'svn_path' => $this->getSvnPath());
-		
+
 		// Pass array of subcommands we need to factory
 		$this->svn = VersionControl_SVN::factory($mode, $options);
 
@@ -146,7 +147,7 @@ abstract class SvnBaseTask extends Task
 			}
 		}
 	}
-	
+
 	/**
 	 * Executes the constructed VersionControl_SVN instance
 	 *
@@ -157,11 +158,11 @@ abstract class SvnBaseTask extends Task
 	protected function run($args = array(), $switches = array())
 	{
 		$svnstack = PEAR_ErrorStack::singleton('VersionControl_SVN');
-		
+
 		$tempArgs = $this->svnArgs;
-		
+
 		$tempArgs = array_merge($tempArgs, $args);
-		
+
 		if ($output = $this->svn->run($tempArgs, $switches))
 		{
 			return $output;

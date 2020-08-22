@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\pgsql\metadata;
 
 require_once 'creole/metadata/DatabaseInfo.php';
 
@@ -37,11 +38,11 @@ class PgSQLDatabaseInfo extends DatabaseInfo {
     protected function initTables()
     {
         include_once 'creole/drivers/pgsql/metadata/PgSQLTableInfo.php';
-        
+
         // Get Database Version
 	// TODO: www.php.net/pg_version
         $result = pg_query ($this->conn->getResource(), "SELECT version() as ver");
-        
+
         if (!$result)
         {
         	throw new SQLException ("Failed to select database version");
@@ -71,7 +72,7 @@ class PgSQLDatabaseInfo extends DatabaseInfo {
         while ($row = pg_fetch_assoc($result)) {
             $this->tables[strtoupper($row['relname'])] = new PgSQLTableInfo($this, $row['relname'], $version, $row['oid']);
         }
-		
+
 		$this->tablesLoaded = true;
     }
 
@@ -83,9 +84,9 @@ class PgSQLDatabaseInfo extends DatabaseInfo {
      */
     protected function initSequences()
     {
-     
+
 	 	$this->sequences = array();
-		   
+
         $result = pg_query($this->conn->getResource(), "SELECT c.oid, 
 														case when n.nspname='public' then c.relname else n.nspname||'.'||c.relname end as relname 
 														FROM pg_class c join pg_namespace n on (c.relnamespace=n.oid)
@@ -94,11 +95,11 @@ class PgSQLDatabaseInfo extends DatabaseInfo {
 														  AND n.nspname NOT LIKE 'pg_temp%'
 														  AND n.nspname NOT LIKE 'pg_toast%'
 														ORDER BY relname");
-														
+
         if (!$result) {
             throw new SQLException("Could not list sequences", pg_last_error($this->dblink));
         }
-		
+
 		while ($row = pg_fetch_assoc($result)) {
 			// FIXME -- decide what info we need for sequences & then create a SequenceInfo object (if needed)
 			$obj = new stdClass;
@@ -106,7 +107,7 @@ class PgSQLDatabaseInfo extends DatabaseInfo {
 			$obj->oid = $row['oid'];
             $this->sequences[strtoupper($row['relname'])] = $obj;
         }
-		
+
     }
 
 }

@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\system\condition;
 
 /**
  * Condition interface specification:

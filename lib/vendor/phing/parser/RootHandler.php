@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\parser;
 
 require_once 'phing/parser/AbstractHandler.php';
 include_once 'phing/parser/ExpatParseException.php';
@@ -30,7 +31,7 @@ include_once 'phing/parser/ProjectHandler.php';
  * specific parsing starts. RootHandler decides what to do next.
  *
  * @author    Andreas Aderhold <andi@binarycloud.com>
- * @copyright © 2001,2002 THYRELL. All rights reserved
+ * @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  * @version   $Revision: 1.7 $
  * @package   phing.parser
  */
@@ -62,7 +63,7 @@ class RootHandler extends AbstractHandler {
      * Kick off a custom action for a start element tag.
      *
      * The root element of our buildfile is the &lt;project&gt; element. The
-     * root filter handles this element if it occurs, creates ProjectHandler 
+     * root filter handles this element if it occurs, creates ProjectHandler
      * to handle any nested tags & attributes of the &lt;project&gt; tag,
      * and calls init.
      *

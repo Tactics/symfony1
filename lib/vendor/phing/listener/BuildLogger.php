@@ -18,7 +18,8 @@
 	 * and is licensed under the LGPL. For more information please see
 	 * <http://phing.info>.
 	 */
-	
+namespace Tactics\Symfony\vendor\phing\listener;
+
 	require_once 'phing/BuildListener.php';
 	/**
 	 * Interface used by Phing Ant to log the build output.

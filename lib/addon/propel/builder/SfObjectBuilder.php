@@ -1,6 +1,6 @@
 <?php
 
-namespace Addon\Propel\Builder;
+namespace Tactics\Symfony\addon\propel\builder;
 
 require_once 'propel/engine/builder/om/php5/PHP5ComplexObjectBuilder.php';
 
@@ -26,7 +26,7 @@ class SfObjectBuilder extends PHP5ComplexObjectBuilder
     {
       return sfToolkit::stripComments(parent::build());
     }
-    
+
     return parent::build();
   }
 

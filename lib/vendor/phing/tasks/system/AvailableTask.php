@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\system;
 
 require_once 'phing/Task.php';
 include_once 'phing/tasks/system/condition/ConditionBase.php';
@@ -28,7 +29,7 @@ include_once 'phing/tasks/system/condition/ConditionBase.php';
  *  Note: implements condition interface (see condition/Condition.php)
  *
  *  @author    Andreas Aderhold <andi@binarycloud.com>
- *  @copyright © 2001,2002 THYRELL. All rights reserved
+ *  @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  *  @version   $Revision: 1.11 $
  *  @package   phing.tasks.system
  */
@@ -36,13 +37,13 @@ class AvailableTask extends Task {
 
     /** Property to check for. */
     private $property;
-    
+
     /** Value property should be set to. */
     private $value = "true";
-    
+
     /** Resource to check for */
     private $resource;
-    
+
     private $type = null;
     private $filepath = null;
 
@@ -77,13 +78,13 @@ class AvailableTask extends Task {
 
     function evaluate() {
         if ($this->file === null && $this->resource === null) {
-            throw new BuildException("At least one of (file|resource) is required", $this->location);            
+            throw new BuildException("At least one of (file|resource) is required", $this->location);
         }
 
         if ($this->type !== null && ($this->type !== "file" && $this->type !== "dir")) {
             throw new BuildException("Type must be one of either dir or file", $this->location);
         }
-        
+
         if (($this->file !== null) && !$this->_checkFile()) {
             $this->log("Unable to find " . $this->file->__toString() . " to set property " . $this->property, PROJECT_MSG_VERBOSE);
             return false;

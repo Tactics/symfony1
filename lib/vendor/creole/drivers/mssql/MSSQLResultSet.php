@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\mssql;
 
 require_once 'creole/ResultSet.php';
 require_once 'creole/common/ResultSetCommon.php';
@@ -28,25 +29,25 @@ require_once 'creole/common/ResultSetCommon.php';
  * MS SQL does not support LIMIT or OFFSET natively so the methods
  * in here need to perform some adjustments and extra checking to make sure
  * that this behaves the same as RDBMS drivers using native OFFSET/LIMIT.
- * 
+ *
  * @author    Hans Lellelid <hans@xmpl.org>
  * @version   $Revision: 1.21 $
  * @package   creole.drivers.mssql
  */
-class MSSQLResultSet extends ResultSetCommon implements ResultSet {    
-    
+class MSSQLResultSet extends ResultSetCommon implements ResultSet {
+
     /**
      * Offset at which to start reading rows.
      * @var int
      */
     private $offset = 0;
-    
+
     /**
      * Maximum rows to retrieve, or 0 if all.
      * @var int
      */
-    private $limit = 0;   
-    
+    private $limit = 0;
+
     /**
      * This MSSQL-only function exists to set offset after ResultSet is instantiated.
      * This function should be "protected" in Java sense: only available to classes in package.
@@ -61,7 +62,7 @@ class MSSQLResultSet extends ResultSetCommon implements ResultSet {
             $this->seek(0);  // 0 becomes $offset by seek() method
         }
     }
-    
+
     /**
      * This MSSQL-only function exists to set limit after ResultSet is instantiated.
      * This function should be "protected" in Java sense: only available to classes in package.
@@ -73,21 +74,21 @@ class MSSQLResultSet extends ResultSetCommon implements ResultSet {
     {
         $this->limit = $limit;
     }
-    
+
     /**
      * @see ResultSet::seek()
-     */ 
+     */
     function seek($rownum)
     {
         // support emulated OFFSET
         $actual = $rownum + $this->offset;
-        
+
         if (($this->limit > 0 && $rownum >= $this->limit) || $rownum < 0) {
                     // have to check for rownum < 0, because mssql_seek() won't
                     // complain if the $actual is valid.
             return false;
         }
-                
+
         // MSSQL rows start w/ 0, but this works, because we are
         // looking to move the position _before_ the next desired position
          if (!@mssql_data_seek($this->result, $actual)) {
@@ -97,7 +98,7 @@ class MSSQLResultSet extends ResultSetCommon implements ResultSet {
         $this->cursorPos = $rownum;
         return true;
     }
-    
+
     /**
      * @see ResultSet::next()
      */
@@ -108,9 +109,9 @@ class MSSQLResultSet extends ResultSetCommon implements ResultSet {
             $this->afterLast();
             return false;
         }
-        
-        $this->fields = mssql_fetch_array($this->result, $this->fetchmode);        
-                
+
+        $this->fields = mssql_fetch_array($this->result, $this->fetchmode);
+
         if (!$this->fields) {
             if ($errmsg = mssql_get_last_message()) {
                 throw new SQLException("Error fetching result", $errmsg);
@@ -118,18 +119,18 @@ class MSSQLResultSet extends ResultSetCommon implements ResultSet {
                 // We've advanced beyond end of recordset.
                 $this->afterLast();
                 return false;
-             }          
+             }
         }
-        
+
         if ($this->fetchmode === ResultSet::FETCHMODE_ASSOC && $this->lowerAssocCase) {
             $this->fields = array_change_key_case($this->fields, CASE_LOWER);
         }
-        
+
         // Advance cursor position
         $this->cursorPos++;
         return true;
     }
-    
+
     /**
      * @see ResultSet::getRecordCount()
      */
@@ -146,14 +147,14 @@ class MSSQLResultSet extends ResultSetCommon implements ResultSet {
 
     /**
      * @see ResultSet::close()
-     */ 
+     */
     function close()
     {
         $ret = @mssql_free_result($this->result);
         $this->result = false;
         $this->fields = array();
         $this->limit = 0;
-        $this->offset = 0;        
-    }   
+        $this->offset = 0;
+    }
 
 }

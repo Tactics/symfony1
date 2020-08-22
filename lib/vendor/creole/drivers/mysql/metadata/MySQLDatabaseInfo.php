@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\mysql\metadata;
 
 require_once 'creole/metadata/DatabaseInfo.php';
 
@@ -36,7 +37,7 @@ class MySQLDatabaseInfo extends DatabaseInfo {
      */
     protected function initTables()
     {
-        include_once 'creole/drivers/mysql/metadata/MySQLTableInfo.php';		
+        include_once 'creole/drivers/mysql/metadata/MySQLTableInfo.php';
 																		// using $this->dblink was causing tests to break
 																		// perhaps dblink is changed by another test ... ?
         $result = @mysql_query("SHOW TABLES FROM `" . $this->dbname . "`", $this->conn->getResource());
@@ -48,9 +49,9 @@ class MySQLDatabaseInfo extends DatabaseInfo {
         while ($row = mysql_fetch_row($result)) {
             $this->tables[strtoupper($row[0])] = new MySQLTableInfo($this, $row[0]);
         }
-		
+
 		$this->tablesLoaded = true;
-		
+
     }
 
     /**

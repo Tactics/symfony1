@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\mssqlsrv;
 
 require_once 'creole/PreparedStatement.php';
 require_once 'creole/common/PreparedStatementCommon.php';
@@ -33,7 +34,7 @@ class MSSQLSRVPreparedStatement extends PreparedStatementCommon implements Prepa
 
     /**
      * @inheritdoc
-     * 
+     *
      */
     public function __construct(Connection $conn, $sql)
     {
@@ -41,10 +42,10 @@ class MSSQLSRVPreparedStatement extends PreparedStatementCommon implements Prepa
       {
         $sql .= '; SELECT SCOPE_IDENTITY() AS ID';
       }
-      
+
       parent::__construct($conn, $sql);
     }
-    
+
     /**
      * Add quotes using str_replace.
      * This is not as thorough as MySQL.

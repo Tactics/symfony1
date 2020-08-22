@@ -1,4 +1,5 @@
 <?php
+namespace Tactics\Symfony\vendor\creole\drivers\oracle;
 
 require_once 'creole/IdGenerator.php';
 
@@ -10,7 +11,7 @@ require_once 'creole/IdGenerator.php';
  * @package   creole.drivers.oracle
  */
 class OCI8IdGenerator implements IdGenerator {
-    
+
     /** Connection object that instantiated this class */
     private $conn;
 
@@ -23,15 +24,15 @@ class OCI8IdGenerator implements IdGenerator {
     {
         $this->conn = $conn;
     }
-    
+
     /**
      * @see IdGenerator::isBeforeInsert()
      */
     public function isBeforeInsert()
     {
         return true;
-    }    
-    
+    }
+
     /**
      * @see IdGenerator::isAfterInsert()
      */
@@ -39,7 +40,7 @@ class OCI8IdGenerator implements IdGenerator {
     {
         return false;
     }
-        
+
     /**
      * @see IdGenerator::getIdMethod()
      */
@@ -47,7 +48,7 @@ class OCI8IdGenerator implements IdGenerator {
     {
         return self::SEQUENCE;
     }
-    
+
     /**
      * @see IdGenerator::getId()
      */
@@ -60,6 +61,6 @@ class OCI8IdGenerator implements IdGenerator {
         $rs->next();
         return $rs->getInt(1);
     }
-    
+
 }
 

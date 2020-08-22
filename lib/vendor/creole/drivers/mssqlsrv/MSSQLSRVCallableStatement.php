@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\mssqlsrv;
 
 require_once 'creole/drivers/mssqlsrv/MSSQLSRVPreparedStatement.php';
 require_once 'creole/CallableStatement.php';

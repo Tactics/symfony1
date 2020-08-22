@@ -1,4 +1,5 @@
 <?php
+namespace Tactics\Symfony\vendor\creole\drivers\mysql;
 
 require_once 'creole/IdGenerator.php';
 
@@ -10,7 +11,7 @@ require_once 'creole/IdGenerator.php';
  * @package   creole.drivers.mysql
  */
 class MySQLIdGenerator implements IdGenerator {
-    
+
     /** Connection object that instantiated this class */
     private $conn;
 
@@ -23,15 +24,15 @@ class MySQLIdGenerator implements IdGenerator {
     {
         $this->conn = $conn;
     }
-    
+
     /**
      * @see IdGenerator::isBeforeInsert()
      */
     public function isBeforeInsert()
     {
         return false;
-    }    
-    
+    }
+
     /**
      * @see IdGenerator::isAfterInsert()
      */
@@ -39,7 +40,7 @@ class MySQLIdGenerator implements IdGenerator {
     {
         return true;
     }
-        
+
     /**
      * @see IdGenerator::getIdMethod()
      */
@@ -47,14 +48,14 @@ class MySQLIdGenerator implements IdGenerator {
     {
         return self::AUTOINCREMENT;
     }
-    
+
     /**
      * Returns last-generated auto-increment ID.
-     * 
+     *
      * Note that for very large values (2,147,483,648 to 9,223,372,036,854,775,807) a string
      * will be returned, because these numbers are larger than supported by PHP's native
      * numeric datatypes.
-     * 
+     *
      * @see IdGenerator::getId()
      */
     public function getId($unused = null)
@@ -70,6 +71,6 @@ class MySQLIdGenerator implements IdGenerator {
         }
         return $insert_id;
     }
-    
+
 }
 

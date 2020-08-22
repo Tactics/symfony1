@@ -1,4 +1,5 @@
 <?php
+namespace Tactics\Symfony\vendor\propel_generator\classes\propel\engine\database\model;
 
 /*
  *  $Id: Table.php 803 2007-11-13 21:24:21Z dwhittle $

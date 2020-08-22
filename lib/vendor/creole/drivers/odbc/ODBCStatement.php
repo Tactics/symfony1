@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\odbc;
 
 require_once 'creole/Statement.php';
 require_once 'creole/common/StatementCommon.php';

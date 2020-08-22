@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://propel.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\propel_generator\classes\propel\engine\database\model;
 
 /**
  * Interface for various ID retrieval method types

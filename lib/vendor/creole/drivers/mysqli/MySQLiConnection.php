@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\mysqli;
 
 require_once 'creole/Connection.php';
 require_once 'creole/common/ConnectionCommon.php';
@@ -52,9 +53,9 @@ class MySQLiConnection extends ConnectionCommon implements Connection {
 
         $this->dsn = $dsninfo;
         $this->flags = $flags;
-		
+
 		$dbhost = null;
-		
+
 
         if (isset($dsninfo['protocol']) && $dsninfo['protocol'] == 'unix') {
             $dbhost = ':' . $dsninfo['socket'];
@@ -115,7 +116,7 @@ class MySQLiConnection extends ConnectionCommon implements Connection {
         $this->dblink = $conn;
 
         if ($encoding) {
-			$this->dblink->set_charset( $encoding ); 
+			$this->dblink->set_charset( $encoding );
 		}
     }
 
@@ -254,7 +255,7 @@ class MySQLiConnection extends ConnectionCommon implements Connection {
         }
 
         if (!mysqli_commit($this->dblink)) {
-            throw new SQLException('Can not commit transaction', mysqli_error($this->dblink));                
+            throw new SQLException('Can not commit transaction', mysqli_error($this->dblink));
         }
 
         mysqli_autocommit($this->dblink, TRUE);

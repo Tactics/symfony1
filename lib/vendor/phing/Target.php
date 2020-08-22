@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing;
 
 include_once 'phing/TaskContainer.php';
 
@@ -26,7 +27,7 @@ include_once 'phing/TaskContainer.php';
  *  abstract class {@link TaskContainer}
  *
  *  @author    Andreas Aderhold <andi@binarycloud.com>
- *  @copyright © 2001,2002 THYRELL. All rights reserved
+ *  @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  *  @version   $Revision: 1.10 $ $Date: 2005/10/04 19:13:44 $
  *  @access    public
  *  @see       TaskContainer
@@ -34,25 +35,25 @@ include_once 'phing/TaskContainer.php';
  */
 
 class Target implements TaskContainer {
-    
+
     /** name of target */
     private $name;
-    
+
     /** dependencies */
     private $dependencies = array();
-    
+
     /** holds objects of children of this target */
     private $children = array();
-    
+
     /** the if cond. from xml */
     private $ifCondition = "";
-    
+
     /** the unless cond. from xml */
     private $unlessCondition = "";
-    
+
     /** description of this target */
     private $description;
-    
+
     /** reference to project */
     private $project;
 
@@ -88,7 +89,7 @@ class Target implements TaskContainer {
             $trimmed = trim($deps[$i]);
             if ($trimmed === "") {
                 throw new BuildException("Syntax Error: Depend attribute for target ".$this->getName()." is malformed.");
-            } 
+            }
             $this->addDependency($trimmed);
         }
     }
@@ -267,7 +268,7 @@ class Target implements TaskContainer {
             $this->project->fireTargetFinished($this, $exc);
             throw $exc;
         }
-    }    
+    }
 
     /**
      *  Tests if the property set in ifConfiditon exists.
@@ -303,7 +304,7 @@ class Target implements TaskContainer {
         if ($this->unlessCondition === "") {
             return true;
         }
-        
+
         $properties = explode(",", $this->unlessCondition);
 
         $result = true;

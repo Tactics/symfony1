@@ -19,9 +19,11 @@
  * <http://creole.phpdb.org>.
  */
 
+namespace Tactics\Symfony\vendor\creole;
+
 /**
  * Generic Creole types modeled on JDBC types.
- * 
+ *
  * @author    David Giffin <david@giffin.org>
  * @author    Hans Lellelid <hans@xmpl.org>
  * @version   $Revision: 1.18 $
@@ -52,12 +54,12 @@ abstract class CreoleTypes {
         const BINARY = 20;
         const LONGVARBINARY = 21;
         const YEAR = 22;
-        
+
         /** this is "ARRAY" from JDBC types */
         const ARR = 23;
-        
+
         const OTHER = -1;
-        
+
         /** Map of Creole type integers to the setter/getter affix. */
         protected static $affixMap = array(
                 self::BOOLEAN => 'Boolean',
@@ -71,7 +73,7 @@ abstract class CreoleTypes {
                 self::TINYINT => 'Int',
                 self::TIME => 'Time',
                 self::TIMESTAMP => 'Timestamp',
-                self::VARCHAR => 'String',                
+                self::VARCHAR => 'String',
                 self::VARBINARY => 'Blob',
                 self::NUMERIC => 'Float',
                 self::BLOB => 'Blob',
@@ -85,7 +87,7 @@ abstract class CreoleTypes {
                 self::ARR => 'Array',
                 self::OTHER => '', // get() and set() for unknown
                 );
-        
+
         /** Map of Creole type integers to their textual name. */
         protected static $creoleTypeMap = array(
                 self::BOOLEAN => 'BOOLEAN',
@@ -105,16 +107,16 @@ abstract class CreoleTypes {
                 self::TIMESTAMP => 'TIMESTAMP',
                 self::DATE => 'DATE',
                 self::YEAR => 'YEAR',
-                self::VARBINARY => 'VARBINARY',                
+                self::VARBINARY => 'VARBINARY',
                 self::BLOB => 'BLOB',
                 self::CLOB => 'CLOB',
                 self::LONGVARCHAR => 'LONGVARCHAR',
                 self::BINARY => 'BINARY',
-                self::LONGVARBINARY => 'LONGVARBINARY',                
+                self::LONGVARBINARY => 'LONGVARBINARY',
                 self::ARR => 'ARR',
                 self::OTHER => 'OTHER', // string is "raw" return
                 );
-        
+
         /**
          * This method returns the generic Creole (JDBC-like) type
          * when given the native db type.
@@ -124,18 +126,18 @@ abstract class CreoleTypes {
         public static function getType($nativeType) {
         	throw new Exception('This method must be overridden in subclasses!'); // abstract static not allowed since PHP 5.2
         }
-        
+
         /**
          * This method will return a native type that corresponds to the specified
          * Creole (JDBC-like) type.
-         * If there is more than one matching native type, then the LAST defined 
+         * If there is more than one matching native type, then the LAST defined
          * native type will be returned.
          * @return string Native type string.
          */
         public static function getNativeType($creoleType) {
         	 throw new Exception('This method must be overridden in subclasses!'); // abstract static not allowed since PHP 5.2
         }
-        
+
         /**
          * Gets the "affix" to use for ResultSet::get*() and PreparedStatement::set*() methods.
          * <code>
@@ -157,7 +159,7 @@ abstract class CreoleTypes {
             }
             return self::$affixMap[$creoleType];
         }
-        
+
         /**
          * Given the integer type, this method will return the corresponding type name.
          * @param int $creoleType the integer Creole type.
@@ -170,7 +172,7 @@ abstract class CreoleTypes {
             }
             return self::$creoleTypeMap[$creoleType];
         }
-        
+
         /**
          * Given the name of a type (e.g. 'VARCHAR') this method will return the corresponding integer.
          * @param string $creoleTypeName The case-sensisive (must be uppercase) name of the Creole type (e.g. 'VARCHAR').

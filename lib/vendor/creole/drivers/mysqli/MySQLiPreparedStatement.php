@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\mysqli;
 
 require_once 'creole/PreparedStatement.php';
 require_once 'creole/common/PreparedStatementCommon.php';

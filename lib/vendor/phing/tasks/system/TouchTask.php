@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\system;
 
 require_once 'phing/Task.php';
 include_once 'phing/util/DirectoryScanner.php';
@@ -50,7 +51,7 @@ class TouchTask extends Task {
      * Sets a single source file to touch.  If the file does not exist
      * an empty file will be created.
      */
-    function setFile(PhingFile $file) {        
+    function setFile(PhingFile $file) {
         $this->file = $file;
     }
 
@@ -106,9 +107,9 @@ class TouchTask extends Task {
         } catch (Exception $ex) {
             throw new BuildException("Error touch()ing file", $ex, $this->location);
         }
-        
+
         $this->millis = $savedMillis;
-        
+
     }
 
     /**
@@ -138,7 +139,7 @@ class TouchTask extends Task {
 
         // deal with the filesets
         foreach($this->filesets as $fs) {
-        
+
             $ds = $fs->getDirectoryScanner($this->getProject());
             $fromDir = $fs->getDir($this->getProject());
 
@@ -148,7 +149,7 @@ class TouchTask extends Task {
             for ($j=0,$_j=count($srcFiles); $j < $_j; $j++) {
                 $this->touchFile(new PhingFile($fromDir, (string) $srcFiles[$j]));
             }
-            
+
             for ($j=0,$_j=count($srcDirs); $j < $_j ; $j++) {
                 $this->touchFile(new PhingFile($fromDir, (string) $srcDirs[$j]));
             }

@@ -16,9 +16,10 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
- 
+namespace Tactics\Symfony\vendor\phing\system\io;
+
 include_once 'phing/system/io/PhingFile.php';
 include_once 'phing/system/io/Reader.php';
 
@@ -36,7 +37,7 @@ class FileReader extends Reader {
     protected $mark = 0;
 
     function __construct($file, $exclusive = false) {
-    
+
         if ($file instanceof PhingFile) {
             $this->file = $file;
         } elseif (is_string($file)) {
@@ -64,7 +65,7 @@ class FileReader extends Reader {
 
         return $skipped;
     }
-    
+
     /**
      * Read data from file.
      * @param int $len Num chars to read.
@@ -77,7 +78,7 @@ class FileReader extends Reader {
         }
 
         // Compute length to read
-        // possible that filesize($this->file) will be larger than 
+        // possible that filesize($this->file) will be larger than
         // available bytes to read, but that's fine -- better to err on high end
         $length = ($len === null) ? filesize($this->file->getAbsolutePath()) : $len;
 
@@ -86,12 +87,12 @@ class FileReader extends Reader {
         $this->currentPosition = ftell($this->fd);
 
         return $out;
-    }    
-    
+    }
+
     function mark($n = null) {
         $this->mark = $this->currentPosition;
     }
-    
+
     function reset() {
         // goes back to last mark, by default this would be 0 (i.e. rewind file).
         fseek($this->fd, SEEK_SET, $this->mark);
@@ -115,7 +116,7 @@ class FileReader extends Reader {
 
     function open() {
         global $php_errormsg;
-        
+
         if ($this->fd === null) {
             $this->fd = @fopen($this->file->getAbsolutePath(), "rb");
         }
@@ -144,7 +145,7 @@ class FileReader extends Reader {
     function eof() {
         return feof($this->fd);
     }
-     
+
     /**
      * Reads a entire file and stores the data in the variable
      * passed by reference.
@@ -167,7 +168,7 @@ class FileReader extends Reader {
         $rBuffer = fread($this->fd, $fileSize);
         $this->close();
     }
-    
+
     /**
      * Returns path to file we are reading.
      * @return string

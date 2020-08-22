@@ -19,6 +19,8 @@
  * <http://propel.phpdb.org>.
  */
 
+namespace Tactics\Symfony\vendor\propel_generator\classes\propel\engine;
+
 require_once 'phing/BuildException.php';
 
 /**

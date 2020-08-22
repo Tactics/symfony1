@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing;
 
 require_once 'phing/Project.php';
 require_once 'phing/ProjectComponent.php';

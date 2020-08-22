@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\types\selectors;
 
 /**
  * Selector that filters files based on whether they appear in another
@@ -37,7 +38,7 @@ class PresentSelector extends BaseSelector {
     private $map = null;
     private $destmustexist = true;
     private static $filePresence = array("srconly", "both");
-    
+
     public function toString() {
         $buf = "{presentselector targetdir: ";
         if ($this->targetdir === null) {
@@ -72,7 +73,7 @@ class PresentSelector extends BaseSelector {
 
     /**
      * Defines the FileNameMapper to use (nested mapper element).
-     * @throws BuildException 
+     * @throws BuildException
      */
     public function createMapper() {
         if ($this->mapperElement !== null) {

@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  *  $Id: MergeMapper.php 3076 2006-12-18 08:52:12Z fabien $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -16,8 +16,9 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\mapper;
 
 include_once 'phing/mappers/FileNameMapper.php';
 
@@ -30,7 +31,7 @@ include_once 'phing/mappers/FileNameMapper.php';
  * @package   phing.mappers
  */
 class MergeMapper implements FileNameMapper {
-    
+
     /** the merge */
     private $mergedFile;
 
@@ -43,9 +44,9 @@ class MergeMapper implements FileNameMapper {
      * @author   Andreas Aderhold, andi@binarycloud.com
      */
     function main($sourceFileName) {
-        if ($this->mergedFile === null) {            
-            throw new BuildException("MergeMapper error, to attribute not set");            
-        }         
+        if ($this->mergedFile === null) {
+            throw new BuildException("MergeMapper error, to attribute not set");
+        }
         return array($this->mergedFile);
     }
 
@@ -59,7 +60,7 @@ class MergeMapper implements FileNameMapper {
      */
     function setTo($to) {
         $this->mergedFile = $to;
-    }    
+    }
 
     /**
      * Ignored.

@@ -16,8 +16,9 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\system\io;
 
 include_once 'phing/system/io/Reader.php';
 
@@ -28,22 +29,22 @@ include_once 'phing/system/io/Reader.php';
  * TODO: All filters should be ProjectComponents, too!
  */
 class FilterReader extends Reader {
-    
+
     protected $in;
-    
+
     function __construct(Reader $in = null) {
         $this->in = $in;
         //parent::__construct(new FileReader($file, $exclusive));
     }
-    
+
     public function setReader(Reader $in) {
         $this->in = $in;
     }
-    
+
     public function skip($n) {
         return $this->in->skip($n);
     }
-    
+
     /**
      * Read data from source.
      * FIXME: Clean up this function signature, as it a) params aren't being used
@@ -56,11 +57,11 @@ class FilterReader extends Reader {
     public function reset() {
         return $this->in->reset();
     }
-    
+
     public function close() {
         return $this->in->close();
     }
-    
+
     public function open() {
         return $this->in->open();
     }

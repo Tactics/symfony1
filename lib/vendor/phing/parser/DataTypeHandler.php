@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\parser;
 
 include_once 'phing/RuntimeConfigurable.php';
 
@@ -30,7 +31,7 @@ include_once 'phing/RuntimeConfigurable.php';
  * classes would be nested within this class
  *
  * @author      Andreas Aderhold <andi@binarycloud.com>
- * @copyright © 2001,2002 THYRELL. All rights reserved
+ * @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  * @version   $Revision: 1.8 $ $Date: 2005/11/02 13:55:33 $
  * @access    public
  * @package   phing.parser
@@ -126,7 +127,7 @@ class DataTypeHandler extends AbstractHandler {
         $nef = new NestedElementHandler($this->parser, $this, $this->configurator, $this->element, $this->wrapper, $this->target);
         $nef->init($name, $attrs);
     }
-    
+
    /**
     * Overrides endElement for data types. Tells the type
     * handler that processing the element had been finished so
@@ -140,5 +141,5 @@ class DataTypeHandler extends AbstractHandler {
        $this->element->parsingComplete();
        parent::endElement($name);
    }
-         
+
 }

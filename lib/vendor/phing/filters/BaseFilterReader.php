@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
 */
+namespace Tactics\Symfony\vendor\phing\filters;
 
 include_once 'phing/system/io/FilterReader.php';
 include_once 'phing/system/io/StringReader.php';
@@ -34,10 +35,10 @@ include_once 'phing/system/io/StringReader.php';
  * @package   phing.filters
  */
 class BaseFilterReader extends FilterReader {
-    
+
     /** Have the parameters passed been interpreted? */
     protected $initialized = false;
-    
+
     /** The Phing project this filter is part of. */
     protected $project = null;
 
@@ -48,7 +49,7 @@ class BaseFilterReader extends FilterReader {
      * it would be useless for filtering purposes, as it has
      * no real data to filter). ChainedReaderHelper uses
      * this placeholder instance to create a chain of real filters.
-     * 
+     *
      * @param Reader $in
      */
     function __construct($in = null) {
@@ -61,7 +62,7 @@ class BaseFilterReader extends FilterReader {
 
     /**
      * Returns the initialized status.
-     * 
+     *
      * @return boolean whether or not the filter is initialized
      */
     function getInitialized() {
@@ -70,7 +71,7 @@ class BaseFilterReader extends FilterReader {
 
     /**
      * Sets the initialized status.
-     * 
+     *
      * @param boolean $initialized Whether or not the filter is initialized.
      */
     function setInitialized($initialized) {
@@ -79,18 +80,18 @@ class BaseFilterReader extends FilterReader {
 
     /**
      * Sets the project to work with.
-     * 
-     * @param object $project The project this filter is part of. 
+     *
+     * @param object $project The project this filter is part of.
      *                Should not be <code>null</code>.
      */
     function setProject(Project $project) {
-        // type check, error must never occur, bad code of it does      
+        // type check, error must never occur, bad code of it does
         $this->project = $project;
     }
 
     /**
      * Returns the project this filter is part of.
-     * 
+     *
      * @return object The project this filter is part of
      */
     function getProject() {
@@ -115,11 +116,11 @@ class BaseFilterReader extends FilterReader {
     /**
      * Reads a line of text ending with '\n' (or until the end of the stream).
      * The returned String retains the '\n'.
-     * 
+     *
      * @return the line read, or <code>null</code> if the end of the
                stream has already been reached
-     * 
-     * @throws IOException if the underlying reader throws one during 
+     *
+     * @throws IOException if the underlying reader throws one during
      *                        reading
      */
     function readLine() {
@@ -133,15 +134,15 @@ class BaseFilterReader extends FilterReader {
 
         return $line;
     }
-    
+
     /**
      * Returns whether the end of file has been reached with input stream.
      * @return boolean
-     */ 
+     */
     function eof() {
         return $this->in->eof();
     }
-    
+
     /**
      * Convenience method to support logging in filters.
      * @param string $msg Message to log.
@@ -149,7 +150,7 @@ class BaseFilterReader extends FilterReader {
      */
     function log($msg, $level = PROJECT_MSG_INFO) {
         if ($this->project !== null) {
-            $this->project->log("[filter:".get_class($this)."] ".$msg, $level);    
+            $this->project->log("[filter:".get_class($this)."] ".$msg, $level);
         }
     }
 }

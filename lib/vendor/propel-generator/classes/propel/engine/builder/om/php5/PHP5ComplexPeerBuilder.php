@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://propel.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\propel_generator\classes\propel\engine\builder\om\php5;
 
 require_once 'propel/engine/builder/om/php5/PHP5BasicPeerBuilder.php';
 
@@ -97,7 +98,7 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 					// the join table will be aliases when
                     // this table == foreign table
                     $alias = $fk->getForeignTableName() == $table->getName() ? 'alias' : null;
-                    
+
                     $joinClassName = $joinTable->getPhpName();
 
                     $thisTableObjectBuilder = OMBuilder::getNewObjectBuilder($table);

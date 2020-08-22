@@ -1,4 +1,7 @@
 <?php
+
+namespace Tactics\Symfony\vendor\phing\lib;
+
 /* vim: set ts=4 sw=4: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |

@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\types\selectors;
 
 require_once 'phing/types/selectors/AndSelector.php';
 
@@ -36,7 +37,7 @@ require_once 'phing/types/selectors/AndSelector.php';
  * @package   phing.types.selectors
  */
 class SelectSelector extends AndSelector {
-         
+
     public function toString() {
         $buf = "";
         if ($this->hasSelectors()) {

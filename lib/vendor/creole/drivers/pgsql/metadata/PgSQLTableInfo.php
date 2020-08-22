@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\pgsql\metadata;
 
 require_once 'creole/metadata/TableInfo.php';
 
@@ -38,13 +39,13 @@ require_once 'creole/metadata/TableInfo.php';
  * @package   creole.drivers.pgsql.metadata
  */
 class PgSQLTableInfo extends TableInfo {
-	
+
     /**
      * Database Version.
      * @var String
      */
     private $version;
-	
+
     /**
      * Table OID
      * @var Integer
@@ -97,11 +98,11 @@ class PgSQLTableInfo extends TableInfo {
             throw new SQLException("Could not list fields for table: " . $this->name, pg_last_error($this->conn->getResource()));
         }
         while($row = pg_fetch_assoc($result)) {
-        	
+
         	$size = null;
         	$precision = null;
         	$scale = null;
-        	
+
         	// Check to ensure that this column isn't an array data type
         	if (((int) $row['isarray']) === 1)
         	{
@@ -134,7 +135,7 @@ class PgSQLTableInfo extends TableInfo {
             } // else (strtolower ($row['typtype']) == 'd')
 
             $autoincrement = null;
-                       
+
             // if column has a default
             if (($boolHasDefault == 't') && (strlen (trim ($default)) > 0))
             {
@@ -379,7 +380,7 @@ class PgSQLTableInfo extends TableInfo {
         if (!$this->colsLoaded) $this->initColumns();
 
         // Primary Keys
-        
+
         $result = pg_query($this->conn->getResource(), sprintf ("SELECT
 													      DISTINCT ON(cls.relname)
 													      cls.relname as idxname,
@@ -418,6 +419,6 @@ class PgSQLTableInfo extends TableInfo {
         $this->pkLoaded = true;
     }
 
-    
+
 
 }

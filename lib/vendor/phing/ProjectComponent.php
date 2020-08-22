@@ -18,13 +18,14 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing;
 
 /**
  *  Abstract class providing properties and methods common to all
  *  the project components
  *
  * @author    Andreas Aderhold <andi@binarycloud.com>
- * @author    Hans Lellelid <hans@xmpl.org> 
+ * @author    Hans Lellelid <hans@xmpl.org>
  * @version   $Revision: 1.5 $
  * @package   phing
  */

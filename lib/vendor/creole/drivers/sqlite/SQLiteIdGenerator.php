@@ -1,4 +1,5 @@
 <?php
+namespace Tactics\Symfony\vendor\creole\drivers\sqlite;
 
 require_once 'creole/IdGenerator.php';
 
@@ -10,7 +11,7 @@ require_once 'creole/IdGenerator.php';
  * @package   creole.drivers.sqlite
  */
 class SQLiteIdGenerator implements IdGenerator {
-    
+
     /** Connection object that instantiated this class */
     private $conn;
 
@@ -23,15 +24,15 @@ class SQLiteIdGenerator implements IdGenerator {
     {
         $this->conn = $conn;
     }
-    
+
     /**
      * @see IdGenerator::isBeforeInsert()
      */
     public function isBeforeInsert()
     {
         return false;
-    }    
-    
+    }
+
     /**
      * @see IdGenerator::isAfterInsert()
      */
@@ -39,7 +40,7 @@ class SQLiteIdGenerator implements IdGenerator {
     {
         return true;
     }
-       
+
     /**
      * @see IdGenerator::getIdMethod()
      */
@@ -47,7 +48,7 @@ class SQLiteIdGenerator implements IdGenerator {
     {
         return self::AUTOINCREMENT;
     }
-    
+
     /**
      * @see IdGenerator::getId()
      */
@@ -55,6 +56,6 @@ class SQLiteIdGenerator implements IdGenerator {
     {
         return sqlite_last_insert_rowid($this->conn->getResource());
     }
-    
+
 }
 

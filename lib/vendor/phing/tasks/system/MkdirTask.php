@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\system;
 
 require_once 'phing/Task.php';
 include_once 'phing/system/io/PhingFile.php';

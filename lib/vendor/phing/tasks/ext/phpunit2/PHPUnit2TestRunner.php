@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\phpunit2;
 
 require_once 'PHPUnit2/Framework/TestListener.php';
 require_once 'PHPUnit2/Framework/TestResult.php';
@@ -45,9 +46,9 @@ class PHPUnit2TestRunner
 	private $suite = NULL;
 	private $retCode = 0;
 	private $formatters = array();
-	
+
 	private $codecoverage = false;
-	
+
 	private $project = NULL;
 
 	function __construct(PHPUnit2_Framework_TestSuite $suite, Project $project)
@@ -56,7 +57,7 @@ class PHPUnit2TestRunner
 		$this->project = $project;
 		$this->retCode = self::SUCCESS;
 	}
-	
+
 	function setCodecoverage($codecoverage)
 	{
 		$this->codecoverage = $codecoverage;
@@ -82,12 +83,12 @@ class PHPUnit2TestRunner
 		}
 
 		$this->suite->run($res);
-		
+
 		if ($this->codecoverage)
 		{
 			CoverageMerger::merge($this->project, $res->getCodeCoverageInformation());
 		}
-		
+
 		if ($res->errorCount() != 0)
 		{
 			$this->retCode = self::ERRORS;

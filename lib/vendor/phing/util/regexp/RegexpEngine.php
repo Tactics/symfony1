@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  *  $Id: RegexpEngine.php 3076 2006-12-18 08:52:12Z fabien $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -16,32 +16,33 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\util\regexp;
 
 /**
  * Contains some shared attributes and methods -- and some abstract methods with
  * engine-specific implementations that sub-classes must override.
- * 
+ *
  * @author Hans Lellelid <hans@velum.net>
  * @package phing.util.regex
  * @version $Revision: 1.4 $
  */
 interface RegexpEngine {
-    
+
     /**
      * Sets whether or not regex operation should ingore case.
      * @param boolean $bit
      * @return void
      */
     public function setIgnoreCase($bit);
-    
+
     /**
      * Returns status of ignore case flag.
      * @return boolean
      */
     public function getIgnoreCase();
-    
+
     /**
      * Matches pattern against source string and sets the matches array.
      * @param string $pattern The regex pattern to match.
@@ -50,14 +51,14 @@ interface RegexpEngine {
      * @return boolean Success of matching operation.
      */
     function match($pattern, $source, &$matches);
-    
+
     /**
      * Matches all patterns in source string and sets the matches array.
      * @param string $pattern The regex pattern to match.
      * @param string $source The source string.
      * @param array $matches The array in which to store matches.
      * @return boolean Success of matching operation.
-     */    
+     */
     function matchAll($pattern, $source, &$matches);
 
     /**
@@ -66,7 +67,7 @@ interface RegexpEngine {
      * @param string $replace The string with which to replace matches.
      * @param string $source The source string.
      * @return string The replaced source string.
-     */        
+     */
     function replace($pattern, $replace, $source);
 
 }

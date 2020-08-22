@@ -1,7 +1,7 @@
 <?php
 /*
- *  $Id: AppendTask.php 3076 2006-12-18 08:52:12Z fabien $  
- * 
+ *  $Id: AppendTask.php 3076 2006-12-18 08:52:12Z fabien $
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\system;
 
 require_once 'phing/Task.php';
 include_once 'phing/types/FileList.php';
@@ -44,54 +45,54 @@ include_once 'phing/types/FileSet.php';
  *            <param name="file_name" expression="%{task.append.current_file.basename}"/> <!-- Example of using a RegisterSlot variable -->
  *        </xsltfilter>
  *    </filterchain>
- *     <filelist dir="book/" listfile="book/PhingGuide.book"/>            
+ *     <filelist dir="book/" listfile="book/PhingGuide.book"/>
  * </append>
  * </code>
  * @package phing.tasks.system
  * @version $Revision: 1.14 $
  */
 class AppendTask extends Task {
-    
+
     /** Append stuff to this file. */
     private $to;
-    
+
     /** Explicit file to append. */
     private $file;
-    
+
     /** Any filesets of files that should be appended. */
     private $filesets = array();
-    
+
     /** Any filelists of files that should be appended. */
     private $filelists = array();
-    
+
     /** Any filters to be applied before append happens. */
     private $filterChains = array();
-    
+
     /** Text to append. (cannot be used in conjunction w/ files or filesets) */
     private $text;
-    
+
     /** Sets specific file to append. */
-    function setFile(PhingFile $f) {        
+    function setFile(PhingFile $f) {
         $this->file = $f;
     }
-    
+
     /**
      * Set target file to append to.
      * @deprecated Will be removed with final release.
      */
-    function setTo(PhingFile $f) {        
+    function setTo(PhingFile $f) {
         $this->log("The 'to' attribute is deprecated in favor of 'destFile'; please update your code.", PROJECT_MSG_WARN);
         $this->to = $f;
     }
-    
+
     /**
      * The more conventional naming for method to set destination file.
      * @param PhingFile $f
      */
-    function setDestFile(PhingFile $f) {        
+    function setDestFile(PhingFile $f) {
         $this->to = $f;
     }
-    
+
     /**
      * Supports embedded <filelist> element.
      * @return FileList
@@ -110,7 +111,7 @@ class AppendTask extends Task {
         $num = array_push($this->filesets, new FileSet());
         return $this->filesets[$num-1];
     }
-    
+
     /**
      * Creates a filterchain
      *
@@ -119,8 +120,8 @@ class AppendTask extends Task {
     function createFilterChain() {
         $num = array_push($this->filterChains, new FilterChain($this->project));
         return $this->filterChains[$num-1];
-    }    
-    
+    }
+
     /**
      * Sets text to append.  (cannot be used in conjunction w/ files or filesets).
      * @param string $txt
@@ -137,50 +138,50 @@ class AppendTask extends Task {
         $this->text = (string) $txt;
     }
 
-    
+
     /** Append the file(s). */
     function main() {
-    
+
         if ($this->to === null) {
             throw new BuildException("You must specify the 'destFile' attribute");
         }
-        
+
         if ($this->file === null && empty($this->filelists) && empty($this->filesets) && $this->text === null) {
             throw new BuildException("You must specify a file, use a filelist, or specify a text value.");
         }
-        
+
         if ($this->text !== null && ($this->file !== null || !empty($this->filelists))) {
             throw new BuildException("Cannot use text attribute in conjunction with file or filelists.");
         }
-        
+
         // create a filwriter to append to "to" file.
         $writer = new FileWriter($this->to, $append=true);
-        
-        if ($this->text !== null) {            
-            
+
+        if ($this->text !== null) {
+
             // simply append the text
             $this->log("Appending string to " . $this->to->getPath());
-            
+
             // for debugging primarily, maybe comment
             // out for better performance(?)
             $lines = explode("\n", $this->text);
             foreach($lines as $line) {
                 $this->log($line, PROJECT_MSG_VERBOSE);
             }
-            
+
             $writer->write($this->text);
-                        
-        } else {        
-            
+
+        } else {
+
             // append explicitly-specified file
-            if ($this->file !== null) { 
+            if ($this->file !== null) {
                 try {
                     $this->appendFile($writer, $this->file);
                 } catch (Exception $ioe) {
                     $this->log("Unable to append contents of file " . $this->file->getAbsolutePath() . ": " . $ioe->getMessage(), PROJECT_MSG_WARN);
-                }                
+                }
             }
-            
+
             // append the files in the filelists
             foreach($this->filelists as $fl) {
                 try {
@@ -190,7 +191,7 @@ class AppendTask extends Task {
                     $this->log($be->getMessage(), PROJECT_MSG_WARN);
                 }
             }
-            
+
             // append any files in filesets
             foreach($this->filesets as $fs) {
                 try {
@@ -199,13 +200,13 @@ class AppendTask extends Task {
                 } catch (BuildException $be) {
                     $this->log($be->getMessage(), PROJECT_MSG_WARN);
                 }
-            }                        
-            
+            }
+
         } // if ($text ) {} else {}
-        
+
         $writer->close();
     }
-    
+
     /**
      * Append an array of files in a directory.
      * @param FileWriter $writer The FileWriter that is appending to target file.
@@ -227,14 +228,14 @@ class AppendTask extends Task {
                     $this->log("Unable to append contents of file " . $f->getAbsolutePath() . ": " . $ioe->getMessage(), PROJECT_MSG_WARN);
                 }
             }
-        } // if !empty        
+        } // if !empty
     }
-    
+
     private function appendFile(FileWriter $writer, PhingFile $f) {
         $in = FileUtils::getChainedReader(new FileReader($f), $this->filterChains, $this->project);
         while(-1 !== ($buffer = $in->read())) { // -1 indicates EOF
             $writer->write($buffer);
         }
-        $this->log("Appending contents of " . $f->getPath() . " to " . $this->to->getPath());    
+        $this->log("Appending contents of " . $f->getPath() . " to " . $this->to->getPath());
     }
 }

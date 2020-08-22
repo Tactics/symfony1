@@ -1,4 +1,7 @@
 <?php
+
+namespace Tactics\Symfony\vendor\phing\tasks\system\condition;
+
 /*
  * $Id: AndCondition.php 3076 2006-12-18 08:52:12Z fabien $
  *
@@ -19,6 +22,8 @@
  * <http://phing.info>.
  */
 
+Use ConditionBase;
+
 require_once 'phing/tasks/system/condition/ConditionBase.php';
 
 /**
@@ -26,10 +31,10 @@ require_once 'phing/tasks/system/condition/ConditionBase.php';
  *
  *  Iterates over all conditions and returns false as soon as one
  *  evaluates to false.
- * 
+ *
  *  @author    Hans Lellelid <hans@xmpl.org>
  *  @author    Andreas Aderhold <andi@binarycloud.com>
- *  @copyright © 2001,2002 THYRELL. All rights reserved
+ *  @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  *  @version   $Revision: 1.7 $
  *  @package   phing.tasks.system.condition
  */
@@ -41,6 +46,6 @@ class AndCondition extends ConditionBase implements Condition {
                 return false;
             }
         }
-        return true;       
+        return true;
     }
 }

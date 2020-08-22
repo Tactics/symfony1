@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\system\condition;
 
 require_once 'phing/ProjectComponent.php';
 include_once 'phing/Project.php';
@@ -28,28 +29,28 @@ include_once 'phing/tasks/system/condition/Condition.php';
  *  Abstract baseclass for the <condition> task as well as several
  *  conditions - ensures that the types of conditions inside the task
  *  and the "container" conditions are in sync.
- * 
+ *
  *    @author    Hans Lellelid <hans@xmpl.org>
  *  @author    Andreas Aderhold <andi@binarycloud.com>
- *  @copyright © 2001,2002 THYRELL. All rights reserved
+ *  @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  *  @version   $Revision: 1.16 $
  *  @package   phing.tasks.system.condition
  */
 abstract class ConditionBase extends ProjectComponent implements IteratorAggregate {
-        
+
     public $conditions = array(); // needs to be public for "inner" class access
 
     function countConditions() {
         return count($this->conditions);
     }
-    
+
     /**
      * Required for IteratorAggregate
      */
     function getIterator() {
         return new ConditionEnumeration($this);
     }
-    
+
     function getConditions() {
         return $this->conditions;
     }
@@ -67,7 +68,7 @@ abstract class ConditionBase extends ProjectComponent implements IteratorAggrega
     function createNot() {
         include_once 'phing/tasks/system/condition/NotCondition.php';
         $num = array_push($this->conditions, new NotCondition());
-        return $this->conditions[$num-1];        
+        return $this->conditions[$num-1];
     }
 
     /**
@@ -78,21 +79,21 @@ abstract class ConditionBase extends ProjectComponent implements IteratorAggrega
         $num = array_push($this->conditions, new AndCondition());
         return $this->conditions[$num-1];
     }
-    
+
     /**
      * @return OrCondition
      */
     function createOr() {
         include_once 'phing/tasks/system/condition/OrCondition.php';
         $num = array_push($this->conditions, new OrCondition());
-        return $this->conditions[$num-1];        
+        return $this->conditions[$num-1];
     }
 
     /**
      * @return EqualsCondition
      */
     function createEquals() {
-        include_once 'phing/tasks/system/condition/EqualsCondition.php';  
+        include_once 'phing/tasks/system/condition/EqualsCondition.php';
         $num = array_push($this->conditions, new EqualsCondition());
         return $this->conditions[$num-1];
     }
@@ -105,7 +106,7 @@ abstract class ConditionBase extends ProjectComponent implements IteratorAggrega
         $num = array_push($this->conditions, new OsCondition());
         return $this->conditions[$num-1];
     }
-   
+
     /**
      * @return IsFalseCondition
      */
@@ -114,7 +115,7 @@ abstract class ConditionBase extends ProjectComponent implements IteratorAggrega
         $num = array_push($this->conditions, new IsFalseCondition());
         return $this->conditions[$num-1];
     }
-   
+
     /**
      * @return IsTrueCondition
      */
@@ -123,7 +124,7 @@ abstract class ConditionBase extends ProjectComponent implements IteratorAggrega
         $num = array_push($this->conditions, new IsTrueCondition());
         return $this->conditions[$num-1];
     }
-   
+
     /**
      * @return ContainsCondition
      */
@@ -132,7 +133,7 @@ abstract class ConditionBase extends ProjectComponent implements IteratorAggrega
         $num = array_push($this->conditions, new ContainsCondition());
         return $this->conditions[$num-1];
     }
-   
+
     /**
      * @return IsSetCondition
      */
@@ -158,17 +159,17 @@ abstract class ConditionBase extends ProjectComponent implements IteratorAggrega
  * Uses build-in PHP5 iterator support.
  */
 class ConditionEnumeration implements Iterator {
-    
+
     /** Current element number */
     private $num = 0;
-    
+
     /** "Outer" ConditionBase class. */
     private $outer;
 
     function __construct(ConditionBase $outer) {
         $this->outer = $outer;
     }
-    
+
     public function valid() {
         return $this->outer->countConditions() > $this->num;
     }
@@ -180,15 +181,15 @@ class ConditionEnumeration implements Iterator {
         }
         return $o;
     }
-    
+
     function next() {
         $this->num++;
     }
-    
+
     function key() {
         return $this->num;
     }
-    
+
     function rewind() {
         $this->num = 0;
     }

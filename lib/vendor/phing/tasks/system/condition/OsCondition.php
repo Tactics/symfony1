@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\system\condition;
 
 require_once 'phing/tasks/system/condition/ConditionBase.php';
 
@@ -25,7 +26,7 @@ require_once 'phing/tasks/system/condition/ConditionBase.php';
  *  Condition that tests the OS type.
  *
  *  @author    Andreas Aderhold <andi@binarycloud.com>
- *  @copyright © 2001,2002 THYRELL. All rights reserved
+ *  @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  *  @version   $Revision: 1.8 $ $Date: 2006-04-28 16:49:47 +0200 (Fri, 28 Apr 2006) $
  *  @access    public
  *  @package   phing.tasks.system.condition
@@ -40,7 +41,7 @@ class OsCondition implements Condition {
 
     function evaluate() {
         $osName = strtolower(Phing::getProperty("os.name"));
-		
+
         if ($this->family !== null) {
             if ($this->family === "windows") {
                 return StringHelper::startsWith("win", $osName);

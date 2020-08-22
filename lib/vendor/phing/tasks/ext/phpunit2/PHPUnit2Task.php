@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\phpunit2;
 
 require_once 'phing/Task.php';
 require_once 'phing/system/io/PhingFile.php';
@@ -56,7 +57,7 @@ class PHPUnit2Task extends Task
 		if (!class_exists('PHPUnit2_Util_Filter')) {
 			throw new BuildException("PHPUnit2Task depends on PEAR PHPUnit2 package being installed.", $this->getLocation());
 		}
-		
+
 		if (version_compare(PHP_VERSION, '5.0.3') < 0) {
 		    throw new BuildException("PHPUnit2Task requires PHP version >= 5.0.3.", $this->getLocation());
 		}
@@ -77,17 +78,17 @@ class PHPUnit2Task extends Task
 		PHPUnit2_Util_Filter::addFileToFilter('phing.php');
 
 	}
-	
+
 	function setFailureproperty($value)
 	{
 		$this->failureproperty = $value;
 	}
-	
+
 	function setErrorproperty($value)
 	{
 		$this->errorproperty = $value;
 	}
-	
+
 	function setHaltonerror($value)
 	{
 		$this->haltonerror = $value;
@@ -102,7 +103,7 @@ class PHPUnit2Task extends Task
 	{
 		$this->printsummary = $printsummary;
 	}
-	
+
 	function setCodecoverage($codecoverage)
 	{
 		$this->codecoverage = $codecoverage;
@@ -126,7 +127,7 @@ class PHPUnit2Task extends Task
 	function main()
 	{
 		$tests = array();
-		
+
 		if ($this->printsummary)
 		{
 			$fe = new FormatterElement();
@@ -134,21 +135,21 @@ class PHPUnit2Task extends Task
 			$fe->setUseFile(false);
 			$this->formatters[] = $fe;
 		}
-		
+
 		foreach ($this->batchtests as $batchtest)
 		{
 			$tests = array_merge($tests, $batchtest->elements());
-		}			
-		
+		}
+
 		foreach ($this->formatters as $fe)
 		{
-			$formatter = $fe->getFormatter();			
+			$formatter = $fe->getFormatter();
 			$formatter->setProject($this->getProject());
 
 			if ($fe->getUseFile())
 			{
 				$destFile = new PhingFile($fe->getToDir(), $fe->getOutfile());
-				
+
 				$writer = new FileWriter($destFile->getAbsolutePath());
 
 				$formatter->setOutput($writer);
@@ -160,7 +161,7 @@ class PHPUnit2Task extends Task
 
 			$formatter->startTestRun();
 		}
-		
+
 		foreach ($tests as $test)
 		{
 			$this->execute(new PHPUnit2_Framework_TestSuite(new ReflectionClass($test)));
@@ -171,7 +172,7 @@ class PHPUnit2Task extends Task
 			$formatter = $fe->getFormatter();
 			$formatter->endTestRun();
 		}
-		
+
 		if ($this->testfailed)
 		{
 			throw new BuildException("One or more tests failed");
@@ -184,7 +185,7 @@ class PHPUnit2Task extends Task
 	private function execute($suite)
 	{
 		$runner = new PHPUnit2TestRunner($suite, $this->project);
-		
+
 		$runner->setCodecoverage($this->codecoverage);
 
 		foreach ($this->formatters as $fe)
@@ -197,7 +198,7 @@ class PHPUnit2Task extends Task
 		$runner->run();
 
 		$retcode = $runner->getRetCode();
-		
+
 		if ($retcode == PHPUnit2TestRunner::ERRORS) {
 		    if ($this->errorproperty) {
 				$this->project->setNewProperty($this->errorproperty, true);
@@ -209,12 +210,12 @@ class PHPUnit2Task extends Task
 			if ($this->failureproperty) {
 				$this->project->setNewProperty($this->failureproperty, true);
 			}
-			
+
 			if ($this->haltonfailure) {
 				$this->testfailed = true;
 			}
 		}
-		
+
 	}
 
 	private function getDefaultOutput()

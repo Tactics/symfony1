@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing;
 
 require_once 'phing/ProjectComponent.php';
 include_once 'phing/RuntimeConfigurable.php';
@@ -28,7 +29,7 @@ include_once 'phing/RuntimeConfigurable.php';
  * Use {@link Project#createTask} to register a new Task.
  *
  * @author    Andreas Aderhold <andi@binarycloud.com>
- * @copyright © 2001,2002 THYRELL. All rights reserved
+ * @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  * @version   $Revision: 1.11 $
  * @see       Project#createTask()
  * @package   phing
@@ -37,19 +38,19 @@ abstract class Task extends ProjectComponent {
 
     /** owning Target object */
     protected $target;
-    
+
     /** description of the task */
     protected $description;
-    
+
     /** internal taskname (req) */
     protected $taskType;
-    
+
     /** taskname for logger */
     protected $taskName;
-    
+
     /** stored buildfile location */
     protected $location;
-    
+
     /** wrapper of the task */
     protected $wrapper;
 
@@ -119,15 +120,15 @@ abstract class Task extends ProjectComponent {
     function setTaskType($name) {
         $this->taskType = (string) $name;
     }
-	
+
 	/**
-	 * Returns a name 
-	 * 
+	 * Returns a name
+	 *
 	 */
 	protected function getRegisterSlot($slotName) {
 		return Register::getSlot('task.' . $this->getTaskName() . '.' . $slotName);
 	}
-	
+
     /**
      *  Provides a project level log event to the task.
      *

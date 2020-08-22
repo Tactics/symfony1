@@ -16,11 +16,12 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\system\io;
 
 /**
- * Abstract class for writing character streams. 
+ * Abstract class for writing character streams.
  * @package   phing.system.io
  */
 abstract class Writer {
@@ -28,21 +29,21 @@ abstract class Writer {
     abstract public function write($buf, $off = null, $len = null);
 
     abstract public function reset();
-    
+
     abstract public function close();
-    
+
     abstract public function open();
 
     public function mark() {}
-    
+
     public function ready() {}
 
     public function markSupported() {}
-    
+
     /**
      * Returns the filename, url, etc. that is being written to.
      * @return string
-     */    
+     */
     abstract function getResource();
 }
 ?>

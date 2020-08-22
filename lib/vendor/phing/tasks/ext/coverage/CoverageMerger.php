@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\coverage;
 
 require_once 'phing/system/util/Properties.php';
 
@@ -70,7 +71,7 @@ class CoverageMerger
 				{
 					$coverageMerged[$linenr_right] = current($left) + current($right);
 				}
-				
+
 				next($left);
 				next($right);
 			}
@@ -97,25 +98,25 @@ class CoverageMerger
 
 		$props = new Properties();
 		$props->load($database);
-		
+
 		$coverageTotal = $codeCoverageInformation;
-		
+
 		foreach ($coverageTotal as $coverage)
 		{
 			foreach ($coverage as $filename => $coverageFile)
 			{
 				$filename = strtolower($filename);
-				
+
 				if ($props->getProperty($filename) != null)
 				{
 					$file = unserialize($props->getProperty($filename));
 					$left = $file['coverage'];
 					$right = $coverageFile;
-					
+
 					$coverageMerged = CoverageMerger::mergeCodeCoverage($left, $right);
-					
+
 					$file['coverage'] = $coverageMerged;
-					
+
 					$props->setProperty($filename, serialize($file));
 				}
 			}

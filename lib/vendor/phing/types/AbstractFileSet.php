@@ -16,8 +16,9 @@
  *
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information please see
- * <http://phing.info>. 
+ * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\types;
 
 include_once 'phing/system/io/PhingFile.php';
 include_once 'phing/types/DataType.php';
@@ -67,24 +68,24 @@ include_once 'phing/util/DirectoryScanner.php';
  * @package    phing.types
  */
 class AbstractFileSet extends DataType implements SelectorContainer {
-    
+
     // These vars are public for cloning purposes
-    
+
     /**
      * @var boolean
      */
     public $useDefaultExcludes = true;
-    
+
     /**
      * @var PatternSet
      */
     public $defaultPatterns;
-    
+
     public $additionalPatterns = array();
     public $dir;
-    public $isCaseSensitive = true;    
+    public $isCaseSensitive = true;
     public $selectors = array();
-    
+
     function __construct($fileset = null) {
         if ($fileset !== null && ($fileset instanceof FileSet)) {
             $this->dir = $fileset->dir;
@@ -284,20 +285,20 @@ class AbstractFileSet extends DataType implements SelectorContainer {
         }
         // FIXME - pass dir directly wehn dirscanner supports File
         $ds->setBasedir($this->dir->getPath());
-        
+
         foreach($this->additionalPatterns as $addPattern) {
             $this->defaultPatterns->append($addPattern, $p);
-        }              
+        }
 
         $ds->setIncludes($this->defaultPatterns->getIncludePatterns($p));
         $ds->setExcludes($this->defaultPatterns->getExcludePatterns($p));
 
         $p->log("FileSet: Setup file scanner in dir " . $this->dir->__toString() . " with " . $this->defaultPatterns->toString(), PROJECT_MSG_DEBUG);
-        
+
         if ($ds instanceof SelectorScanner) {
             $ds->setSelectors($this->getSelectors($p));
         }
-        
+
         if ($this->useDefaultExcludes) {
             $ds->addDefaultExcludes();
         }
@@ -313,7 +314,7 @@ class AbstractFileSet extends DataType implements SelectorContainer {
         if (!$this->checked) {
             $stk = array();
             array_push($stk, $this);
-            $this->dieOnCircularReference($stk, $p);            
+            $this->dieOnCircularReference($stk, $p);
         }
 
         $o = $this->ref->getReferencedObject($p);
@@ -324,7 +325,7 @@ class AbstractFileSet extends DataType implements SelectorContainer {
             return $o;
         }
     }
-    
+
     // SelectorContainer methods
 
     /**
@@ -345,9 +346,9 @@ class AbstractFileSet extends DataType implements SelectorContainer {
      * @return boolean Whether any patterns are in this container.
      */
     public function hasPatterns() {
-    
+
         if ($this->isReference() && $this->getProject() !== null) {
-            return $this->getRef($this->getProject())->hasPatterns();            
+            return $this->getRef($this->getProject())->hasPatterns();
         }
 
         if ($this->defaultPatterns->hasPatterns($this->getProject())) {
@@ -363,7 +364,7 @@ class AbstractFileSet extends DataType implements SelectorContainer {
 
         return false;
     }
-    
+
     /**
      * Gives the count of the number of selectors in this container
      *
@@ -387,7 +388,7 @@ class AbstractFileSet extends DataType implements SelectorContainer {
      */
     public function getSelectors(Project $p) {
         if ($this->isReference()) {
-            return $this->getRef($p)->getSelectors($p);            
+            return $this->getRef($p)->getSelectors($p);
         } else {
             // *copy* selectors
             $result = array();
@@ -405,7 +406,7 @@ class AbstractFileSet extends DataType implements SelectorContainer {
      */
     public function selectorElements() {
         if ($this->isReference() && $this->getProject() !== null) {
-            return $this->getRef($this->getProject())->selectorElements();            
+            return $this->getRef($this->getProject())->selectorElements();
         }
         return $this->selectors;
     }
@@ -420,7 +421,7 @@ class AbstractFileSet extends DataType implements SelectorContainer {
             throw $this->noChildrenAllowed();
         }
         $this->selectors[] = $selector;
-    }    
+    }
 
     /* Methods below all add specific selectors */
 
@@ -553,12 +554,12 @@ class AbstractFileSet extends DataType implements SelectorContainer {
     /**
      * add a depends selector entry on the selector list
      */
-    public function createDepend() {        
+    public function createDepend() {
         $o = new DependSelector();
         $this->appendSelector($o);
         return $o;
     }
-    
+
     /**
      * add a type selector entry on the selector list
      */

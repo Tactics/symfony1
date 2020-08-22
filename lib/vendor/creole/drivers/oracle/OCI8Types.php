@@ -19,7 +19,9 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
- 
+
+namespace Tactics\Symfony\vendor\creole\drivers\oracle;
+
 require_once 'creole/CreoleTypes.php';
 
 /**
@@ -50,10 +52,10 @@ class OCI8Types extends CreoleTypes {
                                 'clob' => CreoleTypes::CLOB,
                                 'varray' => CreoleTypes::ARR,
                                 );
-    
+
     /** Reverse mapping, created on demand. */
     private static $reverseMap = null;
-    
+
     /**
      * This method returns the generic Creole (JDBC-like) type
      * when given the native db type.
@@ -70,11 +72,11 @@ class OCI8Types extends CreoleTypes {
             return CreoleTypes::OTHER;
         }
     }
-            
+
     /**
      * This method will return a native type that corresponds to the specified
      * Creole (JDBC-like) type.
-     * If there is more than one matching native type, then the LAST defined 
+     * If there is more than one matching native type, then the LAST defined
      * native type will be returned.
      * @param int $creoleType
      * @return string Native type string.
@@ -86,5 +88,5 @@ class OCI8Types extends CreoleTypes {
         }
         return @self::$reverseMap[$creoleType];
     }
-                                
+
 }

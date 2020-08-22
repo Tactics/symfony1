@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\phpunit2;
 
 /**
  * Various utility functions
@@ -30,7 +31,7 @@
 class PHPUnit2Util
 {
 	protected static $definedClasses = array();
-	
+
 	/**
 	 * Returns the package of a class as defined in the docblock of the class using @package
 	 *
@@ -50,7 +51,7 @@ class PHPUnit2Util
 			return "default";
 		}
 	}
-	
+
 	/**
 	 * Derives the classname from a filename.
 	 * Assumes that there is only one class defined in that particular file, and that
@@ -62,14 +63,14 @@ class PHPUnit2Util
 	static function getClassFromFileName($filename)
 	{
 		$filename = basename($filename);
-		
+
 		$rpos = strrpos($filename, '.');
-		
+
 		if ($rpos != -1)
 		{
 			$filename = substr($filename, 0, $rpos);
 		}
-		
+
 		return $filename;
 	}
 
@@ -81,33 +82,33 @@ class PHPUnit2Util
 	static function getDefinedClasses($filename, $classpath = NULL)
 	{
 		$filename = realpath($filename);
-		
+
 		if (!file_exists($filename))
 		{
 			throw new Exception("File '" . $filename . "' does not exist");
 		}
-		
+
 		if (isset(self::$definedClasses[$filename]))
 		{
 			return self::$definedClasses[$filename];
 		}
-		
+
 		Phing::__import($filename, $classpath);
 
 		$declaredClasses = get_declared_classes();
-		
+
 		foreach ($declaredClasses as $classname)
 		{
 			$reflect = new ReflectionClass($classname);
-			
+
 			self::$definedClasses[$reflect->getFilename()][] = $classname;
-			
+
 			if (is_array(self::$definedClasses[$reflect->getFilename()]))
-			{			
+			{
 				self::$definedClasses[$reflect->getFilename()] = array_unique(self::$definedClasses[$reflect->getFilename()]);
 			}
 		}
-		
+
 		if (isset(self::$definedClasses[$filename]))
 		{
 			return self::$definedClasses[$filename];

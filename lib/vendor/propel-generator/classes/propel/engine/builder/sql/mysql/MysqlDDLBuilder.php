@@ -19,13 +19,14 @@
  * and is licensed under the LGPL. For more information please see
  * <http://propel.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\propel_generator\classes\propel\engine\builder\sql\mysql;
 
 require_once 'propel/engine/builder/sql/DDLBuilder.php';
 
 /**
  * DDL Builder class for MySQL.
  *
- * @author     David Zülke
+ * @author     David Zï¿½lke
  * @author     Hans Lellelid <hans@xmpl.org>
  * @package    propel.engine.builder.sql.mysql
  */

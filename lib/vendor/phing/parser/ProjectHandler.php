@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\parser;
 
 require_once 'phing/parser/AbstractHandler.php';
 require_once 'phing/system/io/PhingFile.php';
@@ -127,10 +128,10 @@ class ProjectHandler extends AbstractHandler {
      * @access public
      */
     function startElement($name, $attrs) {
-    
+
 		$project = $this->configurator->project;
         $types = $project->getDataTypeDefinitions();
-		
+
 		if ($name == "target") {
 			$tf = new TargetHandler($this->parser, $this, $this->configurator);
 			$tf->init($name, $attrs);

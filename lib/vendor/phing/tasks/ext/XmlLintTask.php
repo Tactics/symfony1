@@ -1,4 +1,6 @@
 <?php
+namespace Tactics\Symfony\vendor\phing\tasks\ext;
+
 require_once 'phing/Task.php';
 
 /**
@@ -30,7 +32,7 @@ class XmlLintTask extends Task {
   public function setSchema(PhingFile $schema) {
     $this->schema = $schema;
   }
-  
+
   /**
    * Nested creator, creates a FileSet for this task
    *

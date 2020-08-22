@@ -1,4 +1,7 @@
 <?php
+
+namespace Tactics\Symfony\vendor\propel_generator\classes\propel\engine\database\model;
+
 /*
  *  $Id: Unique.php 536 2007-01-10 14:30:38Z heltem $
  *

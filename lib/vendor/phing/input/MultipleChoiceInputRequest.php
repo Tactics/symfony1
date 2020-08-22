@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\input;
 
 require_once 'phing/input/InputRequest.php';
 
@@ -38,7 +39,7 @@ class MultipleChoiceInputRequest extends InputRequest {
      *                Must not be null.
      */
     public function __construct($prompt, $choices) {
-        parent::__construct($prompt);        
+        parent::__construct($prompt);
         $this->choices = $choices;
     }
 

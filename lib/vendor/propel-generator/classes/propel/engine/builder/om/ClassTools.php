@@ -19,6 +19,7 @@
  * <http://propel.phpdb.org>.
  */
 
+namespace Tactics\Symfony\vendor\propel_generator\classes\propel\engine\builder\om;
 
  /**
   * Tools to support class & package inclusion and referencing.

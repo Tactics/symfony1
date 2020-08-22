@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext;
 
 require_once 'phing/Task.php';
 include_once 'phing/types/Reference.php';
@@ -40,7 +41,7 @@ abstract class CreoleTask extends Task {
      * Used for caching loaders / driver. This is to avoid
      * getting an OutOfMemoryError when calling this task
      * multiple times in a row.
-     * 
+     *
      * NOT IMPLEMENTED YET
      */
     private static $loaderMap = array();
@@ -51,13 +52,13 @@ abstract class CreoleTask extends Task {
      * Autocommit flag. Default value is false
      */
     private $autocommit = false;
-    
+
     /**
      * [optional] Classpath to Creole driver to use.
      * @param string
      */
     private $driver;
-    
+
     /**
      * DB url.
      */
@@ -77,7 +78,7 @@ abstract class CreoleTask extends Task {
      * RDBMS Product needed for this SQL.
      **/
     private $rdbms;
-   
+
       /**
      * Initialize CreoleTask.
      * This method includes any necessary Creole libraries and triggers
@@ -118,7 +119,7 @@ abstract class CreoleTask extends Task {
     {
         $this->driver = $driver;
     }
-        
+
     /**
      * Sets the password; required.
      * @param password The password to set
@@ -137,14 +138,14 @@ abstract class CreoleTask extends Task {
     }
 
     /**
-     * Sets the version string, execute task only if 
+     * Sets the version string, execute task only if
      * rdbms version match; optional.
      * @param version The version to set
      */
     public function setVersion($version) {
         $this->version = $version;
     }
-       
+
     protected function getLoaderMap() {
         return self::$loaderMap;
     }
@@ -157,38 +158,38 @@ abstract class CreoleTask extends Task {
      * @throws BuildException if the UserId/Password/Url is not set or there is no suitable driver or the driver fails to load.
      */
     protected function getConnection() {
-            
+
         if ($this->url === null) {
             throw new BuildException("Url attribute must be set!", $this->location);
         }
-                
+
         try {
 
             $this->log("Connecting to " . $this->getUrl(), PROJECT_MSG_VERBOSE);
             $info = new Properties();
-            
+
             $dsn = Creole::parseDSN($this->url);
-            
+
             if (!isset($dsn["username"]) && $this->userId === null) {
-                throw new BuildException("Username must be in URL or userid attribute must be set.", $this->location);                
-            }                        
-            
+                throw new BuildException("Username must be in URL or userid attribute must be set.", $this->location);
+            }
+
             if ($this->userId) {
                 $dsn["username"] = $this->getUserId();
             }
-            
+
             if ($this->password) {
                 $dsn["password"] = $this->getPassword();
             }
-            
+
             if ($this->driver) {
                 Creole::registerDriver($dsn['phptype'], $this->driver);
             }
-            
+
             $conn = Creole::getConnection($dsn);
             $conn->setAutoCommit($this->autocommit);
             return $conn;
-            
+
         } catch (SQLException $e) {
             throw new BuildException($e->getMessage(), $this->location);
         }

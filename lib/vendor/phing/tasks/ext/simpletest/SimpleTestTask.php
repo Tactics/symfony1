@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\ext\simpletest;
 
 require_once 'phing/Task.php';
 require_once 'phing/system/io/PhingFile.php';
@@ -50,28 +51,28 @@ class SimpleTestTask extends Task
 	 */
 	function init() {
 		@include_once 'simpletest/scorer.php';
-		
+
 		if (!class_exists('SimpleReporter')) {
 			throw new BuildException("SimpleTestTask depends on SimpleTest package being installed.", $this->getLocation());
 		}
-		
+
 		require_once 'simpletest/reporter.php';
 		require_once 'simpletest/xml.php';
 		require_once 'simpletest/test_case.php';
 		require_once 'phing/tasks/ext/simpletest/SimpleTestCountResultFormatter.php';
 		require_once 'phing/tasks/ext/simpletest/SimpleTestFormatterElement.php';
 	}
-	
+
 	function setFailureproperty($value)
 	{
 		$this->failureproperty = $value;
 	}
-	
+
 	function setErrorproperty($value)
 	{
 		$this->errorproperty = $value;
 	}
-	
+
 	function setHaltonerror($value)
 	{
 		$this->haltonerror = $value;
@@ -86,7 +87,7 @@ class SimpleTestTask extends Task
 	{
 		$this->printsummary = $printsummary;
 	}
-	
+
 	/**
 	 * Add a new formatter to all tests of this task.
 	 *
@@ -144,14 +145,14 @@ class SimpleTestTask extends Task
 	function main()
 	{
 		$group = new GroupTest();
-		
+
 		$filenames = $this->getFilenames();
-		
+
 		foreach ($filenames as $testfile)
 		{
 			$group->addTestFile($testfile);
 		}
-		
+
 		if ($this->printsummary)
 		{
 			$fe = new SimpleTestFormatterElement();
@@ -159,7 +160,7 @@ class SimpleTestTask extends Task
 			$fe->setUseFile(false);
 			$this->formatters[] = $fe;
 		}
-		
+
 		foreach ($this->formatters as $fe)
 		{
 			$formatter = $fe->getFormatter();
@@ -168,7 +169,7 @@ class SimpleTestTask extends Task
 			if ($fe->getUseFile())
 			{
 				$destFile = new PhingFile($fe->getToDir(), $fe->getOutfile());
-				
+
 				$writer = new FileWriter($destFile->getAbsolutePath());
 
 				$formatter->setOutput($writer);
@@ -178,39 +179,39 @@ class SimpleTestTask extends Task
 				$formatter->setOutput($this->getDefaultOutput());
 			}
 		}
-		
+
 		$this->execute($group);
-		
+
 		if ($this->testfailed)
 		{
 			throw new BuildException("One or more tests failed");
 		}
 	}
-	
+
 	private function execute($suite)
 	{
 		$counter = new SimpleTestCountResultFormatter();
 		$reporter = new MultipleReporter();
 		$reporter->attachReporter($counter);
-		
+
 		foreach ($this->formatters as $fe)
 		{
 			$formatter = $fe->getFormatter();
 
 			$reporter->attachReporter($formatter);
-		}		
-		
+		}
+
 		$suite->run($reporter);
-		
+
 		$retcode = $counter->getRetCode();
-		
+
 		if ($retcode == SimpleTestCountResultFormatter::ERRORS)
 		{
 		    if ($this->errorproperty)
 		    {
 				$this->project->setNewProperty($this->errorproperty, true);
 			}
-			
+
 			if ($this->haltonerror)
 			{
 			    $this->testfailed = true;
@@ -222,7 +223,7 @@ class SimpleTestTask extends Task
 			{
 				$this->project->setNewProperty($this->failureproperty, true);
 			}
-			
+
 			if ($this->haltonfailure)
 			{
 				$this->testfailed = true;

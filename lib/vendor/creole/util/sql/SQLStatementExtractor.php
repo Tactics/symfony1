@@ -18,7 +18,9 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
- 
+
+namespace Tactics\Symfony\vendor\creole\util\sql;
+
 /**
  * Static class for extracting SQL statements from a string or file.
  *
@@ -27,12 +29,12 @@
  * @package   creole.util.sql
  */
 class SQLStatementExtractor {
-    
+
     protected static $delimiter = ';';
-    
+
     /**
      * Get SQL statements from file.
-     * 
+     *
      * @param string $filename Path to file to read.
      * @return array SQL statements
      */
@@ -43,17 +45,17 @@ class SQLStatementExtractor {
         }
         return self::extractStatements(self::getLines($buffer));
     }
-    
+
     /**
      * Extract statements from string.
-     * 
+     *
      * @param string $txt
      * @return array
      */
     public static function extract($buffer) {
         return self::extractStatements(self::getLines($buffer));
     }
-    
+
     /**
      * Extract SQL statements from array of lines.
      *
@@ -61,20 +63,20 @@ class SQLStatementExtractor {
      * @return string
      */
     protected static function extractStatements($lines) {
-        
+
         $statements = array();
         $sql = "";
-               
+
         foreach($lines as $line) {
-        
+
                 $line = trim($line);
-                
-                if (self::startsWith("//", $line) || 
+
+                if (self::startsWith("//", $line) ||
                     self::startsWith("--", $line) ||
                     self::startsWith("#", $line)) {
                     continue;
                 }
-                
+
                 if (strlen($line) > 4 && strtoupper(substr($line,0, 4)) == "REM ") {
                     continue;
                 }
@@ -88,19 +90,19 @@ class SQLStatementExtractor {
                 if (strpos($line, "--") !== false) {
                     $sql .= "\n";
                 }
-    
+
                 if (self::endsWith(self::$delimiter, $sql)) {
                     $statements[] = self::substring($sql, 0, strlen($sql)-1 - strlen(self::$delimiter));
                     $sql = "";
                 }
             }
-        return $statements;           
+        return $statements;
     }
-    
+
     //
     // Some string helper methods
-    // 
-    
+    //
+
     /**
      * Tests if a string starts with a given string.
      * @param string $check The substring to check.
@@ -114,7 +116,7 @@ class SQLStatementExtractor {
             return (strpos($string, $check) === 0) ? true : false;
         }
     }
-    
+
     /**
      * Tests if a string ends with a given string.
      * @param string $check The substring to check.
@@ -127,11 +129,11 @@ class SQLStatementExtractor {
         } else {
             return (strpos(strrev($string), strrev($check)) === 0) ? true : false;
         }
-    } 
+    }
 
     /**
      * a natural way of getting a subtring, php's circular string buffer and strange
-     * return values suck if you want to program strict as of C or friends 
+     * return values suck if you want to program strict as of C or friends
      */
     protected static function substring($string, $startpos, $endpos = -1) {
         $len    = strlen($string);
@@ -149,16 +151,16 @@ class SQLStatementExtractor {
         }
         return substr($string, $startpos, $len+1);
     }
-    
+
     /**
      * Convert string buffer into array of lines.
-     * 
+     *
      * @param string $filename
      * @return array string[] lines of file.
      */
-    protected static function getLines($buffer) {       
+    protected static function getLines($buffer) {
        $lines = preg_split("/\r?\n|\r/", $buffer);
        return $lines;
     }
-    
+
 }

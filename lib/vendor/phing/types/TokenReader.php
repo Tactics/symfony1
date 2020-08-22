@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
 */
+namespace Tactics\Symfony\vendor\phing\types;
 
 // include_once 'phing/system/io/Reader.php'; // really this is unrelated to Reader
 include_once 'phing/system/io/IOException.php';
@@ -25,7 +26,7 @@ include_once 'phing/filters/ReplaceTokens.php'; // For class Token
 
 /**
  * Abstract class for TokenReaders.
- * 
+ *
  * @author    Manuel Holtgewe
  * @version   $Revision: 1.5 $
  * @package   phing.filters.util
@@ -34,7 +35,7 @@ abstract class TokenReader {
 
     /**
      * Reference to the Project the TokenReader is used in.
-     * @var Project 
+     * @var Project
      */
     protected $project;
 
@@ -60,7 +61,7 @@ abstract class TokenReader {
      * @return string
      */
     abstract public function readToken();
-    
+
 }
 
 ?>

@@ -19,6 +19,7 @@
  * <http://propel.phpdb.org>.
  */
 
+namespace Tactics\Symfony\vendor\propel\validator;
 
 /**
  * Simple class that serves as a container for any information about a failed validation.

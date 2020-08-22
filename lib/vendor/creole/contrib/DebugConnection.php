@@ -1,5 +1,7 @@
 <?php
 
+namespace Tactics\Symfony\vendor\creole\contrib;
+
 /**
  * Debug implementation of Connection.
  *
@@ -28,10 +30,10 @@ class DebugConnection implements Connection {
 
 	/** @var Connection */
 	private $childConnection = null;
-	
+
 	/** @var int */
 	private $numQueriesExecuted = 0;
-	
+
 	/** @var string */
 	private $lastExecutedQuery = '';
 
@@ -39,7 +41,7 @@ class DebugConnection implements Connection {
 	 * @var object Instance of PEAR Log (or other class with log() method).
 	 */
 	private $logger;
-	
+
 	/**
 	 * Sets a Logger class (e.g. PEAR Log) to use for logging.
 	 * The logger class must have a log() method.  All messages are logged at default log level.
@@ -49,7 +51,7 @@ class DebugConnection implements Connection {
 	{
 		$this->logger = $logger;
 	}
-	
+
 	/**
 	 * Returns the number of queries executed on this connection so far
 	 *
@@ -59,7 +61,7 @@ class DebugConnection implements Connection {
 	{
 		return $this->numQueriesExecuted;
 	}
-	
+
 	/**
 	 * Returns the last query executed on this connection
 	 *
@@ -69,7 +71,7 @@ class DebugConnection implements Connection {
 	{
 		return $this->lastExecutedQuery;
 	}
-	
+
 	/**
 	 * connect()
 	 */
@@ -77,13 +79,13 @@ class DebugConnection implements Connection {
 	{
 		if (!($driver = Creole::getDriver($dsninfo['phptype']))) {
 			throw new SQLException("No driver has been registered to handle connection type: $type");
-		}		
+		}
 		$connectionClass = Creole::import($driver);
 		$this->childConnection = new $connectionClass();
 		$this->log("connect(): DSN: ". var_export($dsninfo, true) . ", FLAGS: " . var_export($flags, true));
 		return $this->childConnection->connect($dsninfo, $flags);
 	}
-	
+
 	/**
 	 * @see Connection::getDatabaseInfo()
 	 */
@@ -91,7 +93,7 @@ class DebugConnection implements Connection {
 	{
 		return $this->childConnection->getDatabaseInfo();
 	}
-	
+
 	/**
 	 * @see Connection::getIdGenerator()
 	 */
@@ -99,7 +101,7 @@ class DebugConnection implements Connection {
 	{
 		return $this->childConnection->getIdGenerator();
 	}
-	
+
 	/**
 	 * @see Connection::isConnected()
 	 */
@@ -107,7 +109,7 @@ class DebugConnection implements Connection {
 	{
 		return $this->childConnection->isConnected();
 	}
-	
+
 	/**
 	 * @see Connection::prepareStatement()
 	 */
@@ -115,20 +117,20 @@ class DebugConnection implements Connection {
 	{
 		$this->log("prepareStatement(): $sql");
 		$obj = $this->childConnection->prepareStatement($sql);
-		$objClass = get_class($obj);		
+		$objClass = get_class($obj);
 		return new $objClass($this, $sql);
 	}
-	
+
 	/**
 	 * @see Connection::createStatement()
 	 */
 	public function createStatement()
 	{
 		$obj = $this->childConnection->createStatement();
-		$objClass = get_class($obj);		
+		$objClass = get_class($obj);
 		return new $objClass($this);
 	}
-	
+
 	/**
 	 * @see Connection::applyLimit()
 	 */
@@ -137,7 +139,7 @@ class DebugConnection implements Connection {
 		$this->log("applyLimit(): $sql, offset: $offset, limit: $limit");
 		return $this->childConnection->applyLimit($sql, $offset, $limit);
 	}
-	
+
 	/**
 	 * @see Connection::close()
 	 */
@@ -146,7 +148,7 @@ class DebugConnection implements Connection {
 		$this->log("close(): Closing connection.");
 		return $this->childConnection->close();
 	}
-	
+
 	/**
 	 * @see Connection::executeQuery()
 	 */
@@ -155,9 +157,9 @@ class DebugConnection implements Connection {
 		$this->log("executeQuery(): $sql");
 		$this->lastExecutedQuery = $sql;
 		$this->numQueriesExecuted++;
-		return $this->childConnection->executeQuery($sql, $fetchmode);	
+		return $this->childConnection->executeQuery($sql, $fetchmode);
 	}
-	
+
 	/**
 	 * @see Connection::executeUpdate()
 	 */
@@ -166,9 +168,9 @@ class DebugConnection implements Connection {
 		$this->log("executeUpdate(): $sql");
 		$this->lastExecutedQuery = $sql;
 		$this->numQueriesExecuted++;
-		return $this->childConnection->executeUpdate($sql);	
+		return $this->childConnection->executeUpdate($sql);
 	}
-	
+
 	/**
 	 * @see Connection::getUpdateCount()
 	 */
@@ -176,7 +178,7 @@ class DebugConnection implements Connection {
 	{
 		return $this->childConnection->getUpdateCount();
 	}
-	
+
 	/**
 	 * @see Connection::prepareCall()
 	 **/
@@ -185,7 +187,7 @@ class DebugConnection implements Connection {
 		$this->log("prepareCall(): $sql");
 		return $this->childConnection->prepareCall($sql);
 	}
-	
+
 	/**
 	 * @see Connection::getResource()
 	 */
@@ -193,7 +195,7 @@ class DebugConnection implements Connection {
 	{
 		return $this->childConnection->getResource();
 	}
-	
+
 	/**
 	 * @see Connection::connect()
 	 */
@@ -201,7 +203,7 @@ class DebugConnection implements Connection {
 	{
 		return $this->childConnection->getDSN();
 	}
-	
+
 	/**
 	 * @see Connection::getFlags()
 	 */
@@ -209,7 +211,7 @@ class DebugConnection implements Connection {
 	{
 		return $this->childConnection->getFlags();
 	}
-	
+
 	/**
 	 * @see Connection::begin()
 	 */
@@ -218,7 +220,7 @@ class DebugConnection implements Connection {
 		$this->log("Beginning transaction.");
 		return $this->childConnection->begin();
 	}
-	
+
 	/**
 	 * @see Connection::commit()
 	 */
@@ -227,7 +229,7 @@ class DebugConnection implements Connection {
 		$this->log("Committing transaction.");
 		return $this->childConnection->commit();
 	}
-	
+
 	/**
 	 * @see Connection::rollback()
 	 */
@@ -236,7 +238,7 @@ class DebugConnection implements Connection {
 		$this->log("Rolling back transaction.");
 		return $this->childConnection->rollback();
 	}
-	
+
 	/**
 	 * @see Connection::setAutoCommit()
 	 */
@@ -245,7 +247,7 @@ class DebugConnection implements Connection {
 		$this->log("Setting autocommit to: " . var_export($bit, true));
 		return $this->childConnection->setAutoCommit($bit);
 	}
-	
+
 	/**
 	 * @see Connection::getAutoCommit()
 	 */
@@ -253,7 +255,7 @@ class DebugConnection implements Connection {
 	{
 		return $this->childConnection->getAutoCommit();
 	}
-	
+
 	/**
 	 * Private function that logs message using specified logger (if provided).
 	 * @param string $msg Message to log.

@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\parser;
 
 /**
  * The abstract SAX parser class.
@@ -27,12 +28,12 @@
  *
  * @author    Andreas Aderhold <andi@binarycloud.com>
  * @author    Hans Lellelid <hans@xmpl.org>
- * @copyright © 2001,2002 THYRELL. All rights reserved
+ * @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  * @version   $Revision: 1.13 $
  * @package   phing.parser
  */
 abstract class AbstractSAXParser {
-    
+
     /** The AbstractHandler object. */
     protected $handler;
 
@@ -64,7 +65,7 @@ abstract class AbstractSAXParser {
      * in the actual parser implementation.
      * It gives control to the current active handler object by calling the
      * <code>startElement()</code> method.
-     * 
+     *
      * BECAUSE OF PROBLEMS WITH EXCEPTIONS BUBBLING UP THROUGH xml_parse() THIS
      * METHOD WILL CALL Phing::halt(-1) ON EXCEPTION.
      *
@@ -74,7 +75,7 @@ abstract class AbstractSAXParser {
      */
     function startElement($parser, $name, $attribs) {
         try {
-            $this->handler->startElement($name, $attribs);        
+            $this->handler->startElement($name, $attribs);
         } catch (Exception $e) {
             print "[Exception in XML parsing]\n";
             print $e;
@@ -93,7 +94,7 @@ abstract class AbstractSAXParser {
      *
      * BECAUSE OF PROBLEMS WITH EXCEPTIONS BUBBLING UP THROUGH xml_parse() THIS
      * METHOD WILL CALL Phing::halt(-1) ON EXCEPTION.
-     * 
+     *
      * @param   object  the php's internal parser handle
      * @param   string  the closing tag name
      */
@@ -118,13 +119,13 @@ abstract class AbstractSAXParser {
      *
      * BECAUSE OF PROBLEMS WITH EXCEPTIONS BUBBLING UP THROUGH xml_parse() THIS
      * METHOD WILL CALL Phing::halt(-1) ON EXCEPTION.
-     * 
+     *
      * @param resource $parser php's internal parser handle.
      * @param string $data the CDATA
      */
     function characters($parser, $data) {
-        try {     
-            $this->handler->characters($data);        
+        try {
+            $this->handler->characters($data);
         } catch (Exception $e) {
             print "[Exception in XML parsing]\n";
             print $e;

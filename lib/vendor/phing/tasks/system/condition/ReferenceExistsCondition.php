@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\tasks\system\condition;
 
 require_once 'phing/ProjectComponent.php'; require_once 'phing/tasks/system/condition/Condition.php';
 
@@ -28,7 +29,7 @@ require_once 'phing/ProjectComponent.php'; require_once 'phing/tasks/system/cond
  * @version $Revision: 1.1 $
  * @package phing.tasks.system.condition  */
 class ReferenceExistsCondition extends ProjectComponent implements Condition {
-    
+
     private $refid;
 
     public function setRef($id) {
@@ -43,7 +44,7 @@ class ReferenceExistsCondition extends ProjectComponent implements Condition {
         if ($this->refid === null) {
             throw new BuildException("No ref attribute specified for reference-exists "
                                      . "condition");
-        }        
+        }
         $refs = $this->project->getReferences();
         return isset($refs[$this->refid]);
     }

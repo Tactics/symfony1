@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\odbc;
 
 require_once 'creole/Connection.php';
 require_once 'creole/common/ConnectionCommon.php';
@@ -266,7 +267,7 @@ class ODBCConnection extends ConnectionCommon implements Connection {
             }
         }
     }
-    
+
     /**
      * Commit the current transaction.
      * @throws SQLException

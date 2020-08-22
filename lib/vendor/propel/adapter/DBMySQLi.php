@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://propel.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\propel\adapter;
 
 require_once 'propel/adapter/DBMySQL.php';
 

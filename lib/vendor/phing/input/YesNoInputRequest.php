@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\input;
 
 require_once 'phing/input/MultipleChoiceInputRequest.php';
 
@@ -28,15 +29,15 @@ require_once 'phing/input/MultipleChoiceInputRequest.php';
  * @version $Revision: 1.4 $
  * @package phing.input
  */
-class YesNoInputRequest extends MultipleChoiceInputRequest {     
+class YesNoInputRequest extends MultipleChoiceInputRequest {
 
     /**
      * @return true if the input is one of the allowed values.
      */
     public function isInputValid() {
-        return StringHelper::isBoolean($this->input);        
+        return StringHelper::isBoolean($this->input);
     }
-    
+
     /**
      * Converts input to boolean.
      * @return boolean

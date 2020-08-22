@@ -1,5 +1,7 @@
 <?php
 
+namespace Tactics\Symfony\vendor\phing\util;
+
 	include_once 'phing/system/io/PhingFile.php';
 
 	/**
@@ -32,7 +34,7 @@
 	class ExtendedFileStream
 	{
 		private $fp = NULL;
-		
+
 		static function registerStream()
 		{
 			if (!in_array("efile", stream_get_wrappers()))
@@ -40,7 +42,7 @@
 				stream_wrapper_register("efile", "ExtendedFileStream");
 			}
 		}
-		
+
 		private function createDirectories($path)
 		{
 			$f = new PhingFile($path);
@@ -48,7 +50,7 @@
 				$f->mkdirs();
 			}
 		}
-		
+
 		function stream_open($path, $mode, $options, &$opened_path)
 		{
 			/** Small fix for Windows */
@@ -60,74 +62,74 @@
 			{
 				$filepath = substr($path, 8);
 			}
-			
+
 			$this->createDirectories(dirname($filepath));
-			
+
 			$this->fp = fopen($filepath, $mode);
-			
+
 			return true;
 		}
-		
+
 		function stream_close()
 		{
 			fclose($this->fp);
 			$this->fp = NULL;
 		}
-		
+
 		function stream_read($count)
 		{
 			return fread($this->fp, $count);
 		}
-		
+
 		function stream_write($data)
 		{
 			return fwrite($this->fp, $data);
 		}
-		
+
 		function stream_eof()
 		{
 			return feof($this->fp);
 		}
-		
+
 		function stream_tell()
 		{
 			return ftell($this->fp);
 		}
-		
+
 		function stream_seek($offset, $whence)
 		{
 			return fseek($this->fp, $offset, $whence);
 		}
-		
+
 		function stream_flush()
 		{
 			return fflush($this->fp);
 		}
-		
+
 		function stream_stat()
 		{
 			return fstat($this->fp);
 		}
-		
+
 		function unlink($path)
 		{
 			return FALSE;
 		}
-		
+
 		function rename($path_from, $path_to)
 		{
 			return FALSE;
 		}
-		
+
 		function mkdir($path, $mode, $options)
 		{
 			return FALSE;
 		}
-		
+
 		function rmdir($path, $options)
 		{
 			return FALSE;
-		}		
+		}
 	};
 
 ?>

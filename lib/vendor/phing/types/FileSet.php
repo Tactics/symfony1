@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\types;
 
 require_once 'phing/types/AbstractFileSet.php';
 
@@ -36,7 +37,7 @@ require_once 'phing/types/AbstractFileSet.php';
  * @package phing.types
  */
 class FileSet extends AbstractFileSet {
-    
+
     function __construct($fileset = null) {
         parent::__construct($fileset);
     }

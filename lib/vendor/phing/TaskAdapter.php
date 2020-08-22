@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing;
 
 require_once 'phing/Task.php';
 
@@ -26,21 +27,21 @@ require_once 'phing/Task.php';
  *  similar patterns).
  *
  *  @author    Andreas Aderhold <andi@binarycloud.com>
- *  @copyright © 2001,2002 THYRELL. All rights reserved
+ *  @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  *  @version   $Revision: 1.7 $
  *  @package   phing
  */
 class TaskAdapter extends Task {
-    
+
     /** target object */
     private $proxy;
-    
+
     /**
      * Main entry point.
      * @return void
      */
     function main() {
-    
+
         if (method_exists($this->proxy, "setProject")) {
             try {  // try to set project
                 $this->proxy->setProject($this->project);
@@ -51,7 +52,7 @@ class TaskAdapter extends Task {
         } else {
             throw new Exception("Error setting project in class " . get_class($this->proxy));
         }
-               
+
         if (method_exists($this->proxy, "main")) {
             try { //try to call main
                 $this->proxy->main($this->project);

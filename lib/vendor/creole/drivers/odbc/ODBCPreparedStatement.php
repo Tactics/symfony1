@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\odbc;
 
 require_once 'creole/PreparedStatement.php';
 require_once 'creole/common/PreparedStatementCommon.php';
@@ -117,17 +118,17 @@ class ODBCPreparedStatement extends PreparedStatementCommon implements PreparedS
             $params = null;
             $fetchmode = null;
             break;
-        }	
-        
+        }
+
         // Set any params passed directly
         if (isset($params)) {
             for($i=0,$cnt=count($params); $i < $cnt; $i++) {
                 $this->set($i+1, $params[$i]);
             }
         }
-        
+
         $sql = $this->replaceParams();
-        
+
         if ($this->conn->getAdapter()->hasLimitOffset())
         {
             if ($this->limit > 0 || $this->offset > 0)
@@ -171,7 +172,7 @@ class ODBCPreparedStatement extends PreparedStatementCommon implements PreparedS
     {
         if ($this->conn->getAdapter()->emulatePrepareStmt())
             return $this->conn->getAdapter()->escape($str);
-            
+
         // Nothing to do here. odbc_execute() takes care of escaping strings.
         return $str;
     }
@@ -192,7 +193,7 @@ class ODBCPreparedStatement extends PreparedStatementCommon implements PreparedS
     {
         if ($this->conn->getAdapter()->emulatePrepareStmt())
             return parent::setBlob($paramIndex, $blob);
-            
+
     	$this->sql_cache_valid = false;
         if ($blob === null)
         {

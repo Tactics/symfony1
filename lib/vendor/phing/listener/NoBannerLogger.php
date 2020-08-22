@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\listener;
 
 include_once 'phing/listener/DefaultLogger.php';
 
@@ -27,7 +28,7 @@ include_once 'phing/listener/DefaultLogger.php';
  *  in bin/.
  *
  *  @author    Andreas Aderhold <andi@binarycloud.com>
- *  @copyright © 2001,2002 THYRELL. All rights reserved
+ *  @copyright ï¿½ 2001,2002 THYRELL. All rights reserved
  *  @version   $Revision: 1.4 $ $Date: 2003/12/24 13:02:08 $
  *  @package   phing.listener
  */

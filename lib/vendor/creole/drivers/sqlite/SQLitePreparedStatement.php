@@ -18,19 +18,20 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
- 
+namespace Tactics\Symfony\vendor\creole\drivers\sqlite;
+
 require_once 'creole/PreparedStatement.php';
 require_once 'creole/common/PreparedStatementCommon.php';
 
 /**
  * MySQL subclass for prepared statements.
- * 
+ *
  * @author    Hans Lellelid <hans@xmpl.org>
  * @version   $Revision: 1.7 $
  * @package   creole.drivers.sqlite
  */
 class SQLitePreparedStatement extends PreparedStatementCommon implements PreparedStatement {
-    
+
     /**
      * Quotes string using native sqlite_escape_string() function.
      * @see ResultSetCommon::escape()
@@ -39,14 +40,14 @@ class SQLitePreparedStatement extends PreparedStatementCommon implements Prepare
     {
         return sqlite_escape_string($str);
     }
-    
+
     /**
      * Applies sqlite_udf_encode_binary() to ensure that binary contents will be handled correctly by sqlite.
      * @see PreparedStatement::setBlob()
      * @see ResultSet::getBlob()
      */
-    function setBlob($paramIndex, $blob) 
-    {    
+    function setBlob($paramIndex, $blob)
+    {
         if ($blob === null) {
             $this->setNull($paramIndex);
         } else {
@@ -57,5 +58,5 @@ class SQLitePreparedStatement extends PreparedStatementCommon implements Prepare
             $this->boundInVars[$paramIndex] = "'" . sqlite_udf_encode_binary( $blob ) . "'";
         }
     }
-    
+
 }

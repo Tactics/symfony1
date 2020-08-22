@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\creole\drivers\odbc\adapters;
 
 /**
  * Default class for ODBC driver-specific behavior.
@@ -44,14 +45,14 @@ class ODBCAdapter
      * Returns true if prepared statements should be emulated. This
      * might be useful if your driver does not support (or has trouble with)
      * prepared statements.
-     * 
+     *
      * @return boolean
      */
     public function emulatePrepareStmt()
     {
         return false;
     }
-    
+
     /**
      * Returns true if ODBC driver supports LIMIT/OFFSET via SQL.
      *
@@ -103,7 +104,7 @@ class ODBCAdapter
 
     /**
      * Returns true if driver support transactions.
-     * 
+     *
      * @return boolean
      */
     public function supportsTransactions()

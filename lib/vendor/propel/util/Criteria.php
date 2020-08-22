@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://propel.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\propel\util;
 
 /**
  * This is a utility class for holding criteria information for a query.
@@ -473,7 +474,7 @@ class Criteria implements IteratorAggregate {
 	{
 		return $this->getValue($key);
 	}
-    
+
     /**
      * Overrides Hashtable put, so that this object is returned
      * instead of the value previously in the Criteria object.
@@ -1371,7 +1372,7 @@ class Criterion  {
 	{
 		return $this->conjunctions;
 	}
-    
+
     /**
      * Append an AND Criterion onto this Criterion's list.
      * @param Criterion $criterion
@@ -1383,7 +1384,7 @@ class Criterion  {
 		$this->conjunctions[] = self::UND;
 		return $this;
 	}
-    
+
     /**
      * Append an OR Criterion onto this Criterion's list.
      * @param Criterion $criterion
@@ -1699,7 +1700,7 @@ class Join
 	{
 		return $this->joinType;
 	}
-    
+
     /**
      * the left column of the join condition
      *
@@ -1709,7 +1710,7 @@ class Join
 	{
 		return $this->leftColumn;
 	}
-    
+
     /**
      * @return bool|string
      */
@@ -1717,7 +1718,7 @@ class Join
     {
         return substr($this->leftColumn, strpos($this->leftColumn, '.') + 1);
     }
-    
+
     /**
      * @return bool|string
      */
@@ -1725,7 +1726,7 @@ class Join
     {
         return substr($this->leftColumn, 0, strpos($this->leftColumn, '.'));
     }
-    
+
     /**
      * @return null|string the right column of the join condition
      */
@@ -1733,7 +1734,7 @@ class Join
 	{
 		return $this->rightColumn;
 	}
-    
+
     /**
      * @return bool|string
      */
@@ -1741,7 +1742,7 @@ class Join
     {
         return substr($this->rightColumn, strpos($this->rightColumn, '.') + 1);
     }
-    
+
     /**
      * @return bool|string
      */

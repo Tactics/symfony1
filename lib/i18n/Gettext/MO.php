@@ -1,6 +1,6 @@
 <?php
 
-namespace i18n\Gettext;
+namespace Tactics\Symfony\i18n\Gettext;
 
 // +----------------------------------------------------------------------+
 // | PEAR :: File :: Gettext :: MO                                        |

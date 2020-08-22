@@ -19,6 +19,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
+namespace Tactics\Symfony\vendor\phing\input;
 
 /**
  * Plugin to Phing to handle requests for user input.
@@ -41,5 +42,5 @@ interface InputHandler {
      * @throws BuildException
      */
     public function handleInput(InputRequest $request);
-    
+
 }

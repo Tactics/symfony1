@@ -1,6 +1,6 @@
 <?php
 
-namespace i18n\Gettext;
+namespace Tactics\Symfony\i18n\Gettext;
 
 // +----------------------------------------------------------------------+
 // | PEAR :: File :: Gettext :: PO                                        |
@@ -18,22 +18,22 @@ namespace i18n\Gettext;
 
 /**
  * File::Gettext::PO
- * 
+ *
  * @author      Michael Wallner <mike@php.net>
  * @license     PHP License
  */
- 
+
 require_once dirname(__FILE__).'/TGettext.class.php';
 
-/** 
+/**
  * File_Gettext_PO
  *
  * GNU PO file reader and writer.
- * 
+ *
  * @author      Michael Wallner <mike@php.net>
  * @version     $Revision: 9858 $
  * @access      public
- * @package System.I18N.core 
+ * @package System.I18N.core
  */
 class TGettext_PO extends TGettext
 {
@@ -72,13 +72,13 @@ class TGettext_PO extends TGettext
         if (!isset($file)) {
             $file = $this->file;
         }
-        
+
         // load file
         if (!$contents = @file($file)) {
             return false;
         }
         $contents = implode('', $contents);
-        
+
         // match all msgid/msgstr entries
         $matched = preg_match_all(
             '/(msgid\s+("([^"]|\\\\")*?"\s*)+)\s+' .
@@ -86,11 +86,11 @@ class TGettext_PO extends TGettext
             $contents, $matches
         );
         unset($contents);
-        
+
         if (!$matched) {
             return false;
         }
-        
+
         // get all msgids and msgtrs
         for ($i = 0; $i < $matched; $i++) {
             $msgid = preg_replace(
@@ -99,16 +99,16 @@ class TGettext_PO extends TGettext
                 '/\s*msgstr\s*"(.*)"\s*/s', '\\1', $matches[4][$i]);
             $this->strings[parent::prepare($msgid)] = parent::prepare($msgstr);
         }
-        
+
         // check for meta info
         if (isset($this->strings[''])) {
             $this->meta = parent::meta2array($this->strings['']);
             unset($this->strings['']);
         }
-        
+
         return true;
     }
-    
+
     /**
      * Save PO file
      *
@@ -147,7 +147,7 @@ class TGettext_PO extends TGettext
                 'msgstr "' . parent::prepare($t, true) . '"' . "\n\n"
             );
         }
-        
+
         //done
         @flock($fh, LOCK_UN);
         @fclose($fh);

@@ -18,7 +18,8 @@
  * and is licensed under the LGPL. For more information please see
  * <http://phing.info>.
  */
- 
+namespace Tactics\Symfony\vendor\phing\parser;
+
 require_once 'phing/parser/AbstractHandler.php';
 
 /**
@@ -56,7 +57,7 @@ class TargetHandler extends AbstractHandler {
      */
     function __construct(AbstractSAXParser $parser, AbstractHandler $parentHandler, ProjectConfigurator $configurator) {
         parent::__construct($parser, $parentHandler);
-        $this->configurator = $configurator;      
+        $this->configurator = $configurator;
     }
 
     /**

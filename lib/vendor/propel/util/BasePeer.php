@@ -18,6 +18,7 @@
  * and is licensed under the LGPL. For more information please see
  * <http://propel.phpdb.org>.
  */
+namespace Tactics\Symfony\vendor\propel\util;
 
 include_once 'propel/adapter/DBAdapter.php';
 include_once 'propel/map/ColumnMap.php';

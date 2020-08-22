@@ -19,7 +19,8 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
- 
+namespace Tactics\Symfony\vendor\creole\drivers\pgsql;
+
 require_once 'creole/CreoleTypes.php';
 
 /**
@@ -34,7 +35,7 @@ class PgSQLTypes extends CreoleTypes {
     /** Map PostgreSQL native types to Creole (JDBC) types. */
     private static $typeMap = array (
                 "int2" => CreoleTypes::SMALLINT,
-                "int4" => CreoleTypes::INTEGER, 
+                "int4" => CreoleTypes::INTEGER,
                 "oid" => CreoleTypes::INTEGER,
                 "int8" => CreoleTypes::BIGINT,
                 "cash"  => CreoleTypes::DOUBLE,
@@ -42,44 +43,44 @@ class PgSQLTypes extends CreoleTypes {
                 "numeric" => CreoleTypes::NUMERIC,
                 "float4" => CreoleTypes::REAL,
                 "float8" => CreoleTypes::DOUBLE,
-                "bpchar" => CreoleTypes::CHAR, 
-                "char" => CreoleTypes::CHAR, 
-                "char2" => CreoleTypes::CHAR, 
-                "char4" => CreoleTypes::CHAR, 
-                "char8" => CreoleTypes::CHAR, 
+                "bpchar" => CreoleTypes::CHAR,
+                "char" => CreoleTypes::CHAR,
+                "char2" => CreoleTypes::CHAR,
+                "char4" => CreoleTypes::CHAR,
+                "char8" => CreoleTypes::CHAR,
                 "char16" => CreoleTypes::CHAR,
-                "varchar" => CreoleTypes::VARCHAR, 
-                "text" => CreoleTypes::VARCHAR, 
-                "name" => CreoleTypes::VARCHAR, 
+                "varchar" => CreoleTypes::VARCHAR,
+                "text" => CreoleTypes::VARCHAR,
+                "name" => CreoleTypes::VARCHAR,
                 "filename" => CreoleTypes::VARCHAR,
                 "bytea" => CreoleTypes::BINARY,
                 "bool" => CreoleTypes::BOOLEAN,
                 "date" => CreoleTypes::DATE,
                 "time" => CreoleTypes::TIME,
-                "abstime" => CreoleTypes::TIMESTAMP, 
-                "timestamp" => CreoleTypes::TIMESTAMP, 
+                "abstime" => CreoleTypes::TIMESTAMP,
+                "timestamp" => CreoleTypes::TIMESTAMP,
                 "timestamptz" => CreoleTypes::TIMESTAMP,
-                "_bool" => CreoleTypes::ARR,     
-                "_char" => CreoleTypes::ARR, 
-                "_int2" => CreoleTypes::ARR, 
-                "_int4" => CreoleTypes::ARR, 
+                "_bool" => CreoleTypes::ARR,
+                "_char" => CreoleTypes::ARR,
+                "_int2" => CreoleTypes::ARR,
+                "_int4" => CreoleTypes::ARR,
                 "_text" => CreoleTypes::ARR,
-                "_oid" => CreoleTypes::ARR, 
-                "_varchar" => CreoleTypes::ARR, 
-                "_int8" => CreoleTypes::ARR, 
-                "_float4" => CreoleTypes::ARR, 
+                "_oid" => CreoleTypes::ARR,
+                "_varchar" => CreoleTypes::ARR,
+                "_int8" => CreoleTypes::ARR,
+                "_float4" => CreoleTypes::ARR,
                 "_float8" => CreoleTypes::ARR,
-                "_abstime" => CreoleTypes::ARR, 
-                "_date" => CreoleTypes::ARR, 
-                "_time" => CreoleTypes::ARR, 
-                "_timestamp" => CreoleTypes::ARR, 
+                "_abstime" => CreoleTypes::ARR,
+                "_date" => CreoleTypes::ARR,
+                "_time" => CreoleTypes::ARR,
+                "_timestamp" => CreoleTypes::ARR,
                 "_numeric" => CreoleTypes::ARR,
                 "_bytea" => CreoleTypes::ARR,
             );
-                
+
     /** Reverse lookup map, created on demand. */
     private static $reverseMap = null;
-    
+
     public static function getType($pgsqlType)
     {
         $t = strtolower($pgsqlType);
@@ -89,7 +90,7 @@ class PgSQLTypes extends CreoleTypes {
             return CreoleTypes::OTHER;
         }
     }
-    
+
     public static function getNativeType($creoleType)
     {
         if (self::$reverseMap === null) {
@@ -97,5 +98,5 @@ class PgSQLTypes extends CreoleTypes {
         }
         return @self::$reverseMap[$creoleType];
     }
-    
+
 }
