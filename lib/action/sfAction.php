@@ -11,6 +11,13 @@ namespace Tactics\Symfony\action;
  * file that was distributed with this source code.
  */
 
+use Tactics\Symfony\config\sfConfig;
+use Tactics\Symfony\config\sfConfigCache;
+use Tactics\Symfony\exception\sfError404Exception;
+use Tactics\Symfony\exception\sfStopException;
+use Tactics\Symfony\request\sfRequest;
+use Tactics\Symfony\view\sfView;
+
 /**
  * sfAction executes all the logic for the current request.
  *
@@ -28,7 +35,7 @@ abstract class sfAction extends sfComponent
   /**
    * Initializes this action.
    *
-   * @param sfContext The current application context.
+   * @param \Tactics\Symfony\util\sfContext The current application context.
    *
    * @return bool true, if initialization completes successfully, otherwise false
    */
@@ -256,7 +263,7 @@ abstract class sfAction extends sfComponent
    *
    * @param  string Text to append to the response
    *
-   * @return sfView::NONE
+   * @return string
    */
   public function renderText($text)
   {
@@ -322,7 +329,7 @@ abstract class sfAction extends sfComponent
   /**
    * Returns the security configuration for this module.
    *
-   * @return string Current security configuration as an array
+   * @return array Current security configuration as an array
    */
   public function getSecurityConfiguration()
   {

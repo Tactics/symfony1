@@ -10,6 +10,9 @@ namespace Tactics\Symfony\addon\bridge;
  * file that was distributed with this source code.
  */
 
+use Tactics\Symfony\config\sfConfig;
+use Tactics\Symfony\exception\sfAutoloadException;
+
 $sf_ez_lib_dir = sfConfig::get('sf_ez_lib_dir') ? sfConfig::get('sf_ez_lib_dir').'/' : '';
 
 if (file_exists($sf_ez_lib_dir.'Base/src/base.php'))

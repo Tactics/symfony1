@@ -11,6 +11,10 @@ namespace Tactics\Symfony\addon\creole\database;
  * file that was distributed with this source code.
  */
 
+use Tactics\Symfony\database\sfDatabase;
+use Tactics\Symfony\exception\sfDatabaseException;
+use Tactics\Symfony\vendor\creole\Creole;
+
 /**
  * sfCreoleDatabase provides connectivity for the Creole database abstraction
  * layer.

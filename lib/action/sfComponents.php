@@ -10,6 +10,8 @@ namespace Tactics\Symfony\action;
  * file that was distributed with this source code.
  */
 
+use Tactics\Symfony\exception\sfInitializationException;
+
 /**
  * sfComponents.
  *

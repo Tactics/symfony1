@@ -10,6 +10,9 @@ namespace Tactics\Symfony\addon\bridge;
  * file that was distributed with this source code.
  */
 
+use Tactics\Symfony\config\sfConfig;
+use Tactics\Symfony\exception\sfAutoloadException;
+
 if (sfConfig::get('sf_zend_lib_dir'))
 {
   set_include_path(sfConfig::get('sf_zend_lib_dir').PATH_SEPARATOR.get_include_path());

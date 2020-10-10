@@ -11,6 +11,8 @@ namespace Tactics\Symfony\action;
  * file that was distributed with this source code.
  */
 
+use Tactics\Symfony\view\sfView;
+
 /**
  * sfActionStackEntry represents information relating to a single sfAction request during a single HTTP request.
  *

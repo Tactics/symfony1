@@ -10,6 +10,12 @@ namespace Tactics\Symfony\action;
  * file that was distributed with this source code.
  */
 
+use Tactics\Symfony\config\sfConfig;
+use Tactics\Symfony\debug\sfWebDebug;
+use Tactics\Symfony\exception\sfException;
+use Tactics\Symfony\util\sfMixer;
+use Tactics\Symfony\util\sfParameterHolder;
+
 /**
  * sfComponent.
  *
@@ -65,7 +71,7 @@ abstract class sfComponent
   /**
    * Initializes this component.
    *
-   * @param sfContext The current application context
+   * @param \Tactics\Symfony\util\sfContext The current application context
    *
    * @return boolean true, if initialization completes successfully, otherwise false
    */
@@ -83,7 +89,7 @@ abstract class sfComponent
   /**
    * Retrieves the current application context.
    *
-   * @return sfContext The current sfContext instance
+   * @return \Tactics\Symfony\util\sfContext The current sfContext instance
    */
   public final function getContext()
   {
@@ -93,7 +99,7 @@ abstract class sfComponent
   /**
    * Retrieves the current logger instance.
    *
-   * @return sfLogger The current sfLogger instance
+   * @return \Tactics\Symfony\log\sfLogger The current sfLogger instance
    */
   public final function getLogger()
   {
@@ -170,7 +176,7 @@ abstract class sfComponent
    *
    * <code>$this->getContext()->getRequest()</code>
    *
-   * @return sfRequest The current sfRequest implementation instance
+   * @return \Tactics\Symfony\request\sfRequest The current sfRequest implementation instance
    */
   public function getRequest()
   {
@@ -184,7 +190,7 @@ abstract class sfComponent
    *
    * <code>$this->getContext()->getResponse()</code>
    *
-   * @return sfResponse The current sfResponse implementation instance
+   * @return \Tactics\Symfony\response\sfResponse The current sfResponse implementation instance
    */
   public function getResponse()
   {
@@ -198,7 +204,7 @@ abstract class sfComponent
    *
    * <code>$this->getContext()->getController()</code>
    *
-   * @return sfController The current sfController implementation instance
+   * @return \Tactics\Symfony\controller\sfController The current sfController implementation instance
    */
   public function getController()
   {
@@ -212,7 +218,7 @@ abstract class sfComponent
    *
    * <code>$this->getContext()->getUser()</code>
    *
-   * @return sfUser The current sfUser implementation instance
+   * @return \Tactics\Symfony\user\sfUser The current sfUser implementation instance
    */
   public function getUser()
   {
@@ -405,16 +411,17 @@ abstract class sfComponent
     return $this->getController()->getPresentationFor($module, $action, $viewName);
   }
 
-  /**
-   * Calls methods defined via the sfMixer class.
-   *
-   * @param string The method name
-   * @param array  The method arguments
-   *
-   * @return mixed The returned value of the called method
-   *
-   * @see sfMixer
-   */
+    /**
+     * Calls methods defined via the sfMixer class.
+     *
+     * @param string The method name
+     * @param array  The method arguments
+     *
+     * @return mixed The returned value of the called method
+     *
+     * @throws \Tactics\Symfony\exception\sfException
+     * @see sfMixer
+     */
   public function __call($method, $arguments)
   {
     if (!$callable = sfMixer::getCallable('sfComponent:'.$method))

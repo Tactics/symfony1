@@ -11,6 +11,9 @@ namespace Tactics\Symfony\action;
  * file that was distributed with this source code.
  */
 
+use Tactics\Symfony\config\sfConfig;
+use Tactics\Symfony\exception\sfInitializationException;
+
 /**
  * sfActions executes all the logic for the current request.
  *
@@ -22,18 +25,20 @@ namespace Tactics\Symfony\action;
  */
 abstract class sfActions extends sfAction
 {
-  /**
-   * Dispatches to the action defined by the 'action' parameter of the sfRequest object.
-   *
-   * This method try to execute the executeXXX() method of the current object where XXX is the
-   * defined action name.
-   *
-   * @return string A string containing the view name associated with this action
-   *
-   * @throws sfInitializationException
-   *
-   * @see sfAction
-   */
+
+    /**
+     * Dispatches to the action defined by the 'action' parameter of the
+     * sfRequest object.
+     *
+     * This method try to execute the executeXXX() method of the current object
+     * where XXX is the defined action name.
+     *
+     * @return string A string containing the view name associated with this
+     *   action
+     *
+     * @throws \Tactics\Symfony\exception\sfInitializationException
+     * @see sfAction
+     */
   public function execute()
   {
     // dispatch action

@@ -22,8 +22,7 @@ namespace Tactics\Symfony\exception;
  * @author     Sean Kerr <sean@code-box.org>
  * @version    SVN: $Id: sfException.class.php 18492 2009-05-20 14:19:35Z nicolas $
  */
-class sfException extends Exception
-{
+class sfException extends \Exception {
   protected
     $name = null;
 
