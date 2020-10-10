@@ -17,10 +17,9 @@
  * @package    symfony
  * @subpackage i18n
  */
- 
 /**
  * sfNumberFormatInfo class
- * 
+ *
  * Defines how numeric values are formatted and displayed,
  * depending on the culture. Numeric values are formatted using
  * standard or custom patterns stored in the properties of a 

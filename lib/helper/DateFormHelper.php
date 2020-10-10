@@ -9,7 +9,6 @@ use_helper('Form');
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 /**
  * DateFormHelper.
  *
@@ -18,7 +17,6 @@ use_helper('Form');
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @version    SVN: $Id: DateFormHelper.php 14120 2008-12-17 10:27:00Z FabianLange $
  */
-
 /**
  * Returns a <select> tag populated with all the days of the month (1 - 31).
  *
@@ -40,7 +38,7 @@ use_helper('Form');
  * @param  string field name
  * @param  integer selected value (1 - 31)
  * @param  array  additional HTML compliant <select> tag parameters
- * @return string <select> tag populated with all the days of the month (1 - 31).
+ * @return string<select> tag populated with all the days of the month (1 - 31).
  * @see    select_date_tag, select datetime_tag
  */
 function select_day_tag($name, $value = null, $options = array(), $html_options = array())
