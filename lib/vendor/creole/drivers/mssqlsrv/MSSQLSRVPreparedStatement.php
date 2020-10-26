@@ -33,7 +33,7 @@ class MSSQLSRVPreparedStatement extends PreparedStatementCommon implements Prepa
 
     /**
      * @inheritdoc
-     * 
+     *
      */
     public function __construct(Connection $conn, $sql)
     {
@@ -41,10 +41,10 @@ class MSSQLSRVPreparedStatement extends PreparedStatementCommon implements Prepa
       {
         $sql .= '; SELECT SCOPE_IDENTITY() AS ID';
       }
-      
+
       parent::__construct($conn, $sql);
     }
-    
+
     /**
      * Add quotes using str_replace.
      * This is not as thorough as MySQL.
@@ -90,7 +90,14 @@ class MSSQLSRVPreparedStatement extends PreparedStatementCommon implements Prepa
           }
         }
 
-        $this->resultSet = $this->conn->executeQuery($sql, $fetchmode);
+        if($this->limit)
+        {
+          $this->resultSet = $this->conn->executeQueryBuffered($sql, $fetchmode);
+        }
+        else
+        {
+          $this->resultSet = $this->conn->executeQuery($sql, $fetchmode);
+        }
 
         if(!$offsetBefore)
         {
