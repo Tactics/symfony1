@@ -169,6 +169,29 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
   }
 
   /**
+   * @see Connection::executeQuery()
+   */
+  function executeQueryBuffered($sql, $fetchmode = null)
+  {
+    $this->lastQuery = $sql;
+
+    $result = sqlsrv_query($this->dblink, $sql, null, array("Scrollable" => SQLSRV_CURSOR_CLIENT_BUFFERED));
+    if($result === false)
+    {
+      throw new SQLException('Could not execute query: ' . $sql,  $this->sqlError());
+    }
+
+    // get first results with has fields
+    $numfields = sqlsrv_num_fields( $result );
+    while(($numfields == false)&&(sqlsrv_num_fields( $result )))
+    {
+      $numfields = sqlsrv_fetch_array( $result );
+    }
+
+    return new MSSQLSRVResultSet($this, $result, $fetchmode);
+  }
+  
+  /**
    * @see Connection::executeUpdate()
    */
   function executeUpdate($sql)
