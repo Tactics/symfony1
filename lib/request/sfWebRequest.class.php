@@ -854,11 +854,12 @@ class sfWebRequest extends sfRequest
   {
   }
 
-  /**
-   * Splits an HTTP header for the current web request.
-   *
-   * @param string Header to split
-   */
+    /**
+     * Splits an HTTP header for the current web request.
+     *
+     * @param string Header to split
+     * @return array
+     */
   public function splitHttpAcceptHeader($header)
   {
     $values = array();

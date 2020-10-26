@@ -500,7 +500,7 @@
      * @param string $line A line from the YAML file
      */
      private function _getIndent($line) {
-      preg_match('/^\s{1,}/',$line,$match);
+      preg_match('/^\s+/',$line,$match);
       if (!empty($match[0])) {
         $indent = substr_count($match[0],' ');
       } else {
