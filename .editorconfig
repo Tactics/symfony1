@@ -13,13 +13,9 @@ trim_trailing_whitespace = true
 # Change to utf-8 after migration to linux and fixes in code.
 charset = utf-8
 
-[composer.json]
-indent_size = 4
-
 [*.bat]
 end_of_line = crlf
 
 [*.yml]
-indent_style = space
 indent_size = 2
 

@@ -505,8 +505,6 @@ class Project {
      * @param string $classpath The classpat to use.
      */
     function addTaskDefinition($name, $class, $classpath = null) {
-        $name  = $name;
-        $class = $class;
         if ($class === "") {
             $this->log("Task $name has no class defined.", PROJECT_MSG_ERR);
         }  elseif (!isset($this->taskdefs[$name])) {
