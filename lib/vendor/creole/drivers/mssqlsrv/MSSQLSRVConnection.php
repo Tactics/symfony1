@@ -38,6 +38,7 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
   /** LastStmt used to count last update SQL **/
   private $lastStmt = null;
 
+  private $pointer_type = SQLSRV_CURSOR_CLIENT_BUFFERED;
   /**
    * @see Connection::connect()
    */
@@ -134,7 +135,6 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
     }
   }
 
-
   /**
    * @see Connection::close()
    */
@@ -146,36 +146,30 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
   }
 
   /**
-   * @see Connection::executeQuery()
+   * @return string
    */
-  function executeQuery($sql, $fetchmode = null)
+  function getPointerType()
   {
-    $this->lastQuery = $sql;
-    
-    $result = sqlsrv_query($this->dblink, $sql, null, array("Scrollable" => SQLSRV_CURSOR_STATIC));    
-    if($result === false)
-    {
-      throw new SQLException('Could not execute query: ' . $sql,  $this->sqlError());
-    }
+    return  $this->pointer_type ?: SQLSRV_CURSOR_CLIENT_BUFFERED;
+  }
 
-    // get first results with has fields
-    $numfields = sqlsrv_num_fields( $result );
-    while(($numfields == false)&&(sqlsrv_num_fields( $result )))
-    {
-      $numfields = sqlsrv_fetch_array( $result );
-    }
-
-    return new MSSQLSRVResultSet($this, $result, $fetchmode);
+  /**
+   * @param $type
+   */
+  function setPointerType($type)
+  {
+    $this->pointer_type = $type;
   }
 
   /**
    * @see Connection::executeQuery()
    */
-  function executeQueryBuffered($sql, $fetchmode = null)
+  function executeQuery($sql, $fetchmode = null)
   {
     $this->lastQuery = $sql;
 
-    $result = sqlsrv_query($this->dblink, $sql, null, array("Scrollable" => SQLSRV_CURSOR_CLIENT_BUFFERED));
+    //var_dump( $this->getPointerType());
+    $result = sqlsrv_query($this->dblink, $sql, null, array("Scrollable" => $this->getPointerType()));
     if($result === false)
     {
       throw new SQLException('Could not execute query: ' . $sql,  $this->sqlError());
@@ -190,7 +184,7 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
 
     return new MSSQLSRVResultSet($this, $result, $fetchmode);
   }
-  
+
   /**
    * @see Connection::executeUpdate()
    */
@@ -199,9 +193,9 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
     $this->lastQuery = $sql;
 
     $stmt = sqlsrv_query( $this->dblink, $sql);
-    
+
     if (!$stmt) {
-        throw new SQLException('Could not execute update', $this->sqlError(), $sql);
+      throw new SQLException('Could not execute update', $this->sqlError(), $sql);
     }
 
     $rows_affected = sqlsrv_rows_affected( $stmt);
@@ -305,23 +299,23 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
   {
     return print_r( sqlsrv_errors(), true);
   }
-  
+
   /**
    * returns the last inserted id
-   * 
+   *
    * @return int
    * @throws SQLException
    */
   function getLastInsertedId()
-  { 
+  {
     if (
-        (sqlsrv_next_result($this->lastStmt) !== true) || 
-        (sqlsrv_fetch($this->lastStmt) !== true) ||
-        (($lastInsertedId = sqlsrv_get_field($this->lastStmt, 0)) === false)
-       ) {
+      (sqlsrv_next_result($this->lastStmt) !== true) ||
+      (sqlsrv_fetch($this->lastStmt) !== true) ||
+      (($lastInsertedId = sqlsrv_get_field($this->lastStmt, 0)) === false)
+    ) {
       throw new SQLException('Unable to retrieve last inserted id', $this->sqlError());
     }
-    
+
     return $lastInsertedId;
   }
 }

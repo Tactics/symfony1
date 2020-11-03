@@ -151,6 +151,28 @@ class sfDebugConnection implements Connection
   }
 
   /**
+   *
+   */
+  public function setPointerType($value)
+  {
+    if(method_exists($this->childConnection, 'setPointerType'))
+    {
+      $this->childConnection->setPointerType($value);
+    }
+  }
+
+  /**
+   *
+   */
+  public function getPointerType()
+  {
+    if(method_exists($this->childConnection, 'getPointerType'))
+    {
+      $this->childConnection->getPointerType();
+    }
+  }
+
+  /**
    * @see Connection::executeQuery()
    */
   public function executeQuery($sql, $fetchmode = null)
@@ -179,37 +201,8 @@ class sfDebugConnection implements Connection
   }
 
   /**
-   * @see Connection::executeQuery()
-   */
-  public function executeQueryBuffered($sql, $fetchmode = null)
-  {
-    $this->lastExecutedQuery = $sql;
-    $this->numQueriesExecuted++;
-
-    $elapsedTime = 0;
-    if (sfConfig::get('sf_debug') && sfConfig::get('sf_logging_enabled'))
-    {
-      $sqlTimer = sfTimerManager::getTimer('Database');
-      $timer = new sfTimer();
-    }
-
-    $retval = $this->childConnection->executeQueryBuffered($sql, $fetchmode);
-
-    if (sfConfig::get('sf_debug') && sfConfig::get('sf_logging_enabled'))
-    {
-      $sqlTimer->addTime();
-      $elapsedTime = $timer->getElapsedTime();
-    }
-
-    $this->log(sprintf("{sfCreole} executeQuery(): [%.2f ms] %s", $elapsedTime * 1000, $sql));
-
-    return $retval;
-  }
-
-
-  /**
-  * @see Connection::executeUpdate()
-  **/
+   * @see Connection::executeUpdate()
+   **/
   public function executeUpdate($sql)
   {
     $this->log("{sfCreole} executeUpdate(): $sql");
