@@ -461,13 +461,14 @@ class BasePeer
 		return $rs;
 	}
 
-	/**
-	 * Applies any validators that were defined in the schema to the specified columns.
-	 *
-	 * @param      string $dbName The name of the database
-	 * @param      string $tableName The name of the table
-	 * @param      array $columns Array of column names as key and column values as value.
-	 */
+    /**
+     * Applies any validators that were defined in the schema to the specified columns.
+     *
+     * @param string $dbName The name of the database
+     * @param string $tableName The name of the table
+     * @param array $columns Array of column names as key and column values as value.
+     * @return array|bool
+     */
 	public static function doValidate($dbName, $tableName, $columns)
 	{
 		$dbMap = Propel::getDatabaseMap($dbName);

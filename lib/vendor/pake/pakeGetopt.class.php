@@ -50,14 +50,14 @@ class pakeGetopt
 
   public function add_option($long_opt, $short_opt, $mode = self::NO_ARGUMENT, $comment = '')
   {
-    if ($long_opt{0} == '-' && $long_opt{1} == '-')
+    if ($long_opt[0] == '-' && $long_opt[1] == '-')
     {
       $long_opt = substr($long_opt, 2);
     }
 
     if ($short_opt)
     {
-      if ($short_opt{0} == '-')
+      if ($short_opt[0] == '-')
       {
         $short_opt = substr($short_opt, 1);
       }
@@ -83,7 +83,7 @@ class pakeGetopt
       $args = $this->read_php_argv();
 
       // we strip command line program
-      if (isset($args[0]) && $args[0]{0} != '-')
+      if (isset($args[0]) && $args[0][0] != '-')
       {
         array_shift($args);
       }
@@ -103,7 +103,7 @@ class pakeGetopt
         break;
       }
 
-      if ($arg{0} != '-' || (strlen($arg) > 1 && $arg{1} == '-' && !$this->long_options))
+      if ($arg[0] != '-' || (strlen($arg) > 1 && $arg[1] == '-' && !$this->long_options))
       {
         $this->arguments = array_merge($this->arguments, array($arg), $this->args);
         break;
@@ -171,7 +171,7 @@ class pakeGetopt
         else
         {
           // take next element as argument (if it doesn't start with a -)
-          if (count($this->args) && $this->args[0]{0} != '-')
+          if (count($this->args) && $this->args[0][0] != '-')
           {
             $this->options[$this->short_options[$opt]['name']] = array_shift($this->args);
             break;
@@ -191,7 +191,7 @@ class pakeGetopt
         else
         {
           // take next element as argument (if it doesn't start with a -)
-          if (count($this->args) && $this->args[0]{0} != '-')
+          if (count($this->args) && $this->args[0][0] != '-')
           {
             $this->options[$this->short_options[$opt]['name']] = array_shift($this->args);
           }

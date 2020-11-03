@@ -75,8 +75,8 @@ class UnixFileSystem extends FileSystem {
         // Resolve home directories. We assume /home is where all home
         // directories reside, b/c there is no other way to do this with
         // PHP AFAIK.
-        if ($strPathname{0} === "~") {
-            if ($strPathname{1} === "/") { // like ~/foo => /home/user/foo
+        if ($strPathname[0] === "~") {
+            if ($strPathname[1] === "/") { // like ~/foo => /home/user/foo
                 $strPathname = "/home/" . get_current_user() . substr($strPathname, 1);
             } else { // like ~foo => /home/foo
                 $pos = strpos($strPathname, "/");
@@ -154,7 +154,7 @@ class UnixFileSystem extends FileSystem {
             return $parent;
         }
 
-        if ($child{0} === '/') {
+        if ($child[0] === '/') {
             if ($parent === '/') {
                 return $child;
             }
@@ -194,7 +194,7 @@ class UnixFileSystem extends FileSystem {
     function getBooleanAttributes($f) {
         //$rv = getBooleanAttributes0($f);
         $name = $f->getName();
-        $hidden = (strlen($name) > 0) && ($name{0} == '.');
+        $hidden = (strlen($name) > 0) && ($name[0] == '.');
         return ($hidden ? $this->BA_HIDDEN : 0);
     }
 

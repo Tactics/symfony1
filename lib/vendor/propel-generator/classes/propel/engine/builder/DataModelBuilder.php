@@ -97,12 +97,13 @@ abstract class DataModelBuilder {
 		return Phing::import($classpath);
 	}
 
-	/**
-	 * Factory method to load a new builder instance based on specified type.
-	 * @param      Table $table
-	 * @param      $type The "key" for class to load.
-	 * @throws     BuildException if specified class cannot be found / loaded.
-	 */
+    /**
+     * Factory method to load a new builder instance based on specified type.
+     * @param Table $table
+     * @param      $type The "key" for class to load.
+     * @return mixed
+     * @throws     BuildException if specified class cannot be found / loaded.
+     */
 	public static function builderFactory(Table $table, $type)
 	{
 		$classname = self::getBuilderClass($type);
