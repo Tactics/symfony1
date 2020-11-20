@@ -14,5 +14,12 @@
         "ext-curl": "*",
         "ext-bcmath": "*",
         "ext-intl": "*"
+    },
+    "require-dev": {
+        "rector/rector": "^0.8.56"
+    },
+    "scripts": {
+        "rector:dryrun": "./vendor/bin/rector process --config rector.php --dry-run",
+        "rector": "./vendor/bin/rector process --config rector.php"
     }
 }
