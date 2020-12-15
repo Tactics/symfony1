@@ -61,7 +61,7 @@ class StringHelper {
         $ret=array();
         $len=strlen($str);
         for ($i=0; $i < $len; $i++) {
-            $ret[] = $str{$i};
+            $ret[] = $str[$i];
         }
         return $ret;
     }

@@ -151,7 +151,7 @@ class pakeGetopt
   {
     for ($i = 0; $i < strlen($arg); $i++)
     {
-      $opt = $arg{$i};
+      $opt = $arg[$i];
       $opt_arg = true;
 
       /* option exists? */
