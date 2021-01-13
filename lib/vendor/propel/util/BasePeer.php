@@ -452,6 +452,13 @@ class BasePeer
 			$rs = $stmt->executeQuery(ResultSet::FETCHMODE_NUM);
 			if ($criteria->isUseTransaction()) $con->commit();
 		} catch (Exception $e) {
+		    // Fallback to STATIC
+		    if(method_exists($con, 'getPointerType') && (! $con->getPointerType() || $con->getPointerType() == SQLSRV_CURSOR_CLIENT_BUFFERED))
+            {
+                $con->setPointerType(SQLSRV_CURSOR_STATIC);
+		        return self::doSelect($criteria, $con);
+            }
+
 			if ($stmt) $stmt->close();
 			if ($criteria->isUseTransaction()) $con->rollback();
 			Propel::log($e->getMessage(), Propel::LOG_ERR);
