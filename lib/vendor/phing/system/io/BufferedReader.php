@@ -64,25 +64,25 @@ class BufferedReader extends Reader {
         }
         
         if ( ($data = $this->in->read($this->bufferSize)) !== -1 ) {
-		
+
 			// not all files end with a newline character, so we also need to check EOF
 			if (!$this->in->eof()) {
-			
+
 	            $notValidPart = strrchr($data, "\n");
 	            $notValidPartSize = strlen($notValidPart);
-	        
+
 	            if ( $notValidPartSize > 1 ) {
 	                // Block doesn't finish on a EOL
 	                // Find the last EOL and forgot all following stuff
 	                $dataSize = strlen($data);
 	                $validSize = $dataSize - $notValidPartSize + 1;
-	            
+
 	                $data = substr($data, 0, $validSize);
-	
+
 	                // Rewind to the begining of the forgotten stuff.
 	                $this->in->skip(-$notValidPartSize+1);
 	            }
-				
+
 			} // if !EOF
         }
         return $data;

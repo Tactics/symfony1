@@ -526,20 +526,20 @@ class SmartyTask extends Task {
         // control context so they are available
         // in the control/worker templates.
         if ($this->contextProperties !== null) {
-            
+
             foreach($this->contextProperties->keys() as $property) {
-                    
+
                 $value = $this->contextProperties->getProperty($property);
-                
+
                 // Special exception (from Texen)
                 // for properties ending in file.contents:
                 // in that case we dump the contents of the file
                 // as the "value" for the Property.
                 if (StringHelper::endsWith("file.contents", $property)) {
                     // pull in contents of file specified 
-                                            
+
                     $property = substr($property, 0, strpos($property, "file.contents") - 1);
-                    
+
                     // reset value, and then 
                     // read in teh contents of the file into that var
                     $value = "";
@@ -552,15 +552,15 @@ class SmartyTask extends Task {
                             throw $e;
                         }
                     }    
-                                                                    
+
                  } // if ends with file.contents
-                
+
                     if (StringHelper::isBoolean($value)) {
                         $value = StringHelper::booleanValue($value);
                     }
-                                                        
+
                  $c->assign($property, $value); 
-                 
+
             } // foreach property
                 
         } // if contextProperties !== null

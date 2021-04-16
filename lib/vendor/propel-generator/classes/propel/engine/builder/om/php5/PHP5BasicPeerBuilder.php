@@ -406,14 +406,14 @@ if (Propel::isInit()) {
 	/** A key representing a particular subclass */
 	const CLASSKEY_".strtoupper($child->getKey())." = '" . $child->getKey() . "';
 ";
-	
+
 	if (strtoupper($child->getClassname()) != strtoupper($child->getKey())) {
 		$script .= "
 	/** A key representing a particular subclass */
 	const CLASSKEY_".strtoupper($child->getClassname())." = '" . $child->getKey() . "';
 ";
 	}
-	
+
 	$script .= "
 	/** A class that can be returned by this peer. */
 	const CLASSNAME_".strtoupper($child->getKey())." = '". $childBuilder->getClasspath() . "';

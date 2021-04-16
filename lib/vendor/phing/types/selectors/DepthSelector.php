@@ -82,7 +82,7 @@ class DepthSelector extends BaseExtendSelector {
                     case self::MAX_KEY:
                         $this->setMax($parameters[$i]->getValue());
                         break;
-                        
+
                     default:
                         $this->setError("Invalud parameter " . $paramname);
                 } // switch                

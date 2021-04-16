@@ -97,7 +97,7 @@ class PHP5ComplexPeerBuilder extends PHP5BasicPeerBuilder {
 					// the join table will be aliases when
                     // this table == foreign table
                     $alias = $fk->getForeignTableName() == $table->getName() ? 'alias' : null;
-                    
+
                     $joinClassName = $joinTable->getPhpName();
 
                     $thisTableObjectBuilder = OMBuilder::getNewObjectBuilder($table);

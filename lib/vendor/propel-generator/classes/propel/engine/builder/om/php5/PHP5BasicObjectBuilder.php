@@ -500,12 +500,12 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 * ".$col->getDescription()."
 	 * @param      ".$col->getPhpNative()." \$v new value
 	 * @return     void";
-  
+
 		if ($throwsPropelException){
 		    $script .= "
      * @throws     PropelException";
         }
-        
+
         $script .= "
 	 */
 	public function set$cfc(\$v)
@@ -635,10 +635,10 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		}
 
 		$this->addMutatorOpen($script, $col);
-		
+
 		// Perform some smart checking here to handle possible type discrepancies
 		// between the passed-in value and the value from the DB
-		
+
 		if ($col->getPhpNative() === "int") {
 			$script .= "
 		// Since the native PHP type for this column is integer,
@@ -656,7 +656,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		}
 ";
 		}
-		
+
 		$script .= "
 		if (\$this->$clo !== \$v";
 		if ($defaultValue !== null) {

@@ -61,7 +61,7 @@ class MoveTask extends CopyTask {
                 $moved = false;
                 $f = new PhingFile($from);
                 $d = new PhingFile($to);
-                
+
                 $moved = false;
                 try { // try to rename                    
                     $this->log("Attempting to rename $from to $to", $this->verbosity);
