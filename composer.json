@@ -13,13 +13,21 @@
         "ext-json": "*",
         "ext-curl": "*",
         "ext-bcmath": "*",
-        "ext-intl": "*"
+        "ext-intl": "*",
+        "pear/log": "^1.13"
     },
-    "require-dev": {
-        "rector/rector": "^0.8.56"
+    "autoload": {
+        "classmap": [
+            "lib/"
+        ]
     },
     "scripts": {
-        "rector:dryrun": "./vendor/bin/rector process --config rector.php --dry-run",
-        "rector": "./vendor/bin/rector process --config rector.php"
+        "rector": [
+            "./vendor/bin/rector process --config rector.php"
+        ]
+    },
+    "require-dev": {
+        "symplify/psr4-switcher": "^9.2",
+        "rector/rector": "^0.10.6"
     }
 }
