@@ -22,12 +22,19 @@
         ]
     },
     "scripts": {
+        "ecs-fix": [
+            "./vendor/bin/ecs check --config ecs.php --fix"
+        ],
+        "ecs": [
+            "./vendor/bin/ecs check --config ecs.php"
+        ],
         "rector": [
             "./vendor/bin/rector process --config rector.php"
         ]
     },
     "require-dev": {
         "symplify/psr4-switcher": "^9.2",
-        "rector/rector": "^0.10.6"
+        "rector/rector": "^0.10.6",
+        "symplify/easy-coding-standard": "^9.2"
     }
 }
