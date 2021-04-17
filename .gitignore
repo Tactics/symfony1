@@ -2,3 +2,4 @@
 vendor/
 .env
 .ecs_cache
+!lib/vendor

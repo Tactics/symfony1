@@ -221,7 +221,7 @@ class FileUtils {
             if (strlen($path) == 1) {
                 $root = DIRECTORY_SEPARATOR;
                 $path = "";
-            } else if ($path{1} == DIRECTORY_SEPARATOR) {
+            } else if ($path[1] == DIRECTORY_SEPARATOR) {
                 // UNC drive
                 $root = DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR;
                 $path = substr($path, 2);
