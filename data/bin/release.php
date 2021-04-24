@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2007 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -18,7 +18,7 @@
  * @version    SVN: $Id$
  */
 require_once(dirname(__FILE__).'/../../lib/vendor/pake/pakeFunction.php');
-require_once(dirname(__FILE__).'/../../lib/vendor/pake/pakeGetopt.class.php');
+require_once(dirname(__FILE__).'/../../lib/vendor/pake/pakeGetopt.php');
 require_once(dirname(__FILE__).'/../../lib/vendor/lime/lime.php');
 
 if (!isset($argv[1]))

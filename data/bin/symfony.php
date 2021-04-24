@@ -32,7 +32,7 @@ if (file_exists('config/config.php') && !isset($sf_symfony_lib_dir))
 }
 
 require_once($sf_symfony_lib_dir.'/vendor/pake/pakeFunction.php');
-require_once($sf_symfony_lib_dir.'/vendor/pake/pakeGetopt.class.php');
+require_once($sf_symfony_lib_dir.'/vendor/pake/pakeGetopt.php');
 
 // autoloading for pake tasks
 class simpleAutoloader
@@ -45,7 +45,7 @@ class simpleAutoloader
   {
     self::$class_paths = array();
 
-    self::register($sf_symfony_lib_dir, '.class.php');
+    self::register($sf_symfony_lib_dir, '.php');
     self::register($sf_symfony_lib_dir.'/vendor/propel', '.php');
     self::register($sf_symfony_lib_dir.'/vendor/creole', '.php');
     self::register('lib/model', '.php');
@@ -131,7 +131,7 @@ if (count($argv) <= 1)
   $argv[] = '-T';
 }
 
-require_once($sf_symfony_lib_dir.'/config/sfConfig.class.php');
+require_once($sf_symfony_lib_dir.'/config/sfConfig.php');
 
 sfConfig::add(array(
   'sf_root_dir'         => getcwd(),

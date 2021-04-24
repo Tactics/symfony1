@@ -52,7 +52,7 @@ class sfYaml
     }
     else
     {
-      require_once(dirname(__FILE__).'/Spyc.class.php');
+      require_once(dirname(__FILE__).'/Spyc.php');
 
       $spyc = new Spyc();
 
@@ -71,7 +71,7 @@ class sfYaml
    */
   public static function dump($array)
   {
-    require_once(dirname(__FILE__).'/Spyc.class.php');
+    require_once(dirname(__FILE__).'/Spyc.php');
 
     $spyc = new Spyc();
 

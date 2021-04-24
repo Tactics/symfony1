@@ -24,8 +24,8 @@ class sfCore
 
   static public function bootstrap($sf_symfony_lib_dir, $sf_symfony_data_dir)
   {
-    require_once($sf_symfony_lib_dir.'/util/sfToolkit.class.php');
-    require_once($sf_symfony_lib_dir.'/config/sfConfig.class.php');
+    require_once($sf_symfony_lib_dir.'/util/sfToolkit.php');
+    require_once($sf_symfony_lib_dir.'/config/sfConfig.php');
 
     sfCore::initConfiguration($sf_symfony_lib_dir, $sf_symfony_data_dir);
 
@@ -210,7 +210,7 @@ class sfCore
 
   static public function initSimpleAutoload($dirs)
   {
-    require_once(dirname(__FILE__).'/sfFinder.class.php');
+    require_once(dirname(__FILE__).'/sfFinder.php');
     self::$classes = array();
     $finder = sfFinder::type('file')->ignore_version_control()->name('*.php');
     foreach ((array) $dirs as $dir)
