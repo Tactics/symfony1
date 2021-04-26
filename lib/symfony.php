@@ -30,7 +30,7 @@ if (!sfConfig::get('sf_in_bootstrap'))
 
   // config support
   require_once($sf_symfony_lib_dir.'/config/sfConfigCache.php');
-  require_once($sf_symfony_lib_dir.'/config/sfConfigHandle.php');
+  require_once($sf_symfony_lib_dir.'/config/sfConfigHandler.php');
   require_once($sf_symfony_lib_dir.'/config/sfYamlConfigHandler.php');
   require_once($sf_symfony_lib_dir.'/config/sfAutoloadConfigHandler.php');
   require_once($sf_symfony_lib_dir.'/config/sfRootConfigHandler.php');
