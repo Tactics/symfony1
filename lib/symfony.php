@@ -19,37 +19,6 @@
  */
 
 $sf_symfony_lib_dir = sfConfig::get('sf_symfony_lib_dir');
-if (!sfConfig::get('sf_in_bootstrap'))
-{
-  // YAML support
-  require_once($sf_symfony_lib_dir.'/util/sfYaml.php');
-
-  // cache support
-  require_once($sf_symfony_lib_dir.'/cache/sfCache.php');
-  require_once($sf_symfony_lib_dir.'/cache/sfFileCache.php');
-
-  // config support
-  require_once($sf_symfony_lib_dir.'/config/sfConfigCache.php');
-  require_once($sf_symfony_lib_dir.'/config/sfConfigHandler.php');
-  require_once($sf_symfony_lib_dir.'/config/sfYamlConfigHandler.php');
-  require_once($sf_symfony_lib_dir.'/config/sfAutoloadConfigHandler.php');
-  require_once($sf_symfony_lib_dir.'/config/sfRootConfigHandler.php');
-  require_once($sf_symfony_lib_dir.'/config/sfLoader.php');
-
-  // basic exception classes
-  require_once($sf_symfony_lib_dir.'/exception/sfException.php');
-  require_once($sf_symfony_lib_dir.'/exception/sfAutoloadException.php');
-  require_once($sf_symfony_lib_dir.'/exception/sfCacheException.php');
-  require_once($sf_symfony_lib_dir.'/exception/sfConfigurationException.php');
-  require_once($sf_symfony_lib_dir.'/exception/sfParseException.php');
-
-  // utils
-  require_once($sf_symfony_lib_dir.'/util/sfParameterHolder.php');
-}
-else
-{
-  require_once($sf_symfony_lib_dir.'/config/sfConfigCache.php');
-}
 
 // autoloading
 sfCore::initAutoload();
@@ -75,13 +44,6 @@ try
   $sf_app_config_dir_name = sfConfig::get('sf_app_config_dir_name');
 
   $sf_debug = sfConfig::get('sf_debug');
-
-  // load timer classes if in debug mode
-  if ($sf_debug)
-  {
-    require_once($sf_symfony_lib_dir.'/debug/sfTimerManager.php');
-    require_once($sf_symfony_lib_dir.'/debug/sfTimer.php');
-  }
 
   // load base settings
   include($configCache->checkConfig($sf_app_config_dir_name.'/settings.yml'));

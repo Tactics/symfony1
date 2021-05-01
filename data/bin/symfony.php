@@ -31,9 +31,6 @@ if (file_exists('config/config.php') && !isset($sf_symfony_lib_dir))
   }
 }
 
-require_once($sf_symfony_lib_dir.'/vendor/pake/pakeFunction.php');
-require_once($sf_symfony_lib_dir.'/vendor/pake/pakeGetopt.php');
-
 // autoloading for pake tasks
 class simpleAutoloader
 {
@@ -131,7 +128,6 @@ if (count($argv) <= 1)
   $argv[] = '-T';
 }
 
-require_once($sf_symfony_lib_dir.'/config/sfConfig.php');
 
 sfConfig::add(array(
   'sf_root_dir'         => getcwd(),

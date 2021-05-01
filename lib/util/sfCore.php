@@ -24,9 +24,6 @@ class sfCore
 
   static public function bootstrap($sf_symfony_lib_dir, $sf_symfony_data_dir)
   {
-    require_once($sf_symfony_lib_dir.'/util/sfToolkit.php');
-    require_once($sf_symfony_lib_dir.'/config/sfConfig.php');
-
     sfCore::initConfiguration($sf_symfony_lib_dir, $sf_symfony_data_dir);
 
     sfCore::initIncludePath();
