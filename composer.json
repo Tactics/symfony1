@@ -17,6 +17,28 @@
         "pear/log": "^1.13"
     },
     "autoload": {
+        "files": [
+            "lib/addon/propel/sfPropelAutoload.php",
+            "lib/helper/AssetHelper.php",
+            "lib/helper/CacheHelper.php",
+            "lib/helper/DateFormHelper.php",
+            "lib/helper/DateHelper.php",
+            "lib/helper/DebugHelper.php",
+            "lib/helper/EscapingHelper.php",
+            "lib/helper/FormHelper.php",
+            "lib/helper/HelperHelper.php",
+            "lib/helper/I18NHelper.php",
+            "lib/helper/JavascriptHelper.php",
+            "lib/helper/NumberHelper.php",
+            "lib/helper/ObjectHelper.php",
+            "lib/helper/PartialHelper.php",
+            "lib/helper/TagHelper.php",
+            "lib/helper/TextHelper.php",
+            "lib/helper/UrlHelper.php",
+            "lib/helper/ValidationHelper.php",
+            "lib/i18n/util.php",
+            "lib/vendor/pake/pakeFunction.php"
+        ],
         "classmap": [
             "lib/"
         ]
