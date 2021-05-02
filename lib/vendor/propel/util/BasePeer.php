@@ -19,14 +19,6 @@
  * <http://propel.phpdb.org>.
  */
 
-include_once 'propel/adapter/DBAdapter.php';
-include_once 'propel/map/ColumnMap.php';
-include_once 'propel/map/DatabaseMap.php';
-include_once 'propel/map/MapBuilder.php';
-include_once 'propel/map/TableMap.php';
-include_once 'propel/map/ValidatorMap.php';
-include_once 'propel/validator/ValidationFailed.php';
-
 /**
  * This is a utility class for all generated Peer classes in the system.
  *

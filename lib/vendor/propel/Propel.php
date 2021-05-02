@@ -20,9 +20,6 @@
  * <http://propel.phpdb.org>.
  */
 
-include_once 'propel/PropelException.php';
-include_once 'propel/adapter/DBAdapter.php';
-
 /**
  * Propel's main resource pool and initialization & configuration class.
  *

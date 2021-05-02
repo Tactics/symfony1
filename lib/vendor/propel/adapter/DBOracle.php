@@ -20,7 +20,6 @@
  * <http://propel.phpdb.org>.
  */
 
-require_once 'propel/adapter/DBAdapter.php';
 
 /**
  * Oracle adapter.
