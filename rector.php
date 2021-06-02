@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 use Rector\Core\Configuration\Option;
+use Rector\Php74\Rector\FuncCall\ArrayKeyExistsOnPropertyRector;
+use Rector\Php74\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
+use Rector\Php74\Rector\MethodCall\ChangeReflectionTypeToStringToGetNameRector;
+use Rector\PSR4\Rector\FileWithoutNamespace\NormalizeNamespaceByPSR4ComposerAutoloadRector;
 use Rector\PSR4\Rector\Namespace_\MultipleClassFileToPsr4ClassesRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -27,8 +31,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // get services (needed for register a single rule)
     $services = $containerConfigurator->services();
 
+    // PSR-4
     // register a single rule
     $services->set(MultipleClassFileToPsr4ClassesRector::class);
+    $services->set(NormalizeNamespaceByPSR4ComposerAutoloadRector::class);
+
+    // PHP 7.4
+    //$services->set(ArrayKeyExistsOnPropertyRector::class);
+    //$services->set(ArraySpreadInsteadOfArrayMergeRector::class);
+    //$services->set(ChangeReflectionTypeToStringToGetNameRector::class);
+
 };
 
 
