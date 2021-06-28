@@ -53,8 +53,14 @@ class MSSQLSRVConnection extends ConnectionCommon implements Connection {
 
     $serverName = $dsninfo['hostspec'] ? $dsninfo['hostspec'] : '(local)';
 
+    if (PHP_OS == "WINNT" || PHP_OS == "WIN32") {
+      $portDelimiter = ",";
+    } else {
+      $portDelimiter = ":";
+    }
+
     if(!empty($dsninfo['port'])) {
-      throw new SQLException('dsninfo[\'port\'] not implemented');
+      $serverName .= $portDelimiter.$dsninfo['port'];
     }
 
     $connectionInfo = array();
